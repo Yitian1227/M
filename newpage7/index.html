@@ -143,7 +143,8 @@
         .project-container {
             max-width: 1200px;
             width: 100%;
-            margin-bottom: 3rem;
+            margin-bottom: 0;
+            position: relative;
         }
 
         .project-header {
@@ -156,13 +157,54 @@
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 3rem 0;
         }
 
         .project-description {
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .buttons-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-button {
+            width: calc(50% - 0.5rem);
+            max-width: 595px; /* (1200px - 1rem gap) / 2 */
+            padding: 1rem;
+            font-size: 1rem;
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Kantumruy Pro', sans-serif;
+            border-radius: 8px;
+        }
+
+        .contact-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        body.light-mode .contact-button {
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        body.light-mode .contact-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.5);
         }
 
         .project-media {
@@ -189,11 +231,63 @@
         /* Drawing Board Styles */
         .drawing-section {
             width: 100%;
-            max-width: 800px; /* 修改為 800px */
-            margin: 2rem auto;
+            max-width: 800px;
+            margin: 0 auto;
             background: #f0f0f0;
             border: 1px solid #999;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .side-area {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc((100vw - 800px) / 2);
+            max-width: 200px;
+            min-width: 8px;
+            background: #0D8C75;
+            cursor: pointer;
+            overflow: visible;
+        }
+
+        .side-area-left {
+            right: 100%;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .side-area-right {
+            left: 100%;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .stamp {
+            position: absolute;
+            pointer-events: none;
+            color: rgba(255, 255, 255, 1);
+            font-size: 36px;
+            transform: translate(-50%, -50%);
+            animation: stampAppear 0.3s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        .paint-menu-bar {
+            background: #20448C;
+            border-bottom: 1px solid #999;
+            display: flex;
+            height: 28px;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            padding: 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
         }
 
         .drawing-container {
@@ -201,6 +295,8 @@
             background: white;
             border: 1px solid #999;
             margin: 0;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
         }
 
         #drawingCanvas {
@@ -219,18 +315,6 @@
             min-height: 28px;
             align-items: center;
             box-sizing: border-box;
-        }
-
-        .paint-menu-bar {
-            background: #20448C;
-            border-bottom: 1px solid #999;
-            display: flex;
-            height: 28px;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-            padding: 0;
         }
 
         .paint-menu-item {
@@ -404,24 +488,37 @@
 
         /* 顏色選擇面板 */
         .color-palette {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 20px);
+            grid-auto-rows: 20px;
+            grid-gap: 3px;
             background: #D2D5D9;
             border-top: 1px solid #999;
-            padding: 4px;
-            gap: 3px; /* 稍微縮小顏色按鈕之間的間距 */
+            padding: 6px 4px 8px 4px; /* 增加底部內邊距 */
             justify-content: center;
+            max-height: 51px; /* 調整高度：(20px * 2) + 3px + 6px + 8px = 51px */
+            overflow: hidden;
+            box-sizing: border-box;
+            grid-template-rows: repeat(2, 20px);
+        }
+
+        @media (min-width: 800px) {
+            .color-palette {
+                max-height: 28px;
+                grid-template-rows: 20px;
+                padding: 4px; /* 桌面版保持原有內邊距 */
+            }
         }
 
         .color-option {
-            width: 20px; /* 稍微縮小顏色按鈕的尺寸 */
+            width: 20px;
             height: 20px;
             border: none;
             padding: 0;
             margin: 0;
             cursor: pointer;
             border-radius: 3px;
-            flex-shrink: 0;
+            display: block;
         }
 
         .color-option:hover {
@@ -445,6 +542,140 @@
             flex-wrap: wrap;
             align-items: center;
         }
+
+        .eraser-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            padding: 2px;
+            border: 1px solid #999;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .eraser-button.active {
+            background: #ccc;
+            border-color: #666;
+        }
+
+        .eraser-button:hover {
+            background: #e5e5e5;
+        }
+
+        @keyframes stampAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 8px;
+            position: relative;
+            max-width: 66.67%;
+            max-height: 66.67%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            border-radius: 8px;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .modal-close:hover {
+            background: #555;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 53.33vh;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .line-id-text {
+            margin-top: 1rem;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 1rem;
+            font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .copy-message {
+            color: #22c35e;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-family: 'Kantumruy Pro', sans-serif;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .copy-message.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -459,10 +690,9 @@
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">project7</h2>
+                <h2 class="project-title">Contact </h2>
                 <p class="project-description">
-                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
-                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                    You can find my LINE and GMAIL here, or you can even just draw me a picture, just use the drawing board below and enjoy it! And I will also reply to you with a picture. Any contact is very welcome!
                 </p>
             </div>
 
@@ -471,6 +701,8 @@
 
         <!-- Drawing Board Section -->
         <div class="drawing-section">
+            <div class="side-area side-area-left"></div>
+            <div class="side-area side-area-right"></div>
             <div class="paint-menu-bar">
                 <div class="paint-menu-item">File</div>
                 <div class="paint-menu-item">Edit</div>
@@ -485,6 +717,12 @@
                     <input type="color" id="colorPicker" value="#000000">
                 </div>
                 <div class="tool-group">
+                    <button class="eraser-button" id="eraserButton" title="Eraser">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M14 5L11 2L4 9L7 12L14 5Z" fill="#666"/>
+                            <path d="M3 10L6 13H2L3 10Z" fill="#666"/>
+                        </svg>
+                    </button>
                     <span class="tool-label">Brush Size:</span>
                     <input type="range" id="brushSize" min="1" max="50" value="5">
                 </div>
@@ -541,6 +779,22 @@
                 </div>
             </div>
         </div>
+
+        <!-- Contact Buttons -->
+        <div class="buttons-container">
+            <button class="contact-button" id="lineButton">LINE</button>
+            <button class="contact-button">GMAIL</button>
+        </div>
+
+        <!-- LINE QR Code Modal -->
+        <div class="modal" id="lineModal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <img src="446560.jpg" alt="LINE QR Code">
+                <div class="line-id-text">LINE ID: 901227tina</div>
+                <div class="copy-message" id="copyMessage">LINE ID has been copied</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -555,11 +809,10 @@
             // Set canvas size
             function resizeCanvas() {
                 const container = document.querySelector('.drawing-container');
-                const projectDescription = document.querySelector('.project-description');
-                const maxWidth = Math.min(800, projectDescription.clientWidth * 0.8);
+                const maxWidth = Math.min(800, container.clientWidth);
                 
                 canvas.width = maxWidth;
-                canvas.height = maxWidth * 0.6; // 將高度設為寬度的 60%
+                canvas.height = maxWidth * 0.6;
                 
                 // Set initial background
                 ctx.fillStyle = 'white';
@@ -589,6 +842,11 @@
                 ctx.strokeStyle = colorPicker.value;
                 ctx.lineWidth = brushSize.value;
                 ctx.lineCap = 'round';
+                if (isEraser) {
+                    ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    ctx.globalCompositeOperation = 'source-over';
+                }
                 ctx.stroke();
                 
                 [lastX, lastY] = [e.offsetX, e.offsetY];
@@ -665,6 +923,86 @@
 
             // Set initial selected color
             colorOptions[0].classList.add('selected');
+
+            // 在 script 部分添加橡皮擦功能
+            let isEraser = false;
+            const eraserButton = document.getElementById('eraserButton');
+            let lastColor = colorPicker.value;
+
+            eraserButton.addEventListener('click', function() {
+                isEraser = !isEraser;
+                this.classList.toggle('active');
+                if (isEraser) {
+                    lastColor = colorPicker.value;
+                    colorPicker.value = '#FFFFFF';
+                } else {
+                    colorPicker.value = lastColor;
+                }
+            });
+
+            // 修改印章功能
+            const stamps = ['❤️', '⭕', '👍'];
+            const sideAreas = document.querySelectorAll('.side-area');
+            
+            function createStamp(e, element) {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const stamp = document.createElement('div');
+                stamp.className = 'stamp';
+                stamp.textContent = stamps[Math.floor(Math.random() * stamps.length)];
+                stamp.style.left = x + 'px';
+                stamp.style.top = y + 'px';
+                
+                // 確保印章被添加到正確的容器中
+                element.appendChild(stamp);
+                
+                // 動畫結束後移除印章
+                setTimeout(() => {
+                    if (stamp && stamp.parentNode) {
+                        stamp.remove();
+                    }
+                }, 10000);
+            }
+
+            // 為兩側區域添加點擊事件
+            sideAreas.forEach(area => {
+                area.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 防止事件冒泡
+                    createStamp(e, this);
+                });
+            });
+
+            // LINE Modal functionality
+            const lineButton = document.getElementById('lineButton');
+            const lineModal = document.getElementById('lineModal');
+            const modalClose = document.querySelector('.modal-close');
+
+            lineButton.addEventListener('click', function() {
+                lineModal.classList.add('show');
+                // Copy LINE ID to clipboard
+                navigator.clipboard.writeText('901227tina').then(() => {
+                    const copyMessage = document.getElementById('copyMessage');
+                    copyMessage.classList.add('show');
+                    setTimeout(() => {
+                        copyMessage.classList.remove('show');
+                    }, 5000);
+                });
+            });
+
+            modalClose.addEventListener('click', function() {
+                lineModal.classList.remove('show');
+                // Reset copy message state when modal is closed
+                const copyMessage = document.getElementById('copyMessage');
+                copyMessage.classList.remove('show');
+            });
+
+            lineModal.addEventListener('click', function(e) {
+                if (e.target === lineModal) {
+                    lineModal.classList.remove('show');
+                }
+            });
         });
     </script>
 </body>
