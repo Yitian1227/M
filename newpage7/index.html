@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio - Project 7</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/theme-styles.css">
+    <script src="../js/theme-controller.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .header {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-button {
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-family: 'Kantumruy Pro', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .back-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+
+        .back-button:hover::before,
+        .back-button:hover::after,
+        .back-button:hover .ripple-circle {
+            border-color: white; /* Night模式下懸停時為白色 */
+        }
+        
+        .back-button:active,
+        .back-button.active { 
+            background-color: white;
+            color: #000;
+            border-color: white;
+        }
+        
+        /* 漣漪動畫 */
+        .back-button::before,
+        .back-button::after,
+        .back-button .ripple-circle {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: transparent;
+            border: 2px solid white; /* Night模式下為白色 */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .back-button::before {
+            animation: none;
+        }
+        
+        .back-button::after {
+            animation: none;
+        }
+        
+        .back-button .ripple-circle {
+            animation: none;
+        }
+        
+        .back-button:hover::before {
+            animation: ripple 2s ease-out 0s infinite;
+        }
+        
+        .back-button:hover::after {
+            animation: ripple 2s ease-out 0.5s infinite;
+        }
+        
+        .back-button:hover .ripple-circle {
+            animation: ripple 2s ease-out 1s infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2.5);
+            }
+        }
+
+        .page-title {
+            font-family: "Tangerine", cursive;
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .project-container {
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .project-header {
+            margin-bottom: 2rem;
+        }
+
+        .project-title {
+            font-family: "Tangerine", cursive;
+            font-size: 10rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 75%;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .project-media {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .media-item {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .media-item img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Drawing Board Styles */
+        .drawing-section {
+            width: 100%;
+            max-width: 800px; /* 修改為 800px */
+            margin: 2rem auto;
+            background: #f0f0f0;
+            border: 1px solid #999;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .drawing-container {
+            position: relative;
+            background: white;
+            border: 1px solid #999;
+            margin: 0;
+        }
+
+        #drawingCanvas {
+            cursor: crosshair;
+            display: block;
+        }
+
+        .tools {
+            display: flex;
+            gap: 0.5rem;
+            padding: 4px 0.5rem;
+            background: #D2D5D9;
+            border-bottom: 1px solid #999;
+            margin: 0;
+            flex-wrap: wrap;
+            min-height: 28px;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .paint-menu-bar {
+            background: #20448C;
+            border-bottom: 1px solid #999;
+            display: flex;
+            height: 28px;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .paint-menu-item {
+            padding: 0 8px;
+            color: #fff;
+            cursor: default;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            min-width: 40px;
+            justify-content: center;
+        }
+
+        .paint-menu-item:hover {
+            background: #2e5aa3;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 0.25rem;
+            border: 1px solid transparent;
+            height: 28px;
+        }
+
+        .tool-label {
+            color: #000;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            white-space: nowrap;
+        }
+
+        #colorPicker {
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            border: 1px solid #999;
+            border-radius: 0;
+            cursor: pointer;
+            background: white;
+        }
+
+        .action-button {
+            height: 20px;
+            line-height: 18px;
+            padding: 0 0.75rem;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        #brushSize {
+            width: 100px;
+            height: 3px;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        #brushSize::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #666;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #brushSize::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: #666;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .action-button:hover {
+            background: #e5e5e5;
+        }
+
+        .action-button:active {
+            background: #d0d0d0;
+            border-color: #666;
+        }
+
+        /* 移除深色模式下的特殊樣式，保持繪圖板始終為淺色主題 */
+        body.light-mode .tools,
+        body.dark-mode .tools {
+            background: #D2D5D9;
+        }
+
+        body.light-mode .tool-label,
+        body.dark-mode .tool-label {
+            color: #000;
+        }
+
+        body.light-mode .action-button,
+        body.dark-mode .action-button {
+            background: #f0f0f0;
+            color: #000;
+            border: 1px solid #999;
+        }
+
+        body.light-mode .action-button:hover,
+        body.dark-mode .action-button:hover {
+            background: #e5e5e5;
+        }
+
+        body.light-mode {
+            background-color: #f0f0f0;
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        body.light-mode .tools {
+            background: #D2D5D9;
+        }
+
+        body.light-mode .tool-label {
+            color: black;
+        }
+
+        body.light-mode .action-button {
+            background: rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+
+        body.light-mode .action-button:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 亮色模式下的按鈕樣式 */
+        body.light-mode .back-button {
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            color: rgba(0, 0, 0, 0.8);
+            background: none;
+        }
+        
+        body.light-mode .back-button:hover {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        body.light-mode .back-button:hover::before,
+        body.light-mode .back-button:hover::after,
+        body.light-mode .back-button:hover .ripple-circle {
+            border-color: black;
+        }
+        
+        body.light-mode .back-button:active,
+        body.light-mode .back-button.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+        
+        body.light-mode .back-button::before,
+        body.light-mode .back-button::after,
+        body.light-mode .back-button .ripple-circle {
+            border-color: black;
+        }
+        
+        body.light-mode .back-button.active::before,
+        body.light-mode .back-button.active::after,
+        body.light-mode .back-button.active .ripple-circle {
+            border-color: black;
+        }
+
+        /* 顏色選擇面板 */
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            background: #D2D5D9;
+            border-top: 1px solid #999;
+            padding: 4px;
+            gap: 3px; /* 稍微縮小顏色按鈕之間的間距 */
+            justify-content: center;
+        }
+
+        .color-option {
+            width: 20px; /* 稍微縮小顏色按鈕的尺寸 */
+            height: 20px;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .color-option:hover {
+            outline: 2px solid #000;
+            outline-offset: -2px;
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .color-option.selected {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+            box-shadow: 0 0 0 2px #000;
+            z-index: 2;
+            border-radius: 4px;
+        }
+
+        .action-buttons-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-button" onclick="window.location.href='../'">
+            HOME
+            <span class="ripple-circle"></span>
+        </button>
+        <h1 class="page-title">Yitiann Portfolio</h1>
+    </div>
+
+    <div class="content">
+        <div class="project-container">
+            <div class="project-header">
+                <h2 class="project-title">project7</h2>
+                <p class="project-description">
+                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                </p>
+            </div>
+
+            
+        </div>
+
+        <!-- Drawing Board Section -->
+        <div class="drawing-section">
+            <div class="paint-menu-bar">
+                <div class="paint-menu-item">File</div>
+                <div class="paint-menu-item">Edit</div>
+                <div class="paint-menu-item">View</div>
+                <div class="paint-menu-item">Image</div>
+                <div class="paint-menu-item">Options</div>
+                <div class="paint-menu-item">Help</div>
+            </div>
+            <div class="tools">
+                <div class="tool-group">
+                    <span class="tool-label">Color:</span>
+                    <input type="color" id="colorPicker" value="#000000">
+                </div>
+                <div class="tool-group">
+                    <span class="tool-label">Brush Size:</span>
+                    <input type="range" id="brushSize" min="1" max="50" value="5">
+                </div>
+                <div class="action-buttons-group">
+                    <button class="action-button" id="clearButton">Clear</button>
+                    <button class="action-button" id="saveButton">Save</button>
+                    <button class="action-button" id="shareButton">Share with me</button>
+                </div>
+            </div>
+            
+            <div class="drawing-container">
+                <canvas id="drawingCanvas"></canvas>
+                <div class="color-palette">
+                    <button class="color-option" style="background: #000000" data-color="#000000"></button>
+                    <button class="color-option" style="background: #7F7F7F" data-color="#7F7F7F"></button>
+                    <button class="color-option" style="background: #880015" data-color="#880015"></button>
+                    <button class="color-option" style="background: #ED1C24" data-color="#ED1C24"></button>
+                    <button class="color-option" style="background: #FF7F27" data-color="#FF7F27"></button>
+                    <button class="color-option" style="background: #FFF200" data-color="#FFF200"></button>
+                    <button class="color-option" style="background: #22B14C" data-color="#22B14C"></button>
+                    <button class="color-option" style="background: #00A2E8" data-color="#00A2E8"></button>
+                    <button class="color-option" style="background: #3F48CC" data-color="#3F48CC"></button>
+                    <button class="color-option" style="background: #A349A4" data-color="#A349A4"></button>
+                    <button class="color-option" style="background: #FFFFFF" data-color="#FFFFFF"></button>
+                    <button class="color-option" style="background: #C3C3C3" data-color="#C3C3C3"></button>
+                    <button class="color-option" style="background: #B97A57" data-color="#B97A57"></button>
+                    <button class="color-option" style="background: #FFAEC9" data-color="#FFAEC9"></button>
+                    <button class="color-option" style="background: #FFC90E" data-color="#FFC90E"></button>
+                    <button class="color-option" style="background: #EFE4B0" data-color="#EFE4B0"></button>
+                    <button class="color-option" style="background: #B5E61D" data-color="#B5E61D"></button>
+                    <button class="color-option" style="background: #99D9EA" data-color="#99D9EA"></button>
+                    <button class="color-option" style="background: #7092BE" data-color="#7092BE"></button>
+                    <button class="color-option" style="background: #C8BFE7" data-color="#C8BFE7"></button>
+                    <button class="color-option" style="background: #FF1493" data-color="#FF1493"></button>
+                    <button class="color-option" style="background: #FF69B4" data-color="#FF69B4"></button>
+                    <button class="color-option" style="background: #FFB6C1" data-color="#FFB6C1"></button>
+                    <button class="color-option" style="background: #8B4513" data-color="#8B4513"></button>
+                    <button class="color-option" style="background: #D2691E" data-color="#D2691E"></button>
+                    <button class="color-option" style="background: #DEB887" data-color="#DEB887"></button>
+                    <button class="color-option" style="background: #FFD700" data-color="#FFD700"></button>
+                    <button class="color-option" style="background: #DAA520" data-color="#DAA520"></button>
+                    <button class="color-option" style="background: #F0E68C" data-color="#F0E68C"></button>
+                    <button class="color-option" style="background: #006400" data-color="#006400"></button>
+                    <button class="color-option" style="background: #32CD32" data-color="#32CD32"></button>
+                    <button class="color-option" style="background: #90EE90" data-color="#90EE90"></button>
+                    <button class="color-option" style="background: #000080" data-color="#000080"></button>
+                    <button class="color-option" style="background: #4169E1" data-color="#4169E1"></button>
+                    <button class="color-option" style="background: #87CEEB" data-color="#87CEEB"></button>
+                    <button class="color-option" style="background: #4B0082" data-color="#4B0082"></button>
+                    <button class="color-option" style="background: #8A2BE2" data-color="#8A2BE2"></button>
+                    <button class="color-option" style="background: #DDA0DD" data-color="#DDA0DD"></button>
+                    <button class="color-option" style="background: #2F4F4F" data-color="#2F4F4F"></button>
+                    <button class="color-option" style="background: #696969" data-color="#696969"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const colorPicker = document.getElementById('colorPicker');
+            const brushSize = document.getElementById('brushSize');
+            const clearButton = document.getElementById('clearButton');
+            const saveButton = document.getElementById('saveButton');
+
+            // Set canvas size
+            function resizeCanvas() {
+                const container = document.querySelector('.drawing-container');
+                const projectDescription = document.querySelector('.project-description');
+                const maxWidth = Math.min(800, projectDescription.clientWidth * 0.8);
+                
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * 0.6; // 將高度設為寬度的 60%
+                
+                // Set initial background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Drawing state
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            // Drawing functions
+            function startDrawing(e) {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = brushSize.value;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+
+            // Event listeners for drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch support
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX - rect.left,
+                    clientY: touch.clientY - rect.top
+                });
+                canvas.dispatchEvent(mouseEvent);
+            });
+
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX - rect.left,
+                    clientY: touch.clientY - rect.top
+                });
+                canvas.dispatchEvent(mouseEvent);
+            });
+
+            canvas.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                const mouseEvent = new MouseEvent('mouseup', {});
+                canvas.dispatchEvent(mouseEvent);
+            });
+
+            // Clear canvas
+            clearButton.addEventListener('click', function() {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            });
+
+            // Save drawing
+            saveButton.addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.download = 'drawing.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+
+            // Color palette functionality
+            const colorPalette = document.querySelector('.color-palette');
+            const colorOptions = document.querySelectorAll('.color-option');
+
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    // Update color picker and current color
+                    const color = this.dataset.color;
+                    colorPicker.value = color;
+                });
+            });
+
+            // Set initial selected color
+            colorOptions[0].classList.add('selected');
+        });
+    </script>
+</body>
+</html> 
