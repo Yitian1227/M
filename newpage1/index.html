@@ -131,6 +131,30 @@
             margin: 0;
         }
 
+        @media (max-width: 767px) {
+            .page-title {
+                position: fixed;
+                top: 34px;
+                right: 20px;
+                font-size: 2rem;
+                line-height: 40px;
+                z-index: 9999;
+                height: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .back-button {
+                width: 60px;
+                height: 60px;
+                margin-top: 10px;
+            }
+        }
+
         .content {
             flex: 1;
             padding: 2rem;
