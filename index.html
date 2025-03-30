@@ -102,7 +102,7 @@
 
         .divider {
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #ffffff;
             width: 100%;
             margin: 1.5rem 0;
         }
@@ -118,6 +118,175 @@
             .right-content {
                 height: 100%;
                 flex-grow: 1;
+            }
+        }
+
+        /* 在手機尺寸下隱藏影片內容 */
+        @media (max-width: 767px) {
+            .container {
+                padding: 1rem;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                position: relative;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                transition: background-color 0.3s ease;
+            }
+            
+            .container.photo-section {
+                background-color: #ffffff;
+            }
+            
+            .container.photo-section .photo-item .project-text,
+            .container.photo-section .photo-item .project-description,
+            .container.photo-section .photo-item .date-text,
+            .container.photo-section .photo-item .featured-text,
+            .container.photo-section .photo-item .arrow {
+                color: #000000;
+            }
+
+            .container:not(.photo-section) .photo-item .project-text,
+            .container:not(.photo-section) .photo-item .project-description,
+            .container:not(.photo-section) .photo-item .date-text,
+            .container:not(.photo-section) .photo-item .featured-text,
+            .container:not(.photo-section) .photo-item .arrow {
+                color: #ffffff;
+            }
+            
+            .container.photo-section .brand-title {
+                color: #000000;
+            }
+
+            .container.photo-section .description {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            .container.photo-section .toggle {
+                border-color: rgba(0, 0, 0, 0.3);
+                color: #000000;
+            }
+
+            .container.photo-section .toggle:hover {
+                border-color: #000000;
+            }
+
+            .container.photo-section .toggle.active {
+                background-color: #000000;
+                color: #ffffff;
+            }
+
+            .container.photo-section .toggle::before,
+            .container.photo-section .toggle::after,
+            .container.photo-section .toggle .ripple-circle {
+                border-color: #000000;
+            }
+            
+            .container.photo-section .divider {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .container:not(.photo-section) .divider {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+            
+            .container::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('./home%20png/6faefbc082c3eedb81df2a1c18c12ee6.gif');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: 0.15;
+                z-index: -1;
+                transition: opacity 0.3s ease;
+            }
+
+            .container.photo-section::before {
+                opacity: 0;
+            }
+            
+            .left-content {
+                width: 100%;
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .brand-title {
+                font-size: 6.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .brand-title span {
+                padding-left: 0;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+                max-width: 90%;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+            
+            .buttons-container {
+                gap: 20px;
+                padding: 10px;
+                margin: 1.5rem auto;
+            }
+            
+            .toggle {
+                width: 70px;
+                height: 70px;
+                font-size: 1rem;
+            }
+
+            .divider {
+                height: 2px;
+                width: 90%;
+                margin: 1.5rem auto;
+            }
+
+            .photo-gallery {
+                display: block;
+                margin-top: 2rem;
+                width: 100%;
+                max-width: 90%;
+            }
+
+            .photo-item {
+                margin: 0.5rem 0;
+            }
+
+            .photo-item img {
+                border-radius: 4px;
+            }
+
+            .photo-item:first-child .date-divider {
+                width: 100%;
+                height: 2px;
+                background-color: rgba(0, 0, 0, 0.3);
+                margin: 0.2rem 0;
+            }
+
+            .container:not(.photo-section) .divider,
+            .container:not(.photo-section) .date-divider {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+
+            .container.photo-section .divider,
+            .container.photo-section .date-divider {
+                background-color: rgba(0, 0, 0, 0.3);
             }
         }
         
@@ -266,7 +435,7 @@
         }
         
         body.light-mode .divider {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #000000;
         }
         
         body.light-mode .control-label {
@@ -324,6 +493,160 @@
         body.light-mode .frame-edge-v {
             filter: invert(1) brightness(0.9);
         }
+
+        /* 照片展示區域樣式 */
+        .photo-gallery {
+            width: 100%;
+            max-width: 90%;
+            margin: 0 auto;
+            display: none; /* 預設隱藏 */
+        }
+
+        .photo-item {
+            width: 100%;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .photo-item:first-child {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-item:first-child .date-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.2rem;
+            text-align: left;
+            padding-left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .photo-item:first-child .arrow {
+            position: static;
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-left: 0.5rem;
+            font-weight: bold;
+        }
+
+        .photo-item:first-child .date-divider {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0.2rem 0;
+        }
+
+        .photo-item:first-child .featured-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.15rem;
+            text-align: left;
+            padding-left: 0;
+            order: 1;
+        }
+
+        .photo-item:first-child .project-text {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.85;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-left: 0;
+            order: 2;
+            text-shadow: none;
+            letter-spacing: 0.02em;
+        }
+
+        .photo-item:first-child img {
+            margin-top: 0;
+            margin-bottom: 0.15rem;
+            order: 0;
+        }
+
+        .photo-item:first-child a {
+            order: 0;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-item .project-text {
+            position: relative;
+            margin-top: 0.2rem;
+            margin-bottom: 0.1rem;
+            font-family: "Tangerine", cursive;
+            font-size: 5rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            text-align: left;
+            padding-left: 0.5rem;
+        }
+
+        .photo-item .project-description {
+            position: relative;
+            margin-bottom: 0.5rem;
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 1rem;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            text-align: left;
+            padding-left: 0.5rem;
+        }
+
+        @media (max-width: 767px) {
+            .photo-gallery {
+                display: block;
+                margin-top: 2rem;
+            }
+
+            .photo-item:first-child .date-divider {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .photo-item {
+                margin: 0.5rem 0;
+            }
+
+            .photo-item img {
+                border-radius: 4px;
+            }
+
+            .photo-item .project-text {
+                font-size: 1.8rem;
+                line-height: 0.85;
+                letter-spacing: 0.02em;
+                padding-left: 0;
+            }
+
+            .photo-item .project-description {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+                padding-left: 0.4rem;
+            }
+
+            .photo-item:first-child .project-text {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -360,6 +683,66 @@
                         </div>
                         
                         <div class="divider"></div>
+
+                        <!-- 照片展示區域 -->
+                        <div class="photo-gallery">
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage1">
+                                    <img src="home png/page/1.png" alt="Page 1">
+                                </a>
+                                <div class="project-text">Nature in Brilliant</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <a href="newpage2">
+                                    <img src="home png/page/2.png" alt="Page 2">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage3">
+                                    <img src="home png/page/3.png" alt="Page 3">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage4">
+                                    <img src="home png/page/4.png" alt="Page 4">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage5">
+                                    <img src="home png/page/5.png" alt="Page 5">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage6">
+                                    <img src="home png/page/6.png" alt="Page 6">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage7">
+                                    <img src="home png/page/7.png" alt="Page 7">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage8">
+                                    <img src="home png/page/8.png" alt="Page 8">
+                                </a>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="photo-item">
+                                <a href="newpage9">
+                                    <img src="home png/page/9.png" alt="Page 9">
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -374,7 +757,29 @@
     <script src="./js/dynamic-frame.js"></script>
     <script src="./js/theme-controller.js"></script>
     <script>
-        // 初始化控制開關
+        // 添加滾動監聽
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.container');
+            const photoGallery = document.querySelector('.photo-gallery');
+            
+            if (container && photoGallery) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            container.classList.add('photo-section');
+                        } else {
+                            container.classList.remove('photo-section');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+                
+                observer.observe(photoGallery);
+            }
+        });
+
+        // 原有的初始化控制開關代碼
         document.addEventListener('DOMContentLoaded', () => {
             const videoToggle = document.getElementById('video-toggle');
             let youtubeFrames = []; // 用於存儲所有YouTube iframe
