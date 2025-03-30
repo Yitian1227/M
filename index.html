@@ -37,12 +37,20 @@
             padding: 2rem;
             box-sizing: border-box;
             overflow: hidden;
+            padding-top: 0;
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
         }
 
         @media (min-width: 768px) {
             .container {
                 flex-direction: row;
                 align-items: flex-start;
+            }
+
+            .top-bar-title {
+                display: none;
             }
         }
 
@@ -125,6 +133,7 @@
         @media (max-width: 767px) {
             .container {
                 padding: 1rem;
+                padding-top: 45px;
                 height: 100vh;
                 display: flex;
                 flex-direction: column;
@@ -254,39 +263,158 @@
             .divider {
                 height: 2px;
                 width: 90%;
-                margin: 1.5rem auto;
+                margin: 1.5rem auto 0.5rem auto;
             }
 
             .photo-gallery {
                 display: block;
                 margin-top: 2rem;
                 width: 100%;
-                max-width: 90%;
+                max-width: 100%;
             }
 
             .photo-item {
                 margin: 0.5rem 0;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .photo-item:first-child {
+                margin-top: 0;
             }
 
             .photo-item img {
                 border-radius: 4px;
+                width: 100%;
             }
 
-            .photo-item:first-child .date-divider {
+            .photo-item .project-text {
+                font-size: 1.8rem;
+                line-height: 1.1;
+                letter-spacing: 0.02em;
+                padding-left: 0;
+            }
+
+            .top-bar {
+                display: flex;
+                height: 45px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #000000;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0;
+                padding-left: 40px;
+                z-index: 9999;
+            }
+
+            .top-bar-title {
+                display: block;
+                font-size: 1.6rem;
+                color: #ffffff;
+                font-family: "Tangerine", cursive;
+                font-weight: 700;
+            }
+
+            .hamburger-menu {
+                display: flex;
+                width: 30px;
+                height: 20px;
+                position: relative;
+                cursor: pointer;
+                flex-direction: column;
+                justify-content: space-between;
+                z-index: 10000;
+                margin-right: 20%;
+            }
+
+            .hamburger-menu span {
+                display: block;
                 width: 100%;
                 height: 2px;
-                background-color: rgba(0, 0, 0, 0.3);
-                margin: 0.2rem 0;
+                background-color: #ffffff;
+                transition: all 0.3s ease;
             }
 
-            .container:not(.photo-section) .divider,
-            .container:not(.photo-section) .date-divider {
-                background-color: rgba(255, 255, 255, 0.3);
+            .menu-dropdown {
+                display: block;
+                position: fixed;
+                top: 45px;
+                right: 0;
+                background-color: #000000;
+                width: 200px;
+                padding: 0.5rem 0;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 9999;
             }
 
-            .container.photo-section .divider,
-            .container.photo-section .date-divider {
-                background-color: rgba(0, 0, 0, 0.3);
+            .menu-dropdown.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .menu-dropdown a {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: #ffffff;
+                text-decoration: none;
+                font-family: "Kantumruy Pro", sans-serif;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .menu-dropdown a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .left-content {
+                padding-top: 0;
+            }
+
+            .menu-items a:not(.social-button)::after,
+            .photo-item .arrow {
+                content: "➜";
+                font-weight: 900;
+                transform: scaleX(0.7);
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+                text-rendering: geometricPrecision;
+            }
+
+            .menu-items a:not(.social-button)::after {
+                font-size: 1.4rem;
+                margin-left: 10px;
+            }
+
+            .photo-item .arrow {
+                position: static;
+                font-size: 1.5rem;
+                color: #ffffff;
+                margin-left: 0.5rem;
+                font-weight: 900;
+                transform: scaleX(0.7);
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+                text-rendering: geometricPrecision;
+            }
+
+            .photo-item .date-text .arrow {
+                content: "➜";
+                font-weight: 900;
+                -webkit-text-stroke: 0.5px;
+            }
+
+            .container.photo-section .photo-item .arrow {
+                color: #000000;
             }
         }
         
@@ -506,15 +634,11 @@
             width: 100%;
             margin: 1rem 0;
             position: relative;
-        }
-
-        .photo-item:first-child {
-            position: relative;
             display: flex;
             flex-direction: column;
         }
 
-        .photo-item:first-child .date-text {
+        .photo-item .date-text {
             font-family: "Kantumruy Pro", sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
@@ -527,22 +651,17 @@
             align-items: center;
         }
 
-        .photo-item:first-child .arrow {
+        .photo-item .arrow {
             position: static;
             font-size: 1.5rem;
             color: #ffffff;
             margin-left: 0.5rem;
-            font-weight: bold;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
         }
 
-        .photo-item:first-child .date-divider {
-            width: 100%;
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.3);
-            margin: 0.2rem 0;
-        }
-
-        .photo-item:first-child .featured-text {
+        .photo-item .featured-text {
             font-family: "Kantumruy Pro", sans-serif;
             font-size: 0.8rem;
             font-weight: 500;
@@ -555,28 +674,21 @@
             order: 1;
         }
 
-        .photo-item:first-child .project-text {
+        .photo-item .project-text {
             font-family: "Roboto Condensed", sans-serif;
             font-size: 2rem;
             font-weight: 700;
             text-transform: uppercase;
-            line-height: 0.85;
+            line-height: 1.1;
             margin-top: 0;
             margin-bottom: 0;
             padding-left: 0;
             order: 2;
             text-shadow: none;
             letter-spacing: 0.02em;
-        }
-
-        .photo-item:first-child img {
-            margin-top: 0;
-            margin-bottom: 0.15rem;
-            order: 0;
-        }
-
-        .photo-item:first-child a {
-            order: 0;
+            color: #ffffff;
+            text-align: left;
+            margin-left: -0.1em;
         }
 
         .photo-item img {
@@ -584,72 +696,178 @@
             height: auto;
             display: block;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 0;
+            margin-bottom: 0.15rem;
+            order: 0;
         }
 
-        .photo-item .project-text {
-            position: relative;
-            margin-top: 0.2rem;
-            margin-bottom: 0.1rem;
-            font-family: "Tangerine", cursive;
-            font-size: 5rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            text-align: left;
-            padding-left: 0.5rem;
-        }
-
-        .photo-item .project-description {
-            position: relative;
-            margin-bottom: 0.5rem;
-            font-family: "Kantumruy Pro", sans-serif;
-            font-size: 1rem;
-            color: #ffffff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            text-align: left;
-            padding-left: 0.5rem;
+        .photo-item a {
+            order: 0;
         }
 
         @media (max-width: 767px) {
             .photo-gallery {
                 display: block;
                 margin-top: 2rem;
+                width: 100%;
+                max-width: 100%;
             }
 
-            .photo-item:first-child .date-divider {
-                background-color: rgba(0, 0, 0, 0.3);
+            .divider {
+                height: 2px;
+                width: 100%;
+                margin: 1.5rem auto 0.5rem auto;
             }
 
             .photo-item {
                 margin: 0.5rem 0;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .photo-item:first-child {
+                margin-top: 0;
             }
 
             .photo-item img {
                 border-radius: 4px;
+                width: 100%;
             }
 
             .photo-item .project-text {
                 font-size: 1.8rem;
-                line-height: 0.85;
+                line-height: 1.1;
                 letter-spacing: 0.02em;
                 padding-left: 0;
             }
+        }
 
-            .photo-item .project-description {
-                font-size: 0.9rem;
-                margin-bottom: 0.4rem;
-                padding-left: 0.4rem;
-            }
+        /* 漢堡選單樣式 */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+        }
 
-            .photo-item:first-child .project-text {
-                font-size: 1.8rem;
+        .menu-overlay.show {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .menu-items .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .menu-items .social-button {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            font-family: "Roboto Condensed", sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .menu-items .social-button:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .menu-items a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.4rem;
+            margin: 8px 0;
+            padding: 6px 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Roboto Condensed", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .menu-items a:not(.social-button)::after {
+            content: "➜";
+            font-size: 1.4rem;
+            margin-left: 10px;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .menu-items a:hover {
+            color: #666;
+        }
+
+        @media (min-width: 768px) {
+            .menu-overlay {
+                width: 300px;
             }
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <h2 class="top-bar-title">Welcome</h2>
+        <div class="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="menu-overlay">
+        <div class="menu-items">
+            <a href="newpage1">newpage1</a>
+            <a href="newpage2">newpage2</a>
+            <a href="newpage3">newpage3</a>
+            <a href="newpage4">newpage4</a>
+            <a href="newpage5">newpage5</a>
+            <a href="newpage6">newpage6</a>
+            <a href="newpage7">contact</a>
+            <a href="newpage8">about me</a>
+            <a href="newpage9">recent research</a>
+            <div class="social-buttons">
+                <a href="#" class="social-button" id="lineButton">Line</a>
+                <a href="#" class="social-button" id="gmailButton">Gmail</a>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <!-- Left Content -->
         <div class="left-content">
@@ -696,51 +914,75 @@
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage2">
                                     <img src="home png/page/2.png" alt="Page 2">
                                 </a>
+                                <div class="project-text">Colorful Life</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage3">
                                     <img src="home png/page/3.png" alt="Page 3">
                                 </a>
+                                <div class="project-text">Neon Dreams</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage4">
                                     <img src="home png/page/4.png" alt="Page 4">
                                 </a>
+                                <div class="project-text">Urban Pulse</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage5">
                                     <img src="home png/page/5.png" alt="Page 5">
                                 </a>
+                                <div class="project-text">Digital Flow</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage6">
                                     <img src="home png/page/6.png" alt="Page 6">
                                 </a>
+                                <div class="project-text">Light Echo</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage7">
                                     <img src="home png/page/7.png" alt="Page 7">
                                 </a>
+                                <div class="project-text">Wave Motion</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage8">
                                     <img src="home png/page/8.png" alt="Page 8">
                                 </a>
+                                <div class="project-text">Pixel Dance</div>
                             </div>
-                            <div class="divider"></div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
                                 <a href="newpage9">
                                     <img src="home png/page/9.png" alt="Page 9">
                                 </a>
+                                <div class="project-text">Data Stream</div>
                             </div>
                         </div>
                     </div>
@@ -939,6 +1181,59 @@
                     this.appendChild(document.createElement('span')).className = 'ripple-circle';
                 });
             }
+        });
+
+        // 添加漢堡選單功能
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            
+            // LINE 按鈕功能
+            const lineButton = document.getElementById('lineButton');
+            lineButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 複製 LINE ID 到剪貼簿
+                navigator.clipboard.writeText('901227tina').then(() => {
+                    alert('Line id has been copied!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            });
+
+            // Gmail 按鈕功能
+            const gmailButton = document.getElementById('gmailButton');
+            gmailButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 複製 Gmail 地址到剪貼簿
+                navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                    alert('Gmail has been copied!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            });
+
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hamburgerMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('show');
+            });
+            
+            // 點擊選單項目時關閉選單
+            const menuItems = document.querySelectorAll('.menu-items a:not(.social-button)');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburgerMenu.classList.remove('active');
+                    menuOverlay.classList.remove('show');
+                });
+            });
+            
+            // 點擊其他地方關閉選單
+            document.addEventListener('click', (e) => {
+                if (!menuOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                    hamburgerMenu.classList.remove('active');
+                    menuOverlay.classList.remove('show');
+                }
+            });
         });
     </script>
 </body>
