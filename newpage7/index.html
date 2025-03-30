@@ -783,7 +783,7 @@
         <!-- Contact Buttons -->
         <div class="buttons-container">
             <button class="contact-button" id="lineButton">LINE</button>
-            <button class="contact-button">GMAIL</button>
+            <button class="contact-button" id="gmailButton">GMAIL</button>
         </div>
 
         <!-- LINE QR Code Modal -->
@@ -793,6 +793,15 @@
                 <img src="446560.jpg" alt="LINE QR Code">
                 <div class="line-id-text">LINE ID: 901227tina</div>
                 <div class="copy-message" id="copyMessage">LINE ID has been copied</div>
+            </div>
+        </div>
+
+        <!-- Gmail Modal -->
+        <div class="modal" id="gmailModal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <div class="line-id-text">my gmail: yshi57846@gmail.com</div>
+                <div class="copy-message" id="gmailCopyMessage">Gmail has been copied</div>
             </div>
         </div>
     </div>
@@ -991,17 +1000,42 @@
                 });
             });
 
-            modalClose.addEventListener('click', function() {
-                lineModal.classList.remove('show');
-                // Reset copy message state when modal is closed
-                const copyMessage = document.getElementById('copyMessage');
-                copyMessage.classList.remove('show');
+            // Gmail Modal functionality
+            const gmailButton = document.getElementById('gmailButton');
+            const gmailModal = document.getElementById('gmailModal');
+
+            gmailButton.addEventListener('click', function() {
+                gmailModal.classList.add('show');
+                // Copy Gmail to clipboard
+                navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                    const copyMessage = document.getElementById('gmailCopyMessage');
+                    copyMessage.classList.add('show');
+                    setTimeout(() => {
+                        copyMessage.classList.remove('show');
+                    }, 5000);
+                });
             });
 
-            lineModal.addEventListener('click', function(e) {
-                if (e.target === lineModal) {
-                    lineModal.classList.remove('show');
-                }
+            // Close modals
+            document.querySelectorAll('.modal-close').forEach(closeButton => {
+                closeButton.addEventListener('click', function() {
+                    this.closest('.modal').classList.remove('show');
+                    // Reset copy message state when modal is closed
+                    const copyMessage = this.closest('.modal').querySelector('.copy-message');
+                    copyMessage.classList.remove('show');
+                });
+            });
+
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('show');
+                        // Reset copy message state when modal is closed
+                        const copyMessage = this.querySelector('.copy-message');
+                        copyMessage.classList.remove('show');
+                    }
+                });
             });
         });
     </script>
