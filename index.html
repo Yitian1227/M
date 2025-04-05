@@ -321,22 +321,26 @@
 
             .hamburger-menu {
                 display: flex;
-                width: 30px;
-                height: 20px;
+                width: auto;
+                height: auto;
                 position: relative;
                 cursor: pointer;
-                flex-direction: column;
-                justify-content: space-between;
+                align-items: center;
+                justify-content: center;
                 z-index: 10000;
-                margin-right: 20%;
+                color: #ffffff;
+                font-size: 2.8rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
             }
 
-            .hamburger-menu span {
-                display: block;
-                width: 100%;
-                height: 2px;
-                background-color: #ffffff;
-                transition: all 0.3s ease;
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
             }
 
             .menu-dropdown {
@@ -768,6 +772,67 @@
             padding: 20px;
         }
 
+        .menu-items a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.4rem;
+            margin: 4px 0;
+            padding: 4px 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Roboto Condensed", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .menu-items a.project-item {
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .menu-items a.project-item::before {
+            content: "•";
+            position: absolute;
+            left: 20px;
+            color: #333;
+            font-size: 1.4rem;
+        }
+
+        .menu-items a:not(.social-button)::after {
+            content: "➜";
+            font-size: 1.4rem;
+            margin-left: 10px;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .menu-items a:hover {
+            color: #666;
+        }
+
+        .menu-category {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+            padding: 4px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .menu-divider {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin: 0.5rem 0;
+        }
+
         .menu-items .social-buttons {
             display: flex;
             gap: 10px;
@@ -793,39 +858,48 @@
             color: white;
         }
 
-        .menu-items a {
-            color: #333;
-            text-decoration: none;
-            font-size: 1.4rem;
-            margin: 4px 0;
-            padding: 4px 20px;
-            transition: color 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: "Roboto Condensed", sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-        }
-
-        .menu-items a:not(.social-button)::after {
-            content: "➜";
-            font-size: 1.4rem;
-            margin-left: 10px;
-            font-weight: normal;
-            transform: scaleX(0.7);
-            display: inline-block;
-            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-        }
-
-        .menu-items a:hover {
-            color: #666;
-        }
-
         @media (min-width: 768px) {
+            .top-bar {
+                display: flex;
+                height: 45px;
+                position: absolute;
+                top: 40px;
+                right: 1630px;
+                width: auto;
+                background-color: transparent;
+                align-items: center;
+                justify-content: flex-end;
+                padding: 0;
+                z-index: 9999;
+            }
+
+            .hamburger-menu {
+                display: flex;
+                width: auto;
+                height: auto;
+                position: relative;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                color: #ffffff;
+                font-size: 2.8rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
+                transition: color 0.3s ease;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
             .menu-overlay {
-                width: 300px;
+                width: 400px;
             }
         }
 
@@ -840,25 +914,57 @@
         .hamburger-menu.active span:nth-child(3) {
             transform: translateY(-7px) rotate(-45deg);
         }
+
+        body.light-mode .hamburger-menu {
+            color: #333;
+        }
+
+        /* 添加滾動文字的樣式 */
+        .scrolling-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: left;
+            margin: 1rem 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 300px;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* 在亮色模式下的文字顏色 */
+        body.light-mode .scrolling-text {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* 在手機版時隱藏文字 */
+        @media (max-width: 767px) {
+            .scrolling-text {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <h2 class="top-bar-title">Welcome</h2>
         <div class="hamburger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            ✻
         </div>
     </div>
     <div class="menu-overlay">
         <div class="menu-items">
-            <a href="newpage1">newpage1</a>
-            <a href="newpage2">newpage2</a>
-            <a href="newpage3">newpage3</a>
-            <a href="newpage4">newpage4</a>
-            <a href="newpage5">newpage5</a>
-            <a href="newpage6">newpage6</a>
+            <span class="menu-category">PROJECT</span>
+            <a href="newpage1" class="project-item">Calm the Code</a>
+            <a href="newpage2" class="project-item">Superstitious Interspace</a>
+            <a href="newpage3" class="project-item">Verbal Flow</a>
+            <a href="newpage4" class="project-item">Fly in Optical Road</a>
+            <a href="newpage5" class="project-item">Market Weathering</a>
+            <a href="newpage6" class="project-item">Relational Shadows</a>
+            <div class="menu-divider"></div>
             <a href="newpage7">contact</a>
             <a href="newpage8">about me</a>
             <a href="newpage9">recent research</a>
@@ -901,6 +1007,10 @@
                         </div>
                         
                         <div class="divider"></div>
+                        
+                        <div class="scrolling-text" id="scrolling-text">
+                            texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext
+                        </div>
 
                         <!-- 照片展示區域 -->
                         <div class="photo-gallery">
@@ -910,7 +1020,7 @@
                                 <a href="newpage1">
                                     <img src="home png/page/1.png" alt="Page 1">
                                 </a>
-                                <div class="project-text">Nature in Brilliant</div>
+                                <div class="project-text">Calm the Code</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -919,7 +1029,7 @@
                                 <a href="newpage2">
                                     <img src="home png/page/2.png" alt="Page 2">
                                 </a>
-                                <div class="project-text">Colorful Life</div>
+                                <div class="project-text">Superstitious Interspace</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -928,7 +1038,7 @@
                                 <a href="newpage3">
                                     <img src="home png/page/3.png" alt="Page 3">
                                 </a>
-                                <div class="project-text">Neon Dreams</div>
+                                <div class="project-text">Verbal Flow</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -937,7 +1047,7 @@
                                 <a href="newpage4">
                                     <img src="home png/page/4.png" alt="Page 4">
                                 </a>
-                                <div class="project-text">Urban Pulse</div>
+                                <div class="project-text">Fly in Optical Road</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -946,7 +1056,7 @@
                                 <a href="newpage5">
                                     <img src="home png/page/5.png" alt="Page 5">
                                 </a>
-                                <div class="project-text">Digital Flow</div>
+                                <div class="project-text">Market Weathering</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -955,7 +1065,7 @@
                                 <a href="newpage6">
                                     <img src="home png/page/6.png" alt="Page 6">
                                 </a>
-                                <div class="project-text">Light Echo</div>
+                                <div class="project-text">Relational Shadows</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -964,7 +1074,7 @@
                                 <a href="newpage7">
                                     <img src="home png/page/7.png" alt="Page 7">
                                 </a>
-                                <div class="project-text">Wave Motion</div>
+                                <div class="project-text">contact</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -973,7 +1083,7 @@
                                 <a href="newpage8">
                                     <img src="home png/page/8.png" alt="Page 8">
                                 </a>
-                                <div class="project-text">Pixel Dance</div>
+                                <div class="project-text">about me</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
@@ -982,7 +1092,7 @@
                                 <a href="newpage9">
                                     <img src="home png/page/9.png" alt="Page 9">
                                 </a>
-                                <div class="project-text">Data Stream</div>
+                                <div class="project-text">recent research</div>
                             </div>
                         </div>
                     </div>
@@ -999,6 +1109,119 @@
     <script src="./js/dynamic-frame.js"></script>
     <script src="./js/theme-controller.js"></script>
     <script>
+        // 文字亂碼效果類
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 25);
+                    const end = start + Math.floor(Math.random() * 25);
+                    this.queue.push({ from, to, start, end });
+                }
+                
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            
+            update() {
+                let output = '';
+                let complete = 0;
+                
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.22) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += char;
+                    } else {
+                        output += from;
+                    }
+                }
+                
+                this.el.innerText = output;
+                
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // 設定懸停文字
+        const hoverTexts = {
+            'newpage1': '111111111111111111111111111111111111111111111111111111111111111111111111111111111',
+            'newpage2': '222222222222222222222222222222222222222222222222222222222222222222222222222222222',
+            'newpage3': '333333333333333333333333333333333333333333333333333333333333333333333333333333333',
+            'newpage4': '444444444444444444444444444444444444444444444444444444444444444444444444444444444',
+            'newpage5': '555555555555555555555555555555555555555555555555555555555555555555555555555555555',
+            'newpage6': '666666666666666666666666666666666666666666666666666666666666666666666666666666666',
+            'newpage7': '777777777777777777777777777777777777777777777777777777777777777777777777777777777',
+            'newpage8': '888888888888888888888888888888888888888888888888888888888888888888888888888888888',
+            'newpage9': '999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+        };
+        
+        // 原始文字
+        let originalText = '';
+        let textScramble;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollingText = document.getElementById('scrolling-text');
+            
+            if (scrollingText) {
+                originalText = scrollingText.textContent.trim();
+                textScramble = new TextScramble(scrollingText);
+                
+                // 只在桌面版應用
+                if (window.innerWidth >= 768) {
+                    // 為每個框架添加懸停事件
+                    const frames = document.querySelectorAll('.frame');
+                    frames.forEach((frame, index) => {
+                        // 添加frame-id數據屬性，從1開始
+                        const frameId = index + 1;
+                        
+                        frame.addEventListener('mouseenter', () => {
+                            // 根據框架ID更新文字
+                            const pageId = `newpage${frameId}`;
+                            if (hoverTexts[pageId]) {
+                                textScramble.setText(hoverTexts[pageId]);
+                            }
+                        });
+                        
+                        frame.addEventListener('mouseleave', () => {
+                            // 恢復原始文字
+                            textScramble.setText(originalText);
+                        });
+                    });
+                }
+            }
+        });
+
         // 添加滾動監聽
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.container');
