@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yitiann Portfolio - Project 7</title>
+    <title>Yitiann Portfolio - Contact</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/theme-styles.css">
-    <script src="../js/theme-controller.js"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100vh;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
         body {
@@ -25,13 +25,71 @@
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 左側藍色線條 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        @media (max-width: 767px) {
+            body::before {
+                display: none;
+            }
+        }
+
+        /* 右側藍色線條 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        /* 左上角藍色圓圈 */
+        .blue-circle {
+            content: '';
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 400px;
+            height: 400px;
+            background-color: #0D05F2;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 767px) {
+            .blue-circle {
+                width: 300px;
+                height: 300px;
+                top: 20px;
+                left: 20px;
+                filter: blur(40px);
+            }
         }
 
         .header {
-            padding: 2rem;
+            padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .back-button {
@@ -62,7 +120,7 @@
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: white; /* Night模式下懸停時為白色 */
+            border-color: black;
         }
         
         .back-button:active,
@@ -85,7 +143,7 @@
             border-radius: 50%;
             transform: translate(-50%, -50%) scale(0);
             background-color: transparent;
-            border: 2px solid white; /* Night模式下為白色 */
+            border: 2px solid rgb(0, 0, 0); /* Night模式下為白色 */
             opacity: 0;
             pointer-events: none;
             z-index: 2;
@@ -126,49 +184,91 @@
             }
         }
 
-        .page-title {
-            font-family: "Tangerine", cursive;
-            font-size: 3rem;
+        .hamburger-menu {
+            position: fixed;
+            top: 40px;
+            left: 150px;
+            display: flex;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            color: #0D05F2;
+            font-size: 7rem;
             margin: 0;
+            animation: rotate 15s linear infinite;
+            pointer-events: auto;
+            line-height: 1;
+            padding: 0;
+            background: none;
+            border: none;
+            outline: none;
+            transform: none;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 767px) {
+            .header {
+                padding: 2.5rem 1rem 1rem 1rem;
+            }
+
+            .hamburger-menu {
+                font-size: 5rem;
+                left: 85px;
+                top: 30px;
+            }
+
+            .back-button {
+                width: 65px;
+                height: 65px;
+                font-size: 0.8rem;
+            }
+
             .page-title {
-                position: fixed;
-                top: 34px;
-                right: 20px;
-                font-size: 2rem;
+                top: 65px;
+                right: 5px;
+                font-size: 1rem;
                 line-height: 40px;
                 z-index: 9999;
                 height: 40px;
                 display: flex;
                 align-items: center;
+                margin: 0;
             }
+            
+            .project-title {
+                font-size: 8rem;
+            }
+        }
 
-            .header {
-                padding: 1rem;
-            }
-
-            .back-button {
-                width: 60px;
-                height: 60px;
-                margin-top: 10px;
-            }
+        .page-title {
+            font-family: "Tangerine", cursive;
+            font-size: 2.3rem;
+            /* margin: -10px 0 0 -3000px; */
         }
 
         .content {
             flex: 1;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem;
+            overflow-y: auto;
         }
 
         .project-container {
             max-width: 1200px;
             width: 100%;
-            margin-bottom: 0;
-            position: relative;
         }
 
         .project-header {
@@ -177,58 +277,17 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 10rem;
+            font-size: 8.2rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
-            margin: 0 0 3rem 0;
+            margin: 0 0 1.5rem 0;
         }
 
         .project-description {
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
-            margin: 0;
-        }
-
-        .buttons-container {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            justify-content: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .contact-button {
-            width: calc(50% - 0.5rem);
-            max-width: 595px; /* (1200px - 1rem gap) / 2 */
-            padding: 1rem;
-            font-size: 1rem;
-            background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Kantumruy Pro', sans-serif;
-            border-radius: 8px;
-        }
-
-        .contact-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        body.light-mode .contact-button {
-            border: 2px solid rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        body.light-mode .contact-button:hover {
-            background: rgba(0, 0, 0, 0.1);
-            border-color: rgba(0, 0, 0, 0.5);
         }
 
         .project-media {
@@ -245,236 +304,133 @@
             position: relative;
         }
 
-        .media-item img {
+        .media-item img,
+        .media-item video,
+        .media-item iframe {
             width: 100%;
             max-height: 80vh;
             object-fit: contain;
             display: block;
         }
 
-        /* Drawing Board Styles */
-        .drawing-section {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            background: #f0f0f0;
-            border: 1px solid #999;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+        .youtube-container {
             position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            cursor: pointer;
         }
 
-        .side-area {
+        .youtube-thumbnail {
             position: absolute;
             top: 0;
-            bottom: 0;
-            width: calc((100vw - 800px) / 2);
-            max-width: 200px;
-            min-width: 8px;
-            background: #0D8C75;
-            cursor: pointer;
-            overflow: visible;
-        }
-
-        .side-area-left {
-            right: 100%;
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .side-area-right {
-            left: 100%;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-
-        .stamp {
-            position: absolute;
-            pointer-events: none;
-            color: rgba(255, 255, 255, 1);
-            font-size: 36px;
-            transform: translate(-50%, -50%);
-            animation: stampAppear 0.3s ease-out forwards;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            white-space: nowrap;
-        }
-
-        .paint-menu-bar {
-            background: #20448C;
-            border-bottom: 1px solid #999;
-            display: flex;
-            height: 28px;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-            padding: 0;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-
-        .drawing-container {
-            position: relative;
-            background: white;
-            border: 1px solid #999;
-            margin: 0;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-
-        #drawingCanvas {
-            cursor: crosshair;
-            display: block;
-        }
-
-        .tools {
-            display: flex;
-            gap: 0.5rem;
-            padding: 4px 0.5rem;
-            background: #D2D5D9;
-            border-bottom: 1px solid #999;
-            margin: 0;
-            flex-wrap: wrap;
-            min-height: 28px;
-            align-items: center;
-            box-sizing: border-box;
-        }
-
-        .paint-menu-item {
-            padding: 0 8px;
-            color: #fff;
-            cursor: default;
+            left: 0;
+            width: 100%;
             height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background-color: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            font-size: 14px;
-            min-width: 40px;
             justify-content: center;
+            transition: background-color 0.3s;
         }
 
-        .paint-menu-item:hover {
-            background: #2e5aa3;
+        .play-button:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent #fff;
         }
 
-        .tool-group {
+        .youtube-container:hover .play-button {
+            background-color: red;
+        }
+
+        .project-details {
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 影片控制開關樣式 */
+        .video-control {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0 0.25rem;
-            border: 1px solid transparent;
-            height: 28px;
+            margin-top: 1.5rem;
         }
-
-        .tool-label {
-            color: #000;
-            font-size: 14px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            white-space: nowrap;
+        
+        .control-label {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
-
-        #colorPicker {
-            width: 16px;
-            height: 16px;
-            padding: 0;
-            border: 1px solid #999;
-            border-radius: 0;
-            cursor: pointer;
-            background: white;
+        
+        .toggle { 
+            width: 80px; 
+            height: 40px; 
+            border-radius: 20px; 
+            background: #333; 
+            box-shadow: inset 2px 2px 5px #222, inset -2px -2px 5px #444; 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
         }
-
-        .action-button {
-            height: 20px;
-            line-height: 18px;
-            padding: 0 0.75rem;
-            margin: 0;
-            font-size: 14px;
+        
+        .circle { 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            background: white; 
+            box-shadow: 2px 2px 5px #222, -2px -2px 5px #444; 
+            margin-left: 5px; 
+            transition: 0.3s; 
         }
-
-        #brushSize {
-            width: 100px;
-            height: 3px;
-            margin: 0;
-            padding: 0;
-            vertical-align: middle;
+        
+        .toggle.active { 
+            background: #666; 
         }
-
-        #brushSize::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #666;
-            border-radius: 50%;
-            cursor: pointer;
+        
+        .toggle.active .circle { 
+            margin-left: 45px; 
         }
-
-        #brushSize::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            background: #666;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-        }
-
-        .action-button:hover {
-            background: #e5e5e5;
-        }
-
-        .action-button:active {
-            background: #d0d0d0;
-            border-color: #666;
-        }
-
-        /* 移除深色模式下的特殊樣式，保持繪圖板始終為淺色主題 */
-        body.light-mode .tools,
-        body.dark-mode .tools {
-            background: #D2D5D9;
-        }
-
-        body.light-mode .tool-label,
-        body.dark-mode .tool-label {
-            color: #000;
-        }
-
-        body.light-mode .action-button,
-        body.dark-mode .action-button {
-            background: #f0f0f0;
-            color: #000;
-            border: 1px solid #999;
-        }
-
-        body.light-mode .action-button:hover,
-        body.dark-mode .action-button:hover {
-            background: #e5e5e5;
-        }
-
-        body.light-mode {
-            background-color: #f0f0f0;
-            color: rgba(0, 0, 0, 0.8);
-        }
-
-        body.light-mode .tools {
-            background: #D2D5D9;
-        }
-
-        body.light-mode .tool-label {
-            color: black;
-        }
-
-        body.light-mode .action-button {
-            background: rgba(0, 0, 0, 0.2);
-            color: black;
-        }
-
-        body.light-mode .action-button:hover {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
+        
         /* 亮色模式下的按鈕樣式 */
         body.light-mode .back-button {
-            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 0, 0, 0.3);
             color: rgba(0, 0, 0, 0.8);
             background: none;
         }
@@ -488,7 +444,7 @@
         body.light-mode .back-button:hover::before,
         body.light-mode .back-button:hover::after,
         body.light-mode .back-button:hover .ripple-circle {
-            border-color: black;
+            border-color: white;
         }
         
         body.light-mode .back-button:active,
@@ -498,570 +454,414 @@
             border-color: #333;
         }
         
+        /* 亮色模式下的漣漪樣式 */
         body.light-mode .back-button::before,
         body.light-mode .back-button::after,
         body.light-mode .back-button .ripple-circle {
-            border-color: black;
+            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
         }
         
+        /* 懸停時的漣漪顏色 - Day模式 */
+        body.light-mode .back-button:hover::before,
+        body.light-mode .back-button:hover::after,
+        body.light-mode .back-button:hover .ripple-circle {
+            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
+        }
+        
+        /* 懸停時的漣漪顏色 - Night模式 */
+        .back-button:hover::before,
+        .back-button:hover::after,
+        .back-button:hover .ripple-circle {
+            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
+        }
+        
+        /* 激活時的漣漪顏色 - Day模式 */
         body.light-mode .back-button.active::before,
         body.light-mode .back-button.active::after,
         body.light-mode .back-button.active .ripple-circle {
-            border-color: black;
+            border-color: #333;
         }
 
-        /* 顏色選擇面板 */
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, 20px);
-            grid-auto-rows: 20px;
-            grid-gap: 3px;
-            background: #D2D5D9;
-            border-top: 1px solid #999;
-            padding: 6px 4px 8px 4px; /* 增加底部內邊距 */
-            justify-content: center;
-            max-height: 51px; /* 調整高度：(20px * 2) + 3px + 6px + 8px = 51px */
-            overflow: hidden;
-            box-sizing: border-box;
-            grid-template-rows: repeat(2, 20px);
-        }
-
-        @media (min-width: 800px) {
-            .color-palette {
-                max-height: 28px;
-                grid-template-rows: 20px;
-                padding: 4px; /* 桌面版保持原有內邊距 */
-            }
-        }
-
-        .color-option {
-            width: 20px;
-            height: 20px;
-            border: none;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            border-radius: 3px;
-            display: block;
-        }
-
-        .color-option:hover {
-            outline: 2px solid #000;
-            outline-offset: -2px;
-            z-index: 1;
-            border-radius: 4px;
-        }
-
-        .color-option.selected {
-            outline: 2px solid #fff;
-            outline-offset: -2px;
-            box-shadow: 0 0 0 2px #000;
-            z-index: 2;
-            border-radius: 4px;
-        }
-
-        .action-buttons-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .eraser-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
-            padding: 2px;
-            border: 1px solid #999;
-            background: #f0f0f0;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        .eraser-button.active {
-            background: #ccc;
-            border-color: #666;
-        }
-
-        .eraser-button:hover {
-            background: #e5e5e5;
-        }
-
-        @keyframes stampAppear {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
+        /* 選單覆蓋層 */
+        .menu-overlay {
             position: fixed;
             top: 0;
-            left: 0;
+            right: -100%;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            height: 100vh;
+            background-color: white;
+            transition: right 0.3s ease-in-out;
             z-index: 1000;
-            justify-content: center;
-            align-items: center;
         }
 
-        .modal.show {
-            display: flex;
+        @media (min-width: 768px) {
+            .menu-overlay {
+                width: 400px;
+                right: -400px;
+            }
+
+            .menu-overlay.show {
+                right: 0;
+            }
         }
 
-        .modal-content {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            border-radius: 8px;
-            position: relative;
-            max-width: 66.67%;
-            max-height: 66.67%;
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .menu-overlay.show {
             right: 0;
-            bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.1;
-            border-radius: 8px;
-            pointer-events: none;
-            mix-blend-mode: overlay;
         }
 
-        .modal-close {
-            position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
+        .menu-items {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             justify-content: center;
-            font-size: 18px;
-            line-height: 1;
-            padding: 0;
+            height: 100%;
+            padding: 20px;
         }
 
-        .modal-close:hover {
-            background: #555;
+        .menu-items a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 4px 0;
+            padding: 4px 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Roboto Condensed", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
-        .modal img {
-            max-width: 100%;
-            max-height: 53.33vh;
-            display: block;
-            margin: 0 auto;
+        .menu-items a.project-item {
+            padding-left: 40px;
             position: relative;
-            z-index: 1;
         }
 
-        .line-id-text {
-            margin-top: 1rem;
-            color: rgba(0, 0, 0, 0.8);
-            font-size: 1rem;
-            font-family: 'Kantumruy Pro', sans-serif;
-            position: relative;
-            z-index: 1;
+        .menu-items a.project-item::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
         }
 
-        .copy-message {
-            color: #22c35e;
+        /* 為每個項目設置不同的顏色 */
+        .menu-items a.project-item:nth-child(2)::before {
+            background-color: #FF6B6B;
+        }
+
+        .menu-items a.project-item:nth-child(3)::before {
+            background-color: #4ECDC4;
+        }
+
+        .menu-items a.project-item:nth-child(4)::before {
+            background-color: #45B7D1;
+        }
+
+        .menu-items a.project-item:nth-child(5)::before {
+            background-color: #96CEB4;
+        }
+
+        .menu-items a.project-item:nth-child(6)::before {
+            background-color: #FFBE0B;
+        }
+
+        .menu-items a.project-item:nth-child(7)::before {
+            background-color: #FF006E;
+        }
+
+        /* 特定項目的藍色文字 */
+        .menu-items a[href="../newpage1"],
+        .menu-items a[href="../newpage2"],
+        .menu-items a[href="../newpage3"],
+        .menu-items a[href="../newpage4"],
+        .menu-items a[href="../newpage5"],
+        .menu-items a[href="../newpage6"] {
+            color: #0D05F2;
+        }
+
+        /* 特定項目懸停效果 */
+        .menu-items a[href="../newpage1"]:hover,
+        .menu-items a[href="../newpage2"]:hover,
+        .menu-items a[href="../newpage3"]:hover,
+        .menu-items a[href="../newpage4"]:hover,
+        .menu-items a[href="../newpage5"]:hover,
+        .menu-items a[href="../newpage6"]:hover {
+            color: #0a03b0;
+        }
+
+        .menu-items a:not(.social-button)::after {
+            content: "➜";
+            font-size: 1.2rem;
+            margin-left: 10px;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .menu-items a:hover {
+            color: #666;
+        }
+
+        .menu-items .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .menu-items .social-button {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
             font-size: 0.9rem;
-            margin-top: 0.5rem;
-            font-family: 'Kantumruy Pro', sans-serif;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            position: relative;
-            z-index: 1;
+            font-family: "Roboto Condensed", sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Gmail 藍色背景 */
+        #gmailButton {
+            background-color: #0D05F2;
+            color: white;
+            border-color: #0D05F2;
         }
 
-        .copy-message.show {
-            opacity: 1;
+        #gmailButton:hover {
+            background-color: #0a03b0;
+            border-color: #0a03b0;
+        }
+
+        /* Line 粉色背景 */
+        #lineButton {
+            background-color: #FF4B8B;
+            color: white;
+            border-color: #FF4B8B;
+        }
+
+        #lineButton:hover {
+            background-color: #E43078;
+            border-color: #E43078;
+        }
+
+        .menu-items .social-button:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .menu-category {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+            padding: 4px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .menu-divider {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin: 0.5rem 0;
         }
     </style>
 </head>
 <body>
+    <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <h1 class="page-title">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">✻</div>
+        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+    </div>
+
+    <!-- 添加選單覆蓋層 -->
+    <div class="menu-overlay">
+        <div class="menu-items">
+            <span class="menu-category">PROJECT</span>
+            <a href="../newpage1" class="project-item">Calm the Code</a>
+            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
+            <a href="../newpage3" class="project-item">Verbal Flow</a>
+            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
+            <a href="../newpage5" class="project-item">Market Weathering</a>
+            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <div class="menu-divider"></div>
+            <a href="../newpage7">contact</a>
+            <a href="../newpage8">about me</a>
+            <a href="../newpage9">recent research</a>
+            <div class="social-buttons">
+                <a href="#" class="social-button" id="lineButton">Line</a>
+                <a href="#" class="social-button" id="gmailButton">Gmail</a>
+            </div>
+        </div>
     </div>
 
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">Contact </h2>
+                <h2 class="project-title">Contact</h2>
                 <p class="project-description">
-                    You can find my LINE and GMAIL here, or you can even just draw me a picture, just use the drawing board below and enjoy it! And I will also reply to you with a picture. Any contact is very welcome!
+                    Feel free to reach out to me for any collaboration opportunities, inquiries, or just to say hello. 
+                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                 </p>
             </div>
 
-            
-        </div>
-
-        <!-- Drawing Board Section -->
-        <div class="drawing-section">
-            <div class="side-area side-area-left"></div>
-            <div class="side-area side-area-right"></div>
-            <div class="paint-menu-bar">
-                <div class="paint-menu-item">File</div>
-                <div class="paint-menu-item">Edit</div>
-                <div class="paint-menu-item">View</div>
-                <div class="paint-menu-item">Image</div>
-                <div class="paint-menu-item">Options</div>
-                <div class="paint-menu-item">Help</div>
-            </div>
-            <div class="tools">
-                <div class="tool-group">
-                    <span class="tool-label">Color:</span>
-                    <input type="color" id="colorPicker" value="#000000">
+            <div class="project-media">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p>yshi57846@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Line</h3>
+                        <p>ID: 901227tina</p>
+                    </div>
+                    
                 </div>
-                <div class="tool-group">
-                    <button class="eraser-button" id="eraserButton" title="Eraser">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M14 5L11 2L4 9L7 12L14 5Z" fill="#666"/>
-                            <path d="M3 10L6 13H2L3 10Z" fill="#666"/>
-                        </svg>
-                    </button>
-                    <span class="tool-label">Brush Size:</span>
-                    <input type="range" id="brushSize" min="1" max="50" value="5">
-                </div>
-                <div class="action-buttons-group">
-                    <button class="action-button" id="clearButton">Clear</button>
-                    <button class="action-button" id="saveButton">Save</button>
-                    <button class="action-button" id="shareButton">Share with me</button>
-                </div>
-            </div>
-            
-            <div class="drawing-container">
-                <canvas id="drawingCanvas"></canvas>
-                <div class="color-palette">
-                    <button class="color-option" style="background: #000000" data-color="#000000"></button>
-                    <button class="color-option" style="background: #7F7F7F" data-color="#7F7F7F"></button>
-                    <button class="color-option" style="background: #880015" data-color="#880015"></button>
-                    <button class="color-option" style="background: #ED1C24" data-color="#ED1C24"></button>
-                    <button class="color-option" style="background: #FF7F27" data-color="#FF7F27"></button>
-                    <button class="color-option" style="background: #FFF200" data-color="#FFF200"></button>
-                    <button class="color-option" style="background: #22B14C" data-color="#22B14C"></button>
-                    <button class="color-option" style="background: #00A2E8" data-color="#00A2E8"></button>
-                    <button class="color-option" style="background: #3F48CC" data-color="#3F48CC"></button>
-                    <button class="color-option" style="background: #A349A4" data-color="#A349A4"></button>
-                    <button class="color-option" style="background: #FFFFFF" data-color="#FFFFFF"></button>
-                    <button class="color-option" style="background: #C3C3C3" data-color="#C3C3C3"></button>
-                    <button class="color-option" style="background: #B97A57" data-color="#B97A57"></button>
-                    <button class="color-option" style="background: #FFAEC9" data-color="#FFAEC9"></button>
-                    <button class="color-option" style="background: #FFC90E" data-color="#FFC90E"></button>
-                    <button class="color-option" style="background: #EFE4B0" data-color="#EFE4B0"></button>
-                    <button class="color-option" style="background: #B5E61D" data-color="#B5E61D"></button>
-                    <button class="color-option" style="background: #99D9EA" data-color="#99D9EA"></button>
-                    <button class="color-option" style="background: #7092BE" data-color="#7092BE"></button>
-                    <button class="color-option" style="background: #C8BFE7" data-color="#C8BFE7"></button>
-                    <button class="color-option" style="background: #FF1493" data-color="#FF1493"></button>
-                    <button class="color-option" style="background: #FF69B4" data-color="#FF69B4"></button>
-                    <button class="color-option" style="background: #FFB6C1" data-color="#FFB6C1"></button>
-                    <button class="color-option" style="background: #8B4513" data-color="#8B4513"></button>
-                    <button class="color-option" style="background: #D2691E" data-color="#D2691E"></button>
-                    <button class="color-option" style="background: #DEB887" data-color="#DEB887"></button>
-                    <button class="color-option" style="background: #FFD700" data-color="#FFD700"></button>
-                    <button class="color-option" style="background: #DAA520" data-color="#DAA520"></button>
-                    <button class="color-option" style="background: #F0E68C" data-color="#F0E68C"></button>
-                    <button class="color-option" style="background: #006400" data-color="#006400"></button>
-                    <button class="color-option" style="background: #32CD32" data-color="#32CD32"></button>
-                    <button class="color-option" style="background: #90EE90" data-color="#90EE90"></button>
-                    <button class="color-option" style="background: #000080" data-color="#000080"></button>
-                    <button class="color-option" style="background: #4169E1" data-color="#4169E1"></button>
-                    <button class="color-option" style="background: #87CEEB" data-color="#87CEEB"></button>
-                    <button class="color-option" style="background: #4B0082" data-color="#4B0082"></button>
-                    <button class="color-option" style="background: #8A2BE2" data-color="#8A2BE2"></button>
-                    <button class="color-option" style="background: #DDA0DD" data-color="#DDA0DD"></button>
-                    <button class="color-option" style="background: #2F4F4F" data-color="#2F4F4F"></button>
-                    <button class="color-option" style="background: #696969" data-color="#696969"></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Buttons -->
-        <div class="buttons-container">
-            <button class="contact-button" id="lineButton">LINE</button>
-            <button class="contact-button" id="gmailButton">GMAIL</button>
-        </div>
-
-        <!-- LINE QR Code Modal -->
-        <div class="modal" id="lineModal">
-            <div class="modal-content">
-                <button class="modal-close">&times;</button>
-                <img src="446560.jpg" alt="LINE QR Code">
-                <div class="line-id-text">LINE ID: 901227tina</div>
-                <div class="copy-message" id="copyMessage">LINE ID has been copied</div>
-            </div>
-        </div>
-
-        <!-- Gmail Modal -->
-        <div class="modal" id="gmailModal">
-            <div class="modal-content">
-                <button class="modal-close">&times;</button>
-                <div class="line-id-text">my gmail: yshi57846@gmail.com</div>
-                <div class="copy-message" id="gmailCopyMessage">Gmail has been copied</div>
             </div>
         </div>
     </div>
 
     <script>
+        // YouTube 延遲載入
         document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('drawingCanvas');
-            const ctx = canvas.getContext('2d');
-            const colorPicker = document.getElementById('colorPicker');
-            const brushSize = document.getElementById('brushSize');
-            const clearButton = document.getElementById('clearButton');
-            const saveButton = document.getElementById('saveButton');
-
-            // Set canvas size
-            function resizeCanvas() {
-                const container = document.querySelector('.drawing-container');
-                const maxWidth = Math.min(800, container.clientWidth);
-                
-                canvas.width = maxWidth;
-                canvas.height = maxWidth * 0.6;
-                
-                // Set initial background
-                ctx.fillStyle = 'white';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            // Drawing state
-            let isDrawing = false;
-            let lastX = 0;
-            let lastY = 0;
-
-            // Drawing functions
-            function startDrawing(e) {
-                isDrawing = true;
-                [lastX, lastY] = [e.offsetX, e.offsetY];
-            }
-
-            function draw(e) {
-                if (!isDrawing) return;
-                
-                ctx.beginPath();
-                ctx.moveTo(lastX, lastY);
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.strokeStyle = colorPicker.value;
-                ctx.lineWidth = brushSize.value;
-                ctx.lineCap = 'round';
-                if (isEraser) {
-                    ctx.globalCompositeOperation = 'destination-out';
-                } else {
-                    ctx.globalCompositeOperation = 'source-over';
-                }
-                ctx.stroke();
-                
-                [lastX, lastY] = [e.offsetX, e.offsetY];
-            }
-
-            function stopDrawing() {
-                isDrawing = false;
-            }
-
-            // Event listeners for drawing
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseout', stopDrawing);
-
-            // Touch support
-            canvas.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                const mouseEvent = new MouseEvent('mousedown', {
-                    clientX: touch.clientX - rect.left,
-                    clientY: touch.clientY - rect.top
-                });
-                canvas.dispatchEvent(mouseEvent);
-            });
-
-            canvas.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                const mouseEvent = new MouseEvent('mousemove', {
-                    clientX: touch.clientX - rect.left,
-                    clientY: touch.clientY - rect.top
-                });
-                canvas.dispatchEvent(mouseEvent);
-            });
-
-            canvas.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                const mouseEvent = new MouseEvent('mouseup', {});
-                canvas.dispatchEvent(mouseEvent);
-            });
-
-            // Clear canvas
-            clearButton.addEventListener('click', function() {
-                ctx.fillStyle = 'white';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            });
-
-            // Save drawing
-            saveButton.addEventListener('click', function() {
-                const link = document.createElement('a');
-                link.download = 'drawing.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-
-            // Color palette functionality
-            const colorPalette = document.querySelector('.color-palette');
-            const colorOptions = document.querySelectorAll('.color-option');
-
-            colorOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    colorOptions.forEach(opt => opt.classList.remove('selected'));
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    // Update color picker and current color
-                    const color = this.dataset.color;
-                    colorPicker.value = color;
-                });
-            });
-
-            // Set initial selected color
-            colorOptions[0].classList.add('selected');
-
-            // 在 script 部分添加橡皮擦功能
-            let isEraser = false;
-            const eraserButton = document.getElementById('eraserButton');
-            let lastColor = colorPicker.value;
-
-            eraserButton.addEventListener('click', function() {
-                isEraser = !isEraser;
-                this.classList.toggle('active');
-                if (isEraser) {
-                    lastColor = colorPicker.value;
-                    colorPicker.value = '#FFFFFF';
-                } else {
-                    colorPicker.value = lastColor;
-                }
-            });
-
-            // 修改印章功能
-            const stamps = ['❤️', '⭕', '👍'];
-            const sideAreas = document.querySelectorAll('.side-area');
+            const container = document.getElementById('youtube-player-container');
+            let youtubePlayer = null;
+            let videoPlaying = false;
             
-            function createStamp(e, element) {
-                const rect = element.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+            if (container) {
+                const videoId = container.getAttribute('data-video-id');
                 
-                const stamp = document.createElement('div');
-                stamp.className = 'stamp';
-                stamp.textContent = stamps[Math.floor(Math.random() * stamps.length)];
-                stamp.style.left = x + 'px';
-                stamp.style.top = y + 'px';
-                
-                // 確保印章被添加到正確的容器中
-                element.appendChild(stamp);
-                
-                // 動畫結束後移除印章
-                setTimeout(() => {
-                    if (stamp && stamp.parentNode) {
-                        stamp.remove();
+                container.addEventListener('click', function() {
+                    // 載入 YouTube API
+                    if (!window.YT) {
+                        // 載入 YouTube API
+                        const tag = document.createElement('script');
+                        tag.src = "https://www.youtube.com/iframe_api";
+                        const firstScriptTag = document.getElementsByTagName('script')[0];
+                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                        
+                        window.onYouTubeIframeAPIReady = function() {
+                            createYouTubePlayer();
+                        };
+                    } else {
+                        createYouTubePlayer();
                     }
-                }, 10000);
+                    
+                    function createYouTubePlayer() {
+                        // 清空容器
+                        container.innerHTML = '';
+                        
+                        // 創建新的 div 用於 YouTube 播放器
+                        const playerDiv = document.createElement('div');
+                        playerDiv.id = 'youtube-player';
+                        container.appendChild(playerDiv);
+                        
+                        // 創建 YouTube 播放器
+                        youtubePlayer = new YT.Player('youtube-player', {
+                            height: '100%',
+                            width: '100%',
+                            videoId: videoId,
+                            playerVars: {
+                                'rel': 0,
+                                'controls': 1,
+                                'autoplay': 1  // 默認自動播放
+                            },
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
+                    
+                    function onPlayerReady(event) {
+                        // 點擊後自動播放
+                        event.target.playVideo();
+                        videoPlaying = true;
+                    }
+                    
+                    function onPlayerStateChange(event) {
+                        // 更新影片狀態
+                        if (event.data == YT.PlayerState.PLAYING) {
+                            videoPlaying = true;
+                        } else if (event.data == YT.PlayerState.PAUSED || 
+                                  event.data == YT.PlayerState.ENDED || 
+                                  event.data == YT.PlayerState.BUFFERING) {
+                            videoPlaying = false;
+                        }
+                    }
+                });
+            }
+        });
+
+        // 添加選單控制
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            
+            hamburgerMenu.addEventListener('click', () => {
+                menuOverlay.classList.toggle('show');
+            });
+
+            // 點擊選單項目時關閉選單
+            const menuItems = document.querySelectorAll('.menu-items a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    menuOverlay.classList.remove('show');
+                });
+            });
+
+            // 點擊其他地方關閉選單
+            document.addEventListener('click', (e) => {
+                if (!menuOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                    menuOverlay.classList.remove('show');
+                }
+            });
+            
+            // LINE 按鈕功能
+            const lineButton = document.getElementById('lineButton');
+            if (lineButton) {
+                lineButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // 複製 LINE ID 到剪貼簿
+                    navigator.clipboard.writeText('901227tina').then(() => {
+                        alert('Line id has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
             }
 
-            // 為兩側區域添加點擊事件
-            sideAreas.forEach(area => {
-                area.addEventListener('click', function(e) {
-                    e.stopPropagation(); // 防止事件冒泡
-                    createStamp(e, this);
-                });
-            });
-
-            // LINE Modal functionality
-            const lineButton = document.getElementById('lineButton');
-            const lineModal = document.getElementById('lineModal');
-            const modalClose = document.querySelector('.modal-close');
-
-            lineButton.addEventListener('click', function() {
-                lineModal.classList.add('show');
-                // Copy LINE ID to clipboard
-                navigator.clipboard.writeText('901227tina').then(() => {
-                    const copyMessage = document.getElementById('copyMessage');
-                    copyMessage.classList.add('show');
-                    setTimeout(() => {
-                        copyMessage.classList.remove('show');
-                    }, 5000);
-                });
-            });
-
-            // Gmail Modal functionality
+            // Gmail 按鈕功能
             const gmailButton = document.getElementById('gmailButton');
-            const gmailModal = document.getElementById('gmailModal');
-
-            gmailButton.addEventListener('click', function() {
-                gmailModal.classList.add('show');
-                // Copy Gmail to clipboard
-                navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
-                    const copyMessage = document.getElementById('gmailCopyMessage');
-                    copyMessage.classList.add('show');
-                    setTimeout(() => {
-                        copyMessage.classList.remove('show');
-                    }, 5000);
+            if (gmailButton) {
+                gmailButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // 複製 Gmail 地址到剪貼簿
+                    navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                        alert('Gmail has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
                 });
-            });
-
-            // Close modals
-            document.querySelectorAll('.modal-close').forEach(closeButton => {
-                closeButton.addEventListener('click', function() {
-                    this.closest('.modal').classList.remove('show');
-                    // Reset copy message state when modal is closed
-                    const copyMessage = this.closest('.modal').querySelector('.copy-message');
-                    copyMessage.classList.remove('show');
-                });
-            });
-
-            // Close modals when clicking outside
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        this.classList.remove('show');
-                        // Reset copy message state when modal is closed
-                        const copyMessage = this.querySelector('.copy-message');
-                        copyMessage.classList.remove('show');
-                    }
-                });
-            });
+            }
         });
     </script>
+    
+    <!-- 引入主題控制器 -->
+    <script src="../js/theme-controller.js"></script>
 </body>
 </html> 
