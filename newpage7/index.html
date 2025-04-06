@@ -223,9 +223,9 @@
             }
 
             .hamburger-menu {
-                font-size: 5rem;
-                left: 85px;
-                top: 30px;
+                font-size: 4rem;
+                left: 80px;
+                top: 39px;
             }
 
             .back-button {
@@ -1401,8 +1401,27 @@
             const shareButton = document.getElementById('shareButton');
             if (shareButton) {
                 shareButton.addEventListener('click', function() {
-                    alert('Your drawing will be shared with Yitiann. Thank you!');
-                    saveButton.click(); // 同時觸發保存功能
+                    // 先保存圖片
+                    const imageData = canvas.toDataURL('image/png');
+                    
+                    // 創建下載連結
+                    const link = document.createElement('a');
+                    link.download = 'drawing_for_yitiann.png';
+                    link.href = imageData;
+                    
+                    // 觸發下載
+                    link.click();
+                    
+                    // 等待短暫時間確保下載開始
+                    setTimeout(() => {
+                        // 打開預設郵件客戶端
+                        const subject = encodeURIComponent('My Drawing for Yitiann');
+                        const body = encodeURIComponent('Here is my drawing for you. I have attached it to this email.');
+                        window.location.href = `mailto:yshi57846@gmail.com?subject=${subject}&body=${body}`;
+                        
+                        // 顯示提示
+                        alert('Please attach the downloaded drawing to this email. Thank you!');
+                    }, 500);
                 });
             }
         });
