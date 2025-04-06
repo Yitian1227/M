@@ -277,7 +277,7 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 8.2rem;
+            font-size: 10rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
@@ -312,174 +312,372 @@
             object-fit: contain;
             display: block;
         }
-
-        .youtube-container {
-            position: relative;
+        
+        /* 繪圖板樣式 */
+        .page-wrapper {
+            display: flex;
+            flex-direction: row;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 比例 */
-            height: 0;
-            overflow: hidden;
-            background-color: #000;
-            cursor: pointer;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .left-content {
+            flex: 1;
+            padding-right: 2rem;
+            max-width: calc(100% - 400px - 1rem);
+        }
+        
+        .right-content {
+            width: 400px;
+            margin-left: 1rem;
+        }
+        
+        @media (max-width: 991px) {
+            .page-wrapper {
+                flex-direction: column;
+            }
+            
+            .left-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+                max-width: 100%;
+            }
+            
+            .right-content {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+        
+        /* Drawing Board Styles */
+        .drawing-section {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f0f0f0;
+            border: 1px solid #999;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            position: relative;
         }
 
-        .youtube-thumbnail {
+        .side-area {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: opacity 0.3s;
+            bottom: 0;
+            width: 50px;
+            background: #0d05f2;
+            cursor: pointer;
+            overflow: visible;
+        }
+        
+        @media (max-width: 767px) {
+            .side-area {
+                background: rgba(13, 5, 242, 0);
+            }
         }
 
-        .play-button {
+        .side-area-left {
+            right: 100%;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .side-area-right {
+            left: 100%;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .stamp {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            pointer-events: none;
+            color: rgba(255, 255, 255, 1);
+            font-size: 36px;
             transform: translate(-50%, -50%);
-            width: 68px;
-            height: 48px;
-            background-color: rgba(0,0,0,0.7);
-            border-radius: 10px;
+            animation: stampAppear 0.3s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        .paint-menu-bar {
+            background: #20448C;
+            border-bottom: 1px solid #999;
+            display: flex;
+            height: 28px;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            padding: 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .drawing-container {
+            position: relative;
+            background: white;
+            border: 1px solid #999;
+            margin: 0;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        #drawingCanvas {
+            cursor: crosshair;
+            display: block;
+            touch-action: none;
+        }
+
+        .tools {
+            display: flex;
+            gap: 0.5rem;
+            padding: 4px 0.5rem;
+            background: #D2D5D9;
+            border-bottom: 1px solid #999;
+            margin: 0;
+            flex-wrap: wrap;
+            min-height: 28px;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .paint-menu-item {
+            padding: 0 8px;
+            color: #fff;
+            cursor: default;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            min-width: 40px;
+            justify-content: center;
+        }
+
+        .paint-menu-item:hover {
+            background: #2e5aa3;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 0.25rem;
+            border: 1px solid transparent;
+            height: 28px;
+        }
+
+        .tool-label {
+            color: #000;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            white-space: nowrap;
+        }
+
+        #colorPicker {
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            border: 1px solid #999;
+            border-radius: 0;
             cursor: pointer;
+            background: white;
+        }
+
+        .action-button {
+            height: 20px;
+            line-height: 18px;
+            padding: 0 0.75rem;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        #brushSize {
+            width: 100px;
+            height: 3px;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        #brushSize::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #666;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #brushSize::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: #666;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .action-button:hover {
+            background: #e5e5e5;
+        }
+
+        .action-button:active {
+            background: #d0d0d0;
+            border-color: #666;
+        }
+
+        /* Share button 發光效果 */
+        #shareButton {
+            background-color: #0d05f2;
+            color: white;
+            border-color: #0d05f2;
+            position: relative;
+            box-shadow: 0 0 10px 3px rgba(13, 5, 242, 0.6);
+            animation: pulse-glow 2s infinite;
+            font-weight: bold;
+        }
+
+        #shareButton:hover {
+            background-color: #0a03b0;
+            box-shadow: 0 0 15px 5px rgba(13, 5, 242, 0.8);
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 10px 3px rgba(13, 5, 242, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 15px 5px rgba(13, 5, 242, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 10px 3px rgba(13, 5, 242, 0.6);
+            }
+        }
+
+        /* 移除深色模式下的特殊樣式，保持繪圖板始終為淺色主題 */
+        body.light-mode .tools,
+        body.dark-mode .tools {
+            background: #D2D5D9;
+        }
+
+        body.light-mode .tool-label,
+        body.dark-mode .tool-label {
+            color: #000;
+        }
+
+        body.light-mode .action-button,
+        body.dark-mode .action-button {
+            background: #f0f0f0;
+            color: #000;
+            border: 1px solid #999;
+        }
+
+        body.light-mode .action-button:hover,
+        body.dark-mode .action-button:hover {
+            background: #e5e5e5;
+        }
+
+        /* 顏色選擇面板 */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 20px);
+            grid-auto-rows: 20px;
+            grid-gap: 3px;
+            background: #D2D5D9;
+            border-top: 1px solid #999;
+            padding: 6px 4px 8px 4px; /* 增加底部內邊距 */
+            justify-content: center;
+            max-height: 51px; /* 調整高度：(20px * 2) + 3px + 6px + 8px = 51px */
+            overflow: hidden;
+            box-sizing: border-box;
+            grid-template-rows: repeat(2, 20px);
+        }
+
+        @media (min-width: 800px) {
+            .color-palette {
+                max-height: 28px;
+                grid-template-rows: 20px;
+                padding: 4px; /* 桌面版保持原有內邊距 */
+            }
+        }
+
+        .color-option {
+            width: 20px;
+            height: 20px;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            border-radius: 3px;
+            display: block;
+        }
+
+        .color-option:hover {
+            outline: 2px solid #000;
+            outline-offset: -2px;
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .color-option.selected {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+            box-shadow: 0 0 0 2px #000;
+            z-index: 2;
+            border-radius: 4px;
+        }
+
+        .action-buttons-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .eraser-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s;
+            width: 20px;
+            height: 20px;
+            padding: 2px;
+            border: 1px solid #999;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 3px;
         }
 
-        .play-button:before {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 10px 0 10px 20px;
-            border-color: transparent transparent transparent #fff;
+        .eraser-button.active {
+            background: #ccc;
+            border-color: #666;
         }
 
-        .youtube-container:hover .play-button {
-            background-color: red;
+        .eraser-button:hover {
+            background: #e5e5e5;
         }
 
-        .project-details {
-            margin: 2rem 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+        @keyframes stampAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
-
-        .detail-section {
-            margin-bottom: 2rem;
-        }
-
-        .detail-title {
+        
+        .drawing-board-title {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .detail-content {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* 影片控制開關樣式 */
-        .video-control {
-            display: flex;
-            align-items: center;
-            margin-top: 1.5rem;
-        }
-        
-        .control-label {
-            margin-right: 10px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .toggle { 
-            width: 80px; 
-            height: 40px; 
-            border-radius: 20px; 
-            background: #333; 
-            box-shadow: inset 2px 2px 5px #222, inset -2px -2px 5px #444; 
-            display: flex; 
-            align-items: center; 
-            cursor: pointer; 
-            transition: 0.3s; 
-        }
-        
-        .circle { 
-            width: 30px; 
-            height: 30px; 
-            border-radius: 50%; 
-            background: white; 
-            box-shadow: 2px 2px 5px #222, -2px -2px 5px #444; 
-            margin-left: 5px; 
-            transition: 0.3s; 
-        }
-        
-        .toggle.active { 
-            background: #666; 
-        }
-        
-        .toggle.active .circle { 
-            margin-left: 45px; 
-        }
-        
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
-        .back-button:hover::before,
-        .back-button:hover::after,
-        .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            font-weight: normal;
+            text-align: center;
         }
 
         /* 選單覆蓋層 */
@@ -675,6 +873,45 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 聯絡按鈕樣式 */
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-button {
+            padding: 10px 30px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+        
+        #contactLineButton {
+            background-color: #FF4B8B;
+        }
+        
+        #contactLineButton:hover {
+            background-color: #E43078;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 75, 139, 0.4);
+        }
+        
+        #contactGmailButton {
+            background-color: #0D05F2;
+        }
+        
+        #contactGmailButton:hover {
+            background-color: #0a03b0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 5, 242, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -710,27 +947,106 @@
     </div>
 
     <div class="content">
-        <div class="project-container">
-            <div class="project-header">
-                <h2 class="project-title">Contact</h2>
-                <p class="project-description">
-                    Feel free to reach out to me for any collaboration opportunities, inquiries, or just to say hello. 
-                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-                </p>
-            </div>
-
-            <div class="project-media">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h3>Email</h3>
-                        <p>yshi57846@gmail.com</p>
+        <div class="page-wrapper">
+            <div class="left-content">
+                <div class="project-container">
+                    <div class="project-header">
+                        <h2 class="project-title">Contact</h2>
+                        <p class="project-description">
+                            You can find my LINE and GMAIL here, or you can even just draw me a picture!<br>
+                            Just use the drawing board on the right and enjoy it!<br>
+                            I will also reply to you with a picture. Any contact is very welcome!
+                        </p>
                     </div>
-                    <div class="contact-item">
-                        <h3>Line</h3>
-                        <p>ID: 901227tina</p>
+                </div>
+
+                <!-- Contact Buttons -->
+                <div class="buttons-container">
+                    <button class="contact-button" id="contactLineButton">LINE</button>
+                    <button class="contact-button" id="contactGmailButton">GMAIL</button>
+                </div>
+            </div>
+            
+            <div class="right-content">
+                
+                <div class="drawing-section">
+                    <div class="side-area side-area-left"></div>
+                    <div class="side-area side-area-right"></div>
+                    <div class="paint-menu-bar">
+                        <div class="paint-menu-item">File</div>
+                        <div class="paint-menu-item">Edit</div>
+                        <div class="paint-menu-item">View</div>
+                        <div class="paint-menu-item">Image</div>
+                        <div class="paint-menu-item">Options</div>
+                        <div class="paint-menu-item">Help</div>
+                    </div>
+                    <div class="tools">
+                        <div class="tool-group">
+                            <span class="tool-label">Color:</span>
+                            <input type="color" id="colorPicker" value="#000000">
+                        </div>
+                        <div class="tool-group">
+                            <button class="eraser-button" id="eraserButton" title="Eraser">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M14 5L11 2L4 9L7 12L14 5Z" fill="#666"/>
+                                    <path d="M3 10L6 13H2L3 10Z" fill="#666"/>
+                                </svg>
+                            </button>
+                            <span class="tool-label">Brush Size:</span>
+                            <input type="range" id="brushSize" min="1" max="50" value="5">
+                        </div>
+                        <div class="action-buttons-group">
+                            <button class="action-button" id="clearButton">Clear</button>
+                            <button class="action-button" id="saveButton">Save</button>
+                            <button class="action-button" id="shareButton">Share with me</button>
+                        </div>
                     </div>
                     
+                    <div class="drawing-container">
+                        <canvas id="drawingCanvas"></canvas>
+                        <div class="color-palette">
+                            <button class="color-option" style="background: #000000" data-color="#000000"></button>
+                            <button class="color-option" style="background: #7F7F7F" data-color="#7F7F7F"></button>
+                            <button class="color-option" style="background: #880015" data-color="#880015"></button>
+                            <button class="color-option" style="background: #ED1C24" data-color="#ED1C24"></button>
+                            <button class="color-option" style="background: #FF7F27" data-color="#FF7F27"></button>
+                            <button class="color-option" style="background: #FFF200" data-color="#FFF200"></button>
+                            <button class="color-option" style="background: #22B14C" data-color="#22B14C"></button>
+                            <button class="color-option" style="background: #00A2E8" data-color="#00A2E8"></button>
+                            <button class="color-option" style="background: #3F48CC" data-color="#3F48CC"></button>
+                            <button class="color-option" style="background: #A349A4" data-color="#A349A4"></button>
+                            <button class="color-option" style="background: #FFFFFF" data-color="#FFFFFF"></button>
+                            <button class="color-option" style="background: #C3C3C3" data-color="#C3C3C3"></button>
+                            <button class="color-option" style="background: #B97A57" data-color="#B97A57"></button>
+                            <button class="color-option" style="background: #FFAEC9" data-color="#FFAEC9"></button>
+                            <button class="color-option" style="background: #FFC90E" data-color="#FFC90E"></button>
+                            <button class="color-option" style="background: #EFE4B0" data-color="#EFE4B0"></button>
+                            <button class="color-option" style="background: #B5E61D" data-color="#B5E61D"></button>
+                            <button class="color-option" style="background: #99D9EA" data-color="#99D9EA"></button>
+                            <button class="color-option" style="background: #7092BE" data-color="#7092BE"></button>
+                            <button class="color-option" style="background: #C8BFE7" data-color="#C8BFE7"></button>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- LINE QR Code Modal -->
+        <div class="modal" id="lineModal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <img src="446560.jpg" alt="LINE QR Code">
+                <div class="line-id-text">LINE ID: 901227tina</div>
+                <div class="copy-message" id="copyMessage">LINE ID has been copied</div>
+            </div>
+        </div>
+
+        <!-- Gmail Modal -->
+        <div class="modal" id="gmailModal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <div class="line-id-text">my gmail: yshi57846@gmail.com</div>
+                <div class="copy-message" id="gmailCopyMessage">Gmail has been copied</div>
             </div>
         </div>
     </div>
@@ -856,6 +1172,237 @@
                     }).catch(err => {
                         console.error('Failed to copy:', err);
                     });
+                });
+            }
+            
+            // 聯絡頁面中的LINE按鈕功能
+            const contactLineButton = document.getElementById('contactLineButton');
+            if (contactLineButton) {
+                contactLineButton.addEventListener('click', () => {
+                    // 複製 LINE ID 到剪貼簿
+                    navigator.clipboard.writeText('901227tina').then(() => {
+                        alert('Line ID has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+            }
+            
+            // 聯絡頁面中的Gmail按鈕功能
+            const contactGmailButton = document.getElementById('contactGmailButton');
+            if (contactGmailButton) {
+                contactGmailButton.addEventListener('click', () => {
+                    // 複製 Gmail 地址到剪貼簿
+                    navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                        alert('Gmail has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加繪圖板的功能
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const colorPicker = document.getElementById('colorPicker');
+            const brushSize = document.getElementById('brushSize');
+            const clearButton = document.getElementById('clearButton');
+            const saveButton = document.getElementById('saveButton');
+
+            // Set canvas size
+            function resizeCanvas() {
+                const container = document.querySelector('.drawing-container');
+                const maxWidth = Math.min(400, container.clientWidth);
+                
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * 0.6;
+                
+                // Set initial background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Drawing state
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            // Drawing functions
+            function startDrawing(e) {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = brushSize.value;
+                ctx.lineCap = 'round';
+                if (isEraser) {
+                    ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    ctx.globalCompositeOperation = 'source-over';
+                }
+                ctx.stroke();
+                
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+
+            // Event listeners for drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch support
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+                
+                isDrawing = true;
+                [lastX, lastY] = [offsetX, offsetY];
+            });
+
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                if (!isDrawing) return;
+                
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(offsetX, offsetY);
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = brushSize.value;
+                ctx.lineCap = 'round';
+                if (isEraser) {
+                    ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    ctx.globalCompositeOperation = 'source-over';
+                }
+                ctx.stroke();
+                
+                [lastX, lastY] = [offsetX, offsetY];
+            });
+
+            canvas.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                isDrawing = false;
+            });
+
+            canvas.addEventListener('touchcancel', function(e) {
+                e.preventDefault();
+                isDrawing = false;
+            });
+
+            // Clear canvas
+            clearButton.addEventListener('click', function() {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            });
+
+            // Save drawing
+            saveButton.addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.download = 'drawing.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+
+            // Color palette functionality
+            const colorPalette = document.querySelector('.color-palette');
+            const colorOptions = document.querySelectorAll('.color-option');
+
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    // Update color picker and current color
+                    const color = this.dataset.color;
+                    colorPicker.value = color;
+                });
+            });
+
+            // Set initial selected color
+            colorOptions[0].classList.add('selected');
+
+            // 添加橡皮擦功能
+            let isEraser = false;
+            const eraserButton = document.getElementById('eraserButton');
+            let lastColor = colorPicker.value;
+
+            eraserButton.addEventListener('click', function() {
+                isEraser = !isEraser;
+                this.classList.toggle('active');
+                if (isEraser) {
+                    lastColor = colorPicker.value;
+                    colorPicker.value = '#FFFFFF';
+                } else {
+                    colorPicker.value = lastColor;
+                }
+            });
+
+            // 修改印章功能
+            const stamps = ['❤️', '⭕', '👍'];
+            const sideAreas = document.querySelectorAll('.side-area');
+            
+            function createStamp(e, element) {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const stamp = document.createElement('div');
+                stamp.className = 'stamp';
+                stamp.textContent = stamps[Math.floor(Math.random() * stamps.length)];
+                stamp.style.left = x + 'px';
+                stamp.style.top = y + 'px';
+                
+                // 確保印章被添加到正確的容器中
+                element.appendChild(stamp);
+                
+                // 動畫結束後移除印章
+                setTimeout(() => {
+                    if (stamp && stamp.parentNode) {
+                        stamp.remove();
+                    }
+                }, 10000);
+            }
+
+            // 為兩側區域添加點擊事件
+            sideAreas.forEach(area => {
+                area.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 防止事件冒泡
+                    createStamp(e, this);
+                });
+            });
+            
+            // 分享功能
+            const shareButton = document.getElementById('shareButton');
+            if (shareButton) {
+                shareButton.addEventListener('click', function() {
+                    alert('Your drawing will be shared with Yitiann. Thank you!');
+                    saveButton.click(); // 同時觸發保存功能
                 });
             }
         });
