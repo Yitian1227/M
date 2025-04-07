@@ -289,6 +289,24 @@
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         .project-media {
@@ -312,6 +330,45 @@
             max-height: 80vh;
             object-fit: contain;
             display: block;
+        }
+
+        /* 添加左右分欄樣式 */
+        .media-row {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .media-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .media-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .media-text p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .media-image {
+            flex: 1;
+        }
+
+        @media (max-width: 767px) {
+            .media-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         .youtube-container {
@@ -428,7 +485,7 @@
         .toggle.active .circle { 
             margin-left: 45px; 
         }
-        
+
         /* 亮色模式下的按鈕樣式 */
         body.light-mode .back-button {
             border-color: rgba(0, 0, 0, 0.3);
@@ -714,14 +771,44 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Fly in Optical Road</h2>
-                <p class="project-description">
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div style="margin-top: 5rem;">
                     Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div style="margin-top: 5rem;">
                     Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
-                </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="project-media">
+                <!-- 添加視頻 -->
+                <div class="media-item">
+                    <video width="100%" controls>
+                        <source src="手機.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
                 
+                <!-- 左右分欄：左側文字，右側圖片 -->
+                <div class="media-row">
+                    <div class="media-text">
+                        <h3>台南小巷探索</h3>
+                        <p style="font-size: 1rem; line-height: 1.6; color: rgba(255, 255, 255, 0.6);">這張照片捕捉了台南傳統小巷的獨特氛圍，展現了台灣歷史文化的精髓。狹窄的巷道、斑駁的牆壁和傳統建築元素共同構成了一幅充滿故事感的畫面，讓人感受到時光流逝中的寧靜與美好。</p>
+                    </div>
+                    <div class="media-image">
+                        <img src="台南小巷.jpg" alt="台南小巷" width="100%">
+                    </div>
+                </div>
+                
+                <!-- 添加螢幕擷取畫面 -->
+                <div class="media-item">
+                    <img src="螢幕擷取畫面 (1).png" alt="螢幕擷取畫面" width="100%">
+                </div>
                 
                 <!-- 添加更多媒體項目 -->
                 <div class="media-item">
