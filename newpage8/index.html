@@ -288,6 +288,30 @@
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 7;
+        }
+
+        .project-description-right {
+            flex: 3;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .project-description-left,
+            .project-description-right {
+                flex: 1;
+                width: 100%;
+            }
         }
 
         .project-media {
@@ -713,42 +737,50 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">About Me</h2>
-                <p class="project-description">
-                    I am Yitiann Shi, a designer and creative coder passionate about the intersection of art, technology, and human experience. My work explores visual narratives, interactive installations, and digital experiences that challenge perceptions and create meaningful connections.
-                </p>
+                <div class="project-description" style="margin-top: 3rem;">
+                    <div class="project-description-left">
+                        <p>
+                            I am Yitiann Shi, a designer and creative coder passionate about the intersection of art, technology, and human experience. My work explores visual narratives, interactive installations, and digital experiences that challenge perceptions and create meaningful connections.
+                        </p>
+                        
+                        <div class="bio-section">
+                            <div class="detail-section">
+                                <h3 class="detail-title">Education</h3>
+                                <p class="detail-content">
+                                    • Master of Design, Interaction Design, 2022-2024<br>
+                                    • Bachelor of Fine Arts, Digital Media, 2018-2022
+                                </p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h3 class="detail-title">Skills</h3>
+                                <p class="detail-content">
+                                    Interactive Design, Creative Coding, User Experience Design, Visual Design, 
+                                    Digital Fabrication, 3D Modeling, Video Production, Installation Art
+                                </p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h3 class="detail-title">Experience</h3>
+                                <p class="detail-content">
+                                    • Digital Designer, StudioXYZ, 2021-Present<br>
+                                    • Exhibition Designer, Gallery Modern, 2020-2021<br>
+                                    • Design Intern, Creative Agency, 2019
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-description-right">
+                        <div class="media-item">
+                            <img src="449267.jpg" alt="Yitiann Shi" style="width: 100%; max-height: 60vh; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="project-media">
-                <div class="media-item">
-                    <img src="../path/to/your/profile-image.jpg" alt="Yitiann Shi">
-                </div>
-                
-                <div class="bio-section">
-                    <div class="detail-section">
-                        <h3 class="detail-title">Education</h3>
-                        <p class="detail-content">
-                            • Master of Design, Interaction Design, 2022-2024<br>
-                            • Bachelor of Fine Arts, Digital Media, 2018-2022
-                        </p>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3 class="detail-title">Skills</h3>
-                        <p class="detail-content">
-                            Interactive Design, Creative Coding, User Experience Design, Visual Design, 
-                            Digital Fabrication, 3D Modeling, Video Production, Installation Art
-                        </p>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3 class="detail-title">Experience</h3>
-                        <p class="detail-content">
-                            • Digital Designer, StudioXYZ, 2021-Present<br>
-                            • Exhibition Designer, Gallery Modern, 2020-2021<br>
-                            • Design Intern, Creative Agency, 2019
-                        </p>
-                    </div>
-                </div>
+                <!-- 移除原有的圖片，因為已經移到右側了 -->
             </div>
         </div>
     </div>
