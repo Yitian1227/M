@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/dynamic-frame.css">
+    <link rel="stylesheet" href="./styles/theme-styles.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'CustomFont', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding-top: 0;
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .brand-title {
+                position: relative;
+            }
+
+            .hamburger-menu {
+                position: absolute;
+                top: 65px;
+                right: -50px;
+                display: flex;
+                width: auto;
+                height: auto;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 100000;
+                color: #0D05F2;
+                font-size: 20rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
+                line-height: 1;
+                padding: 0;
+                background: none;
+                border: none;
+                outline: none;
+                transform: none;
+            }
+
+            /* 左側背景色塊 */
+            .container::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 20px;
+                height: 100%;
+                background-color: #0D05F2;
+                z-index: -2;
+            }
+
+            /* 右側背景色塊 */
+            .container::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 100%;
+                background-color: #0D05F2;
+                z-index: -2;
+            }
+
+            /* 左下角藍色圓圈 */
+            .blue-circle {
+                content: '';
+                position: fixed;
+                bottom: 40px;
+                left: 40px;
+                width: 400px;
+                height: 400px;
+                background-color: #0D05F2;
+                border-radius: 50%;
+                z-index: 1;
+                filter: blur(60px);
+                opacity: 0.8;
+            }
+
+            .top-bar-title {
+                display: none;
+            }
+
+            /* 確保其他元素在背景色上層 */
+            .left-content,
+            .right-content,
+            .top-bar,
+            .menu-overlay {
+                position: relative;
+                z-index: 1;
+            }
+
+            .top-bar {
+                display: flex;
+                height: 45px;
+                position: fixed;
+                top: 30px;
+                left: 30px;
+                width: auto;
+                background-color: transparent;
+                align-items: center;
+                justify-content: flex-end;
+                padding: 0;
+                z-index: 9999;
+            }
+        }
+
+        @media (min-width: 768px)  {
+            .container {
+                flex-direction: row;
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .brand-title {
+                position: relative;
+            }
+
+            .hamburger-menu {
+                position: fixed;
+                top: 20px;
+                left: 200px;
+                display: flex;
+                
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 100000;
+                color: #0D05F2;
+                font-size: 6.5rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
+                line-height: 1;
+                padding: 0;
+                background: none;
+                border: none;
+                outline: none;
+                transform: none;
+            }
+        }
+
+        .left-content {
+            width: 100%;
+            overflow: visible;
+            padding-right: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        .left-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .left-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .left-content::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        @media (min-width: 768px) {
+            .left-content {
+                width: 260px;
+                flex-shrink: 0;
+            }
+        }
+
+        .brand-title {
+            font-size: 7rem;
+            font-weight: 700;
+            font-family: "Tangerine", cursive;
+            font-style: normal;
+            letter-spacing: -0.05em;
+            line-height: 75%;
+            margin-bottom: 4rem;
+        }
+
+        .brand-title span {
+            display: block;
+            padding-left: 2rem;
+        }
+
+        .description {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 300px;
+            font-family: "Kantumruy Pro", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 1.6;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #ffffff;
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        .right-content {
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .right-content {
+                height: 100%;
+                flex-grow: 1;
+            }
+        }
+
+        /* 手機版樣式 */
+        @media (max-width: 767px) {
+            .container {
+                padding: 1rem;
+                padding-top: 20px;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                position: relative;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                transition: background-color 0.3s ease;
+            }
+
+            .top-bar {
+                display: flex;
+                height: 15px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0);
+                align-items: center;
+                justify-content: space-between;
+                padding: 0;
+                padding-left: 10px;
+                z-index: 9999;
+            }
+
+            .hamburger-menu {
+                position: fixed;
+                top: 80px;
+                left: 180px;
+                display: flexed;
+                width: auto;
+                height: auto;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 100000;
+                color: #0D05F2;
+                font-size: 15rem;
+                margin: 100;
+                animation: rotate 15s linear infinite;
+                pointer-events: auto;
+                line-height: 1;
+                padding: 0;
+                background: none;
+                border: none;
+                outline: none;
+                transform: none;
+            }
+
+            /* 右側藍色條 */
+            .container::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 100%;
+                background-color: #0D05F2;
+                z-index: -1;
+            }
+
+            /* 右上角藍色圓圈 */
+            .mobile-blue-circle {
+                content: '';
+                position: absolute;
+                top: 100px;
+                right: 80px;
+                width: 300px;
+                height: 300px;
+                background-color: #0D05F2;
+                border-radius: 50%;
+                z-index: -1;
+                filter: blur(40px);
+                opacity: 0.8;
+                display: block;
+            }
+
+            .container.photo-section {
+                background-color: transparent;
+            }
+
+            .container.photo-section .photo-item .project-text,
+            .container.photo-section .photo-item .project-description,
+            .container.photo-section .photo-item .date-text,
+            .container.photo-section .photo-item .featured-text,
+            .container.photo-section .photo-item .arrow {
+                color: #ffffff;
+            }
+
+            .container.photo-section .brand-title {
+                color: #ffffff;
+            }
+
+            .container.photo-section .description {
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .container.photo-section .toggle {
+                border-color: rgba(255, 255, 255, 0.3);
+                color: #ffffff;
+            }
+
+            .container.photo-section .toggle:hover {
+                border-color: #ffffff;
+            }
+
+            .container.photo-section .toggle.active {
+                background-color: #ffffff;
+                color: #000000;
+            }
+
+            .container.photo-section .toggle::before,
+            .container.photo-section .toggle::after,
+            .container.photo-section .toggle .ripple-circle {
+                border-color: #ffffff;
+            }
+            
+            .container.photo-section .divider {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+
+            .container:not(.photo-section) .divider {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+            
+            .container::before {
+                display: none;
+            }
+
+            .container.photo-section::before {
+                display: none;
+            }
+            
+            .left-content {
+                width: 100%;
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .brand-title {
+                font-size: 6.5rem;
+                margin-bottom: 2rem;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .brand-title span {
+                padding-left: 0;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+                max-width: 90%;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+            
+            .buttons-container {
+                gap: 20px;
+                padding: 10px;
+                margin: 1.5rem auto;
+            }
+            
+            .toggle {
+                width: 70px;
+                height: 70px;
+                font-size: 1rem;
+            }
+
+            .divider {
+                height: 2px;
+                width: 90%;
+                margin: 1.5rem auto 0.5rem auto;
+            }
+
+            .photo-gallery {
+                display: block;
+                margin-top: 2rem;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .photo-item {
+                margin: 0.5rem 0;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .photo-item:first-child {
+                margin-top: 0;
+            }
+
+            .photo-item img {
+                border-radius: 4px;
+                width: 100%;
+            }
+
+            .photo-item .project-text {
+                font-size: 1.8rem;
+                line-height: 1.1;
+                letter-spacing: 0.02em;
+                padding-left: 0;
+            }
+
+            .top-bar {
+                display: flex;
+                height: 15px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0);
+                align-items: center;
+                justify-content: space-between;
+                padding: 0;
+                padding-left: 10px;
+                z-index: 9999;
+            }
+
+            .top-bar-title {
+                display: block;
+                font-size: 1.6rem;
+                color: #ffffff;
+                font-family: "Tangerine", cursive;
+                font-weight: 700;
+            }
+
+            .hamburger-menu {
+                display: flex;
+                width: auto;
+                height: auto;
+                position: relative;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 100000;
+                color: #0D05F2;
+                font-size: 3.5rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .menu-dropdown {
+                display: block;
+                position: fixed;
+                top: 45px;
+                right: 0;
+                background-color: #000000;
+                width: 200px;
+                padding: 0.5rem 0;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 9999;
+            }
+
+            .menu-dropdown.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .menu-dropdown a {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: #ffffff;
+                text-decoration: none;
+                font-family: "Kantumruy Pro", sans-serif;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .menu-dropdown a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .left-content {
+                padding-top: 0;
+            }
+
+            .menu-items a:not(.social-button)::after,
+            .photo-item .arrow {
+                content: "➜";
+                font-weight: 900;
+                transform: scaleX(0.7);
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+                text-rendering: geometricPrecision;
+            }
+
+            .menu-items a:not(.social-button)::after {
+                font-size: 1.4rem;
+                margin-left: 10px;
+            }
+
+            .photo-item .arrow {
+                position: static;
+                font-size: 1.5rem;
+                color: #ffffff;
+                margin-left: 0.5rem;
+                font-weight: 900;
+                transform: scaleX(0.7);
+                display: inline-block;
+                -webkit-font-smoothing: antialiased;
+                font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+                text-rendering: geometricPrecision;
+            }
+
+            .photo-item .date-text .arrow {
+                content: "➜";
+                font-weight: 900;
+                -webkit-text-stroke: 0.5px;
+            }
+
+            .container.photo-section .photo-item .arrow {
+                color: #000000;
+            }
+        }
+        
+        .frame {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        /* 影片控制開關樣式 */
+        .video-control {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        /* 按鈕容器樣式 */
+        .buttons-container {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            margin: 15px 0;
+            justify-content: center;
+            padding: 20px;
+            overflow: visible;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .control-label {
+            margin-right: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .toggle { 
+            width: 80px;
+            height: 80px;
+            border-radius: 50%; 
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            position: relative;
+            z-index: 5;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .toggle:hover {
+            border-color: white;
+        }
+        
+        .toggle.active { 
+            background-color: white;
+            color: #000;
+            border-color: white;
+        }
+        
+        /* 漣漪動畫 */
+        .toggle::before,
+        .toggle::after,
+        .toggle .ripple-circle {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: transparent;
+            border: 2px solid white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .toggle::before {
+            animation: none;
+        }
+        
+        .toggle::after {
+            animation: none;
+        }
+        
+        .toggle .ripple-circle {
+            animation: none;
+        }
+        
+        .toggle:hover::before {
+            animation: ripple 2s ease-out 0s infinite;
+        }
+        
+        .toggle:hover::after {
+            animation: ripple 2s ease-out 0.5s infinite;
+        }
+        
+        .toggle:hover .ripple-circle {
+            animation: ripple 2s ease-out 1s infinite;
+        }
+        
+        .toggle.active::before {
+            animation: ripple 2s ease-out 0s infinite;
+        }
+        
+        .toggle.active::after {
+            animation: ripple 2s ease-out 0.5s infinite;
+        }
+        
+        .toggle.active .ripple-circle {
+            animation: ripple 2s ease-out 1s infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2.5);
+            }
+        }
+
+        /* 亮色模式樣式 */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: rgba(0, 0, 0, 0.8);
+        }
+        
+        body.light-mode .description {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        body.light-mode .divider {
+            background-color: #000000;
+        }
+        
+        body.light-mode .control-label {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        body.light-mode .toggle {
+            border-color: rgba(0, 0, 0, 0.3);
+            color: rgba(0, 0, 0, 0.8);
+            background: none;
+        }
+        
+        body.light-mode .toggle:hover {
+            border-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        body.light-mode .toggle.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+        
+        body.light-mode .toggle::before,
+        body.light-mode .toggle::after,
+        body.light-mode .toggle .ripple-circle {
+            border-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        body.light-mode .toggle.active::before,
+        body.light-mode .toggle.active::after,
+        body.light-mode .toggle.active .ripple-circle {
+            border-color: #333;
+        }
+        
+        /* 亮色模式下的影片框架和右側內容區域 */
+        body.light-mode .right-content {
+            background-color: #f5f5f5;
+        }
+        
+        body.light-mode .frame-grid {
+            background-color: #f5f5f5;
+        }
+        
+        body.light-mode .frame {
+            background-color: #eaeaea;
+        }
+        
+        body.light-mode .frame iframe {
+            background-color: #eaeaea;
+        }
+        
+        /* 亮色模式下的框架邊緣和角落 */
+        body.light-mode .frame-corner,
+        body.light-mode .frame-edge-h,
+        body.light-mode .frame-edge-v {
+            filter: invert(1) brightness(0.9);
+        }
+
+        /* 照片展示區域樣式 */
+        .photo-gallery {
+            width: 100%;
+            max-width: 90%;
+            margin: 0 auto;
+            display: none; /* 預設隱藏 */
+        }
+
+        .photo-item {
+            width: 100%;
+            margin: 1rem 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-item .date-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.2rem;
+            text-align: left;
+            padding-left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .photo-item .arrow {
+            position: static;
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-left: 0.5rem;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+        }
+
+        .photo-item .featured-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.15rem;
+            text-align: left;
+            padding-left: 0;
+            order: 1;
+        }
+
+        .photo-item .project-text {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-left: 0;
+            order: 2;
+            text-shadow: none;
+            letter-spacing: 0.02em;
+            color: #ffffff;
+            text-align: left;
+            margin-left: -0.1em;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            margin-top: 0;
+            margin-bottom: 0.15rem;
+            order: 0;
+        }
+
+        .photo-item a {
+            order: 0;
+        }
+
+        @media (max-width: 767px) {
+            .photo-gallery {
+                display: block;
+                margin-top: 2rem;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .divider {
+                height: 2px;
+                width: 100%;
+                margin: 1.5rem auto 0.5rem auto;
+            }
+
+            .photo-item {
+                margin: 0.5rem 0;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .photo-item:first-child {
+                margin-top: 0;
+            }
+
+            .photo-item img {
+                border-radius: 4px;
+                width: 100%;
+            }
+
+            .photo-item .project-text {
+                font-size: 1.8rem;
+                line-height: 1.1;
+                letter-spacing: 0.02em;
+                padding-left: 0;
+            }
+        }
+
+        /* 漢堡選單樣式 */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .menu-overlay.show {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .menu-items a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 4px 0;
+            padding: 4px 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Roboto Condensed", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .menu-items a.project-item {
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .menu-items a.project-item::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* 為每個項目設置不同的顏色 */
+        .menu-items a.project-item:nth-child(2)::before {
+            background-color: #FF6B6B;
+        }
+
+        .menu-items a.project-item:nth-child(3)::before {
+            background-color: #4ECDC4;
+        }
+
+        .menu-items a.project-item:nth-child(4)::before {
+            background-color: #45B7D1;
+        }
+
+        .menu-items a.project-item:nth-child(5)::before {
+            background-color: #96CEB4;
+        }
+
+        .menu-items a.project-item:nth-child(6)::before {
+            background-color: #FFBE0B;
+        }
+
+        .menu-items a.project-item:nth-child(7)::before {
+            background-color: #FF006E;
+        }
+
+        /* 特定項目的藍色文字 */
+        .menu-items a[href="newpage1"],
+        .menu-items a[href="newpage2"],
+        .menu-items a[href="newpage3"],
+        .menu-items a[href="newpage4"],
+        .menu-items a[href="newpage5"],
+        .menu-items a[href="newpage6"] {
+            color: #0D05F2;
+        }
+
+        /* 特定項目懸停效果 */
+        .menu-items a[href="newpage1"]:hover,
+        .menu-items a[href="newpage2"]:hover,
+        .menu-items a[href="newpage3"]:hover,
+        .menu-items a[href="newpage4"]:hover,
+        .menu-items a[href="newpage5"]:hover,
+        .menu-items a[href="newpage6"]:hover {
+            color: #0a03b0;
+        }
+
+        .menu-items a:not(.social-button)::after {
+            content: "➜";
+            font-size: 1.2rem;
+            margin-left: 10px;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .menu-items a:hover {
+            color: #666;
+        }
+
+        .menu-category {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+            padding: 4px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .menu-divider {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin: 0.5rem 0;
+        }
+
+        .menu-items .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .menu-items .social-button {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: "Roboto Condensed", sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* Gmail 藍色背景 */
+        #gmailButton {
+            background-color: #0D05F2;
+            color: white;
+            border-color: #0D05F2;
+        }
+
+        #gmailButton:hover {
+            background-color: #0a03b0;
+            border-color: #0a03b0;
+        }
+
+        /* Line 粉色背景 */
+        #lineButton {
+            background-color: #FF4B8B;
+            color: white;
+            border-color: #FF4B8B;
+        }
+
+        #lineButton:hover {
+            background-color: #E43078;
+            border-color: #E43078;
+        }
+
+        .menu-items .social-button:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+
+            .hamburger-menu {
+                display: flex;
+                width: auto;
+                height: auto;
+                position: relative;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                z-index: 100000;
+                color: #0D05F2;
+                font-size: 2.8rem;
+                margin: 0;
+                animation: rotate 15s linear infinite;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .menu-overlay {
+                width: 400px;
+            }
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        body.light-mode .hamburger-menu {
+            color: #333;
+        }
+
+        /* 添加滾動文字的樣式 */
+        .scrolling-text {
+            font-family: "Kantumruy Pro", sans-serif;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: left;
+            margin: 1rem 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 300px;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* 在亮色模式下的文字顏色 */
+        body.light-mode .scrolling-text {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* 在手機版時隱藏文字 */
+        @media (max-width: 767px) {
+            .scrolling-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .container.photo-section .photo-item .project-text,
+            .container.photo-section .photo-item .project-description,
+            .container.photo-section .photo-item .date-text,
+            .container.photo-section .photo-item .featured-text,
+            .container.photo-section .photo-item .arrow {
+                color: #ffffff;
+            }
+
+            body.light-mode .container .photo-item .project-text,
+            body.light-mode .container .photo-item .date-text,
+            body.light-mode .container .photo-item .featured-text,
+            body.light-mode .container .photo-item .arrow {
+                color: #000000;
+            }
+
+            body.light-mode .container .photo-item .date-text {
+                color: rgba(0, 0, 0, 0.8);
+            }
+
+            body.light-mode .container .photo-item .featured-text {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            body.light-mode .container .divider {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            body.light-mode .description p {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            body.light-mode .brand-title {
+                color: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="hamburger-menu" style="font-size: 4rem;">
+            :-) 
+        </div>
+    </div>
+    <div class="menu-overlay">
+        <div class="menu-items">
+            <span class="menu-category">PROJECT</span>
+            <a href="newpage1" class="project-item">Calm the Code</a>
+            <a href="newpage2" class="project-item">Superstitious Interspace</a>
+            <a href="newpage3" class="project-item">Verbal Flow</a>
+            <a href="newpage4" class="project-item">Fly in Optical Road</a>
+            <a href="newpage5" class="project-item">Market Weathering</a>
+            <a href="newpage6" class="project-item">Relational Shadows</a>
+            <div class="menu-divider"></div>
+            <a href="newpage7">contact</a>
+            <a href="newpage8">about me</a>
+            <a href="newpage9">recent research</a>
+            <div class="social-buttons">
+                <a href="#" class="social-button" id="lineButton">Line</a>
+                <a href="#" class="social-button" id="gmailButton">Gmail</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="blue-circle"></div>
+        <div class="mobile-blue-circle"></div>
+        <!-- Left Content -->
+        <div class="left-content">
+            <div>
+                <h1 class="brand-title">
+                    Yitiann<br>
+                    <span>Portfolio</span>
+                </h1>
+                <div class="description">
+                    <div>
+                        <div class="divider"></div>
+                        <p>
+                            Welcome to yitiann's portfolio. I hope you have fun and enjoy it. Everyone can draw a picture for me in the contact me area.
+                            <br>
+                            
+                        </p>
+                        
+                        <!-- 控制按鈕容器 - 橫向排列 -->
+                        <div class="buttons-container">
+                            <!-- 影片播放/暫停控制開關 -->
+                            <div class="toggle" id="video-toggle">
+                                Play
+                                <span class="ripple-circle"></span>
+                            </div>
+                            
+                            <!-- 黑白模式控制開關 -->
+                            <div class="toggle" id="theme-toggle">
+                                Day
+                                <span class="ripple-circle"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <div class="scrolling-text" id="scrolling-text">
+                            texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext
+                        </div>
+
+                        <!-- 照片展示區域 -->
+                        <div class="photo-gallery">
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage1">
+                                    <img src="home png/page/1.png" alt="Page 1">
+                                </a>
+                                <div class="project-text">Calm the Code</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage2">
+                                    <img src="home png/page/2.png" alt="Page 2">
+                                </a>
+                                <div class="project-text">Superstitious Interspace</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage3">
+                                    <img src="home png/page/3.png" alt="Page 3">
+                                </a>
+                                <div class="project-text">Verbal Flow</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage4">
+                                    <img src="home png/page/4.png" alt="Page 4">
+                                </a>
+                                <div class="project-text">Fly in Optical Road</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage5">
+                                    <img src="home png/page/5.png" alt="Page 5">
+                                </a>
+                                <div class="project-text">Market Weathering</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage6">
+                                    <img src="home png/page/6.png" alt="Page 6">
+                                </a>
+                                <div class="project-text">Relational Shadows</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage7">
+                                    <img src="home png/page/7.png" alt="Page 7">
+                                </a>
+                                <div class="project-text">contact</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage8">
+                                    <img src="home png/page/8.png" alt="Page 8">
+                                </a>
+                                <div class="project-text">about me</div>
+                            </div>
+                            <div class="divider" style="margin-top: 3.5rem;"></div>
+                            <div class="photo-item">
+                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Exhibition</div>
+                                <a href="newpage9">
+                                    <img src="home png/page/9.png" alt="Page 9">
+                                </a>
+                                <div class="project-text">recent research</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="right-content" id="dynamic-frame">
+            <!-- 動態內容將通過 JavaScript 載入 -->
+        </div>
+    </div>
+
+    <script src="./js/dynamic-frame.js"></script>
+    <script src="./js/theme-controller.js"></script>
+    <script>
+        // 文字亂碼效果類
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 25);
+                    const end = start + Math.floor(Math.random() * 25);
+                    this.queue.push({ from, to, start, end });
+                }
+                
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            
+            update() {
+                let output = '';
+                let complete = 0;
+                
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.22) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += char;
+                    } else {
+                        output += from;
+                    }
+                }
+                
+                this.el.innerText = output;
+                
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // 設定懸停文字
+        const hoverTexts = {
+            'newpage1': '111111111111111111111111111111111111111111111111111111111111111111111111111111111',
+            'newpage2': '222222222222222222222222222222222222222222222222222222222222222222222222222222222',
+            'newpage3': '333333333333333333333333333333333333333333333333333333333333333333333333333333333',
+            'newpage4': '444444444444444444444444444444444444444444444444444444444444444444444444444444444',
+            'newpage5': '555555555555555555555555555555555555555555555555555555555555555555555555555555555',
+            'newpage6': '666666666666666666666666666666666666666666666666666666666666666666666666666666666',
+            'newpage7': '777777777777777777777777777777777777777777777777777777777777777777777777777777777',
+            'newpage8': '888888888888888888888888888888888888888888888888888888888888888888888888888888888',
+            'newpage9': '999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+        };
+        
+        // 原始文字
+        let originalText = '';
+        let textScramble;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollingText = document.getElementById('scrolling-text');
+            
+            if (scrollingText) {
+                originalText = scrollingText.textContent.trim();
+                textScramble = new TextScramble(scrollingText);
+                
+                // 只在桌面版應用
+                if (window.innerWidth >= 768) {
+                    // 為每個框架添加懸停事件
+                    const frames = document.querySelectorAll('.frame');
+                    frames.forEach((frame, index) => {
+                        // 添加frame-id數據屬性，從1開始
+                        const frameId = index + 1;
+                        
+                        frame.addEventListener('mouseenter', () => {
+                            // 根據框架ID更新文字
+                            const pageId = `newpage${frameId}`;
+                            if (hoverTexts[pageId]) {
+                                textScramble.setText(hoverTexts[pageId]);
+                            }
+                        });
+                        
+                        frame.addEventListener('mouseleave', () => {
+                            // 恢復原始文字
+                            textScramble.setText(originalText);
+                        });
+                    });
+                }
+            }
+        });
+
+        // 添加滾動監聽
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.container');
+            const photoGallery = document.querySelector('.photo-gallery');
+            
+            // 移除滾動監聽功能
+        });
+
+        // 原有的初始化控制開關代碼
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoToggle = document.getElementById('video-toggle');
+            let youtubeFrames = []; // 用於存儲所有YouTube iframe
+            
+            // 添加影片開關點擊事件
+            if (videoToggle) {
+                // 預設為啟用（自動播放）
+                videoToggle.classList.add('active');
+                videoToggle.textContent = 'Pause';
+                videoToggle.appendChild(document.createElement('span')).className = 'ripple-circle';
+                
+                videoToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const isPlaying = this.classList.contains('active');
+                    
+                    // 更新按鈕文字
+                    if (isPlaying) {
+                        this.textContent = 'Pause';
+                    } else {
+                        this.textContent = 'Play';
+                    }
+                    
+                    // 重新添加ripple元素
+                    this.appendChild(document.createElement('span')).className = 'ripple-circle';
+                    
+                    // 控制所有影片的播放狀態
+                    controlAllVideos(isPlaying);
+                });
+            }
+            
+            // 控制所有影片的函數
+            function controlAllVideos(play) {
+                // 獲取所有iframe（YouTube影片）
+                const iframes = document.querySelectorAll('iframe');
+                
+                iframes.forEach(iframe => {
+                    try {
+                        const command = play ? 'playVideo' : 'pauseVideo';
+                        iframe.contentWindow.postMessage(`{"event":"command","func":"${command}","args":""}`, '*');
+                    } catch (e) {
+                        console.log('無法控制影片:', e);
+                    }
+                });
+            }
+            
+            // 等待dynamic-frame.js初始化完成
+            setTimeout(() => {
+                // 獲取開關狀態
+                const isAutoplayEnabled = videoToggle ? videoToggle.classList.contains('active') : true;
+                
+                // 確保所有框架中的YouTube影片都啟用了API控制
+                const frameElements = document.querySelectorAll('.frame');
+                
+                frameElements.forEach(frame => {
+                    const iframe = frame.querySelector('iframe');
+                    if (iframe) {
+                        // 保存原始src
+                        const originalSrc = iframe.src;
+                        
+                        // 檢查是否已經啟用API
+                        if (!originalSrc.includes('enablejsapi=1')) {
+                            // 添加enablejsapi參數
+                            let newSrc = originalSrc;
+                            if (newSrc.includes('?')) {
+                                newSrc += '&enablejsapi=1';
+                            } else {
+                                newSrc += '?enablejsapi=1';
+                            }
+                            
+                            // 更新autoplay參數
+                            if (newSrc.includes('autoplay=1') && !isAutoplayEnabled) {
+                                newSrc = newSrc.replace('autoplay=1', 'autoplay=0');
+                            }
+                            
+                            iframe.src = newSrc;
+                        }
+                        
+                        youtubeFrames.push(iframe);
+                    }
+                });
+                
+                // 特殊處理框架7，若已經被我們之前的代碼修改過
+                const frame7 = document.querySelector('[data-frame-id="7"]');
+                if (frame7 && frame7.innerHTML === '') {
+                    // 添加YouTube影片，修正ID提取
+                    const iframe = document.createElement('iframe');
+                    // 啟用API控制
+                    iframe.src = "https://www.youtube.com/embed/7mc_FYVJmzE?enablejsapi=1&autoplay=" + (isAutoplayEnabled ? "1" : "0") + "&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&loop=1&playlist=7mc_FYVJmzE";
+                    iframe.id = "youtube-player";
+                    iframe.title = "YouTube video player";
+                    iframe.frameBorder = "0";
+                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                    iframe.allowFullscreen = true;
+                    iframe.style.width = "100%";
+                    iframe.style.height = "100%";
+                    iframe.style.position = "absolute";
+                    iframe.style.top = "0";
+                    iframe.style.left = "0";
+                    
+                    // 添加到框架中
+                    frame7.appendChild(iframe);
+                    youtubeFrames.push(iframe);
+                    
+                    // 添加覆蓋層，用於跳轉
+                    const overlay = document.createElement('div');
+                    overlay.className = 'video-overlay';
+                    overlay.onclick = function() {
+                        window.location.href = 'newpage7';
+                    };
+                    frame7.appendChild(overlay);
+                    
+                    // 配置URL以便dynamic-frame.js的點擊處理
+                    if (typeof initialFrames !== 'undefined' && initialFrames) {
+                        const frame = initialFrames.find(f => f.id === 7);
+                        if (frame) frame.url = 'newpage7';
+                    }
+                }
+                
+                // 如果開關是關閉狀態，暫停所有影片
+                if (!isAutoplayEnabled) {
+                    // 稍微延遲以確保iframe已經完全載入
+                    setTimeout(() => {
+                        controlAllVideos(false);
+                    }, 1000);
+                }
+            }, 1000); // 增加等待時間確保dynamic-frame.js已經完全初始化
+        });
+
+        // 處理主題按鈕文字
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (themeToggle) {
+                // 檢查當前主題設置更新文字
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                    themeToggle.textContent = 'Night';
+                } else {
+                    themeToggle.textContent = 'Day';
+                }
+                
+                // 重新添加ripple元素
+                themeToggle.appendChild(document.createElement('span')).className = 'ripple-circle';
+                
+                // 添加事件監聽器
+                themeToggle.addEventListener('click', function() {
+                    const isLightMode = this.classList.contains('active');
+                    
+                    // 更新按鈕文字
+                    if (isLightMode) {
+                        this.textContent = 'Night';
+                    } else {
+                        this.textContent = 'Day';
+                    }
+                    
+                    // 重新添加ripple元素
+                    this.appendChild(document.createElement('span')).className = 'ripple-circle';
+                });
+            }
+        });
+
+        // 添加漢堡選單功能
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            
+            // LINE 按鈕功能
+            const lineButton = document.getElementById('lineButton');
+            lineButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 複製 LINE ID 到剪貼簿
+                navigator.clipboard.writeText('901227tina').then(() => {
+                    alert('Line id has been copied!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            });
+
+            // Gmail 按鈕功能
+            const gmailButton = document.getElementById('gmailButton');
+            gmailButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 複製 Gmail 地址到剪貼簿
+                navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                    alert('Gmail has been copied!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            });
+
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hamburgerMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('show');
+            });
+            
+            // 點擊選單項目時關閉選單
+            const menuItems = document.querySelectorAll('.menu-items a:not(.social-button)');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburgerMenu.classList.remove('active');
+                    menuOverlay.classList.remove('show');
+                });
+            });
+            
+            // 點擊其他地方關閉選單
+            document.addEventListener('click', (e) => {
+                if (!menuOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                    hamburgerMenu.classList.remove('active');
+                    menuOverlay.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio - Project 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/theme-styles.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 左側藍色線條 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        @media (max-width: 767px) {
+            body::before {
+                display: none;
+            }
+        }
+
+        /* 右側藍色線條 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        /* 左上角藍色圓圈 */
+        .blue-circle {
+            content: '';
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 400px;
+            height: 400px;
+            background-color: #0D05F2;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 767px) {
+            .blue-circle {
+                width: 300px;
+                height: 300px;
+                top: 20px;
+                left: 20px;
+                filter: blur(40px);
+            }
+        }
+
+        .header {
+            padding: 3.5rem 2rem 2rem 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .back-button {
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-family: 'Kantumruy Pro', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .back-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+
+        .back-button:hover::before,
+        .back-button:hover::after,
+        .back-button:hover .ripple-circle {
+            border-color: black;
+        }
+        
+        .back-button:active,
+        .back-button.active { 
+            background-color: white;
+            color: #000;
+            border-color: white;
+        }
+        
+        /* 漣漪動畫 */
+        .back-button::before,
+        .back-button::after,
+        .back-button .ripple-circle {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: transparent;
+            border: 2px solid rgb(0, 0, 0); /* Night模式下為白色 */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .back-button::before {
+            animation: none;
+        }
+        
+        .back-button::after {
+            animation: none;
+        }
+        
+        .back-button .ripple-circle {
+            animation: none;
+        }
+        
+        .back-button:hover::before {
+            animation: ripple 2s ease-out 0s infinite;
+        }
+        
+        .back-button:hover::after {
+            animation: ripple 2s ease-out 0.5s infinite;
+        }
+        
+        .back-button:hover .ripple-circle {
+            animation: ripple 2s ease-out 1s infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2.5);
+            }
+        }
+
+        .hamburger-menu {
+            position: fixed;
+            top: 40px;
+            left: 150px;
+            display: flex;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            color: #0D05F2;
+            font-size: 7rem;
+            margin: 0;
+            animation: rotate 15s linear infinite;
+            pointer-events: auto;
+            line-height: 1;
+            padding: 0;
+            background: none;
+            border: none;
+            outline: none;
+            transform: none;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header {
+                padding: 2.5rem 1rem 1rem 1rem;
+            }
+
+            .hamburger-menu {
+                font-size: 4rem;
+                left: 80px;
+                top: 39px;
+            }
+
+            .back-button {
+                width: 65px;
+                height: 65px;
+                font-size: 0.8rem;
+            }
+
+            .page-title {
+                top: 65px;
+                right: 5px;
+                font-size: 1rem;
+                line-height: 40px;
+                z-index: 9999;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                margin: 0;
+            }
+            
+            .project-title {
+                font-size: 8rem;
+            }
+        }
+
+        .page-title {
+            font-family: "Tangerine", cursive;
+            font-size: 2.3rem;
+            /* margin: -10px 0 0 -3000px; */
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .project-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .project-header {
+            margin-bottom: 2rem;
+        }
+
+        .project-title {
+            font-family: "Tangerine", cursive;
+            font-size: 7rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 75%;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            /* 手機版時，所有媒體元素都是100%寬度 */
+            .project-media > div {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+            }
+            
+            .project-media > div > div {
+                flex: 1 !important;
+                width: 100% !important;
+            }
+            
+            .media-item {
+                width: 100% !important;
+            }
+            
+            .media-item img,
+            .media-item video,
+            .media-item iframe {
+                width: 100% !important;
+                max-height: none !important;
+            }
+            
+            /* 手機版時，調整光影與空間的對話文字的margin-top */
+            .project-media > div:nth-child(3) > div:first-child > div:first-child {
+                margin-top: 2rem !important;
+            }
+        }
+
+        .project-media {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+        }
+
+        .media-item {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .media-item img,
+        .media-item video,
+        .media-item iframe {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            cursor: pointer;
+        }
+
+        .youtube-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background-color: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .play-button:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .youtube-container:hover .play-button {
+            background-color: red;
+        }
+
+        .project-details {
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 影片控制開關樣式 */
+        .video-control {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        
+        .control-label {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .toggle { 
+            width: 80px; 
+            height: 40px; 
+            border-radius: 20px; 
+            background: #333; 
+            box-shadow: inset 2px 2px 5px #222, inset -2px -2px 5px #444; 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        
+        .circle { 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            background: white; 
+            box-shadow: 2px 2px 5px #222, -2px -2px 5px #444; 
+            margin-left: 5px; 
+            transition: 0.3s; 
+        }
+        
+        .toggle.active { 
+            background: #666; 
+        }
+        
+        .toggle.active .circle { 
+            margin-left: 45px; 
+        }
+        
+        /* 亮色模式下的按鈕樣式 */
+        body.light-mode .back-button {
+            border-color: rgba(0, 0, 0, 0.3);
+            color: rgba(0, 0, 0, 0.8);
+            background: none;
+        }
+        
+        body.light-mode .back-button:hover {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        body.light-mode .back-button:hover::before,
+        body.light-mode .back-button:hover::after,
+        body.light-mode .back-button:hover .ripple-circle {
+            border-color: white;
+        }
+        
+        body.light-mode .back-button:active,
+        body.light-mode .back-button.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+        
+        /* 亮色模式下的漣漪樣式 */
+        body.light-mode .back-button::before,
+        body.light-mode .back-button::after,
+        body.light-mode .back-button .ripple-circle {
+            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
+        }
+        
+        /* 懸停時的漣漪顏色 - Day模式 */
+        body.light-mode .back-button:hover::before,
+        body.light-mode .back-button:hover::after,
+        body.light-mode .back-button:hover .ripple-circle {
+            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
+        }
+        
+        /* 懸停時的漣漪顏色 - Night模式 */
+        .back-button:hover::before,
+        .back-button:hover::after,
+        .back-button:hover .ripple-circle {
+            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
+        }
+        
+        /* 激活時的漣漪顏色 - Day模式 */
+        body.light-mode .back-button.active::before,
+        body.light-mode .back-button.active::after,
+        body.light-mode .back-button.active .ripple-circle {
+            border-color: #333;
+        }
+
+        /* 選單覆蓋層 */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        @media (min-width: 768px) {
+            .menu-overlay {
+                width: 400px;
+                right: -400px;
+            }
+
+            .menu-overlay.show {
+                right: 0;
+            }
+        }
+
+        .menu-overlay.show {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .menu-items a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 4px 0;
+            padding: 4px 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Roboto Condensed", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .menu-items a.project-item {
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .menu-items a.project-item::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* 為每個項目設置不同的顏色 */
+        .menu-items a.project-item:nth-child(2)::before {
+            background-color: #FF6B6B;
+        }
+
+        .menu-items a.project-item:nth-child(3)::before {
+            background-color: #4ECDC4;
+        }
+
+        .menu-items a.project-item:nth-child(4)::before {
+            background-color: #45B7D1;
+        }
+
+        .menu-items a.project-item:nth-child(5)::before {
+            background-color: #96CEB4;
+        }
+
+        .menu-items a.project-item:nth-child(6)::before {
+            background-color: #FFBE0B;
+        }
+
+        .menu-items a.project-item:nth-child(7)::before {
+            background-color: #FF006E;
+        }
+
+        /* 特定項目的藍色文字 */
+        .menu-items a[href="../newpage1"],
+        .menu-items a[href="../newpage2"],
+        .menu-items a[href="../newpage3"],
+        .menu-items a[href="../newpage4"],
+        .menu-items a[href="../newpage5"],
+        .menu-items a[href="../newpage6"] {
+            color: #0D05F2;
+        }
+
+        /* 特定項目懸停效果 */
+        .menu-items a[href="../newpage1"]:hover,
+        .menu-items a[href="../newpage2"]:hover,
+        .menu-items a[href="../newpage3"]:hover,
+        .menu-items a[href="../newpage4"]:hover,
+        .menu-items a[href="../newpage5"]:hover,
+        .menu-items a[href="../newpage6"]:hover {
+            color: #0a03b0;
+        }
+
+        .menu-items a:not(.social-button)::after {
+            content: "➜";
+            font-size: 1.2rem;
+            margin-left: 10px;
+            font-weight: normal;
+            transform: scaleX(0.7);
+            display: inline-block;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .menu-items a:hover {
+            color: #666;
+        }
+
+        .menu-items .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .menu-items .social-button {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: "Roboto Condensed", sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Gmail 藍色背景 */
+        #gmailButton {
+            background-color: #0D05F2;
+            color: white;
+            border-color: #0D05F2;
+        }
+
+        #gmailButton:hover {
+            background-color: #0a03b0;
+            border-color: #0a03b0;
+        }
+
+        /* Line 粉色背景 */
+        #lineButton {
+            background-color: #FF4B8B;
+            color: white;
+            border-color: #FF4B8B;
+        }
+
+        #lineButton:hover {
+            background-color: #E43078;
+            border-color: #E43078;
+        }
+
+        .menu-items .social-button:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .menu-category {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+            padding: 4px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .menu-divider {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-circle"></div>
+    <div class="header">
+        <button class="back-button" onclick="window.location.href='../'">
+            HOME
+            <span class="ripple-circle"></span>
+        </button>
+        <div class="hamburger-menu">✻</div>
+        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+    </div>
+
+    <!-- 添加選單覆蓋層 -->
+    <div class="menu-overlay">
+        <div class="menu-items">
+            <span class="menu-category">PROJECT</span>
+            <a href="../newpage1" class="project-item">Calm the Code</a>
+            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
+            <a href="../newpage3" class="project-item">Verbal Flow</a>
+            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
+            <a href="../newpage5" class="project-item">Market Weathering</a>
+            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <div class="menu-divider"></div>
+            <a href="../newpage7">contact</a>
+            <a href="../newpage8">about me</a>
+            <a href="../newpage9">recent research</a>
+            <div class="social-buttons">
+                <a href="#" class="social-button" id="lineButton">Line</a>
+                <a href="#" class="social-button" id="gmailButton">Gmail</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="project-container">
+            <div class="project-header">
+                <h2 class="project-title">Relational Shadows</h2>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div style="margin-top: 5rem;">
+                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div style="margin-top: 5rem;">
+                            Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 添加媒體內容，保持3:7分割 -->
+            <div class="project-media">
+                <!-- 添加6.mp4在最上方，100%呈現 -->
+                <div class="media-item" style="margin-bottom: 4rem;">
+                    <video width="100%" controls>
+                        <source src="6.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div style="display: flex; flex-direction: row; gap: 3rem;">
+                    <!-- 左側影片 (30%) -->
+                    <div style="flex: 3;">
+                        <div class="media-item">
+                            <video width="100%" controls>
+                                <source src="2.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <!-- 添加說明文字 -->
+                        <div class="image-caption" style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                            光影互動設計 - 通過投影與實體物件的結合，創造出豐富的視覺層次與互動體驗
+                        </div>
+                    </div>
+                    
+                    <!-- 右側照片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <img src="7.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加第二組媒體內容，保持3:7分割 -->
+                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
+                    <!-- 左側說明文字和照片 (30%) -->
+                    <div style="flex: 3;">
+                        <div class="image-caption" style="margin-top: -10rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                            關係陰影的視覺呈現 - 通過光影變化展現人際關係中的微妙互動與情感流動，探索空間中的無形連結
+                        </div>
+                        
+                        <!-- 添加兩張照片 -->
+                        <div class="media-item" style="margin-top: 1rem;">
+                            <img src="9.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                        
+                        <div class="media-item" style="margin-top: 0.5rem;">
+                            <img src="11.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                        
+                        <!-- 添加底部說明文字 -->
+                        <div class="image-caption" style="margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                            空間互動設計 - 通過光影與實體物件的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
+                        </div>
+                    </div>
+                    
+                    <!-- 右側影片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <video width="100%" controls>
+                                <source src="6.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加第三組媒體內容，保持3:7分割 -->
+                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
+                    <!-- 左側空白 (30%) -->
+                    <div style="flex: 3;">
+                        <!-- 添加左下角說明文字 -->
+                        <div class="image-caption" style="margin-top: 2rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                            光影與空間的對話 - 通過投影技術與實體空間的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
+                            創造出豐富的視覺層次與互動體驗，
+                            讓觀眾能夠在空間中感受到人際關係的微妙變化
+                        </div>
+                        
+                        <!-- 添加項目資訊 -->
+                        <div class="image-caption" style="margin-top: 2rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6;">
+                            <br>
+                            <br>
+                            <br>
+                            <div style="margin-bottom: 0.5rem;">-使用軟體 : touchdesigner</div>
+                            <div style="margin-bottom: 0.5rem;">-設計年分 : 2024</div>
+                            <div style="margin-bottom: 0.5rem;">-製作團隊 : 施亦恬、陳柏安</div>
+                            <div style="margin-bottom: 0.5rem;">-負責項目 : 程式設計、互動設計、視覺設計</div>
+                            <div style="margin-bottom: 0.5rem;">-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右側影片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <video width="100%" controls>
+                                <source src="1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // YouTube 延遲載入
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('youtube-player-container');
+            let youtubePlayer = null;
+            let videoPlaying = false;
+            
+            if (container) {
+                const videoId = container.getAttribute('data-video-id');
+                
+                container.addEventListener('click', function() {
+                    // 載入 YouTube API
+                    if (!window.YT) {
+                        // 載入 YouTube API
+                        const tag = document.createElement('script');
+                        tag.src = "https://www.youtube.com/iframe_api";
+                        const firstScriptTag = document.getElementsByTagName('script')[0];
+                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                        
+                        window.onYouTubeIframeAPIReady = function() {
+                            createYouTubePlayer();
+                        };
+                    } else {
+                        createYouTubePlayer();
+                    }
+                    
+                    function createYouTubePlayer() {
+                        // 清空容器
+                        container.innerHTML = '';
+                        
+                        // 創建新的 div 用於 YouTube 播放器
+                        const playerDiv = document.createElement('div');
+                        playerDiv.id = 'youtube-player';
+                        container.appendChild(playerDiv);
+                        
+                        // 創建 YouTube 播放器
+                        youtubePlayer = new YT.Player('youtube-player', {
+                            height: '100%',
+                            width: '100%',
+                            videoId: videoId,
+                            playerVars: {
+                                'rel': 0,
+                                'controls': 1,
+                                'autoplay': 1  // 默認自動播放
+                            },
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
+                    
+                    function onPlayerReady(event) {
+                        // 點擊後自動播放
+                        event.target.playVideo();
+                        videoPlaying = true;
+                    }
+                    
+                    function onPlayerStateChange(event) {
+                        // 更新影片狀態
+                        if (event.data == YT.PlayerState.PLAYING) {
+                            videoPlaying = true;
+                        } else if (event.data == YT.PlayerState.PAUSED || 
+                                  event.data == YT.PlayerState.ENDED || 
+                                  event.data == YT.PlayerState.BUFFERING) {
+                            videoPlaying = false;
+                        }
+                    }
+                });
+            }
+        });
+
+        // 添加選單控制
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            
+            hamburgerMenu.addEventListener('click', () => {
+                menuOverlay.classList.toggle('show');
+            });
+
+            // 點擊選單項目時關閉選單
+            const menuItems = document.querySelectorAll('.menu-items a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    menuOverlay.classList.remove('show');
+                });
+            });
+
+            // 點擊其他地方關閉選單
+            document.addEventListener('click', (e) => {
+                if (!menuOverlay.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                    menuOverlay.classList.remove('show');
+                }
+            });
+            
+            // LINE 按鈕功能
+            const lineButton = document.getElementById('lineButton');
+            if (lineButton) {
+                lineButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // 複製 LINE ID 到剪貼簿
+                    navigator.clipboard.writeText('901227tina').then(() => {
+                        alert('Line id has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+            }
+
+            // Gmail 按鈕功能
+            const gmailButton = document.getElementById('gmailButton');
+            if (gmailButton) {
+                gmailButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // 複製 Gmail 地址到剪貼簿
+                    navigator.clipboard.writeText('yshi57846@gmail.com').then(() => {
+                        alert('Gmail has been copied!');
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+            }
+        });
+    </script>
+    
+    <!-- 引入主題控制器 -->
+    <script src="../js/theme-controller.js"></script>
+</body>
+</html> 
