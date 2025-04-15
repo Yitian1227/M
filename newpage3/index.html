@@ -288,6 +288,24 @@
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         .project-media {
@@ -427,7 +445,7 @@
         .toggle.active .circle { 
             margin-left: 45px; 
         }
-        
+
         /* 亮色模式下的按鈕樣式 */
         body.light-mode .back-button {
             border-color: rgba(0, 0, 0, 0.3);
@@ -675,6 +693,22 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
@@ -713,10 +747,86 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Verbal Flow</h2>
-                <p class="project-description">
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div style="margin-top: 5rem;">
                     Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        </div>
+                        
+                        <!-- 添加作品信息 -->
+                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">使用軟體:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">Processing, Arduino IDE</span>
+                            </div>
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">藝術團隊:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">Yitiann Shi</span>
+                            </div>
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">負責項目:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">概念發想、程式設計、硬體整合</span>
+                            </div>
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">設備器材:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">投影機、感應器、Arduino</span>
+                            </div>
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">作品媒材:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">互動投影、程式設計</span>
+                            </div>
+                            <div class="info-item" style="margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">作品年分:</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">2023</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 添加左側照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="字海.jpg" alt="字海照片" width="100%">
+                        </div>
+                        
+                        <!-- 添加左側視頻說明文字 -->
+                        <div class="image-caption" style="margin-top: 2rem; margin-bottom: 1rem;">
+                            互動投影細節 - 作品利用精準的動態投影技術，創造出隨觀眾行為變化的視覺效果
+                        </div>
+                        
+                        <!-- 添加左側視頻 -->
+                        <div class="embedded-video" style="margin-top: 0;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/M_TUL5Cnf5M" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <!-- 添加左側第二張照片說明文字 -->
+                        <div class="image-caption" style="margin-top: 4rem; margin-bottom: 1rem;">
+                            作品空間整體視圖 - 展場中的光影和投影共同構成完整的沉浸式體驗環境
+                        </div>
+                        
+                        <!-- 添加左側第二張照片 -->
+                        <div class="embedded-image" style="margin-top: 0;">
+                            <img src="字海3.jpg" alt="字海3照片" width="100%">
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div style="margin-top: 5rem;">
                     Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
-                </p>
+                        </div>
+                        
+                        <!-- 嵌入右側視頻 -->
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/JFOKR2KC2Zk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <!-- 添加右側照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="字海2.jpg" alt="字海2照片" width="100%">
+                        </div>
+                        
+                        <!-- 添加右側第二張照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="字海5.jpg" alt="字海5照片" width="100%">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="project-media">
@@ -736,69 +846,61 @@
         // YouTube 延遲載入
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('youtube-player-container');
-            let youtubePlayer = null;
-            let videoPlaying = false;
             
             if (container) {
                 const videoId = container.getAttribute('data-video-id');
                 
-                container.addEventListener('click', function() {
-                    // 載入 YouTube API
-                    if (!window.YT) {
-                        // 載入 YouTube API
-                        const tag = document.createElement('script');
-                        tag.src = "https://www.youtube.com/iframe_api";
-                        const firstScriptTag = document.getElementsByTagName('script')[0];
-                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                        
-                        window.onYouTubeIframeAPIReady = function() {
-                            createYouTubePlayer();
-                        };
-                    } else {
-                        createYouTubePlayer();
-                    }
-                    
-                    function createYouTubePlayer() {
-                        // 清空容器
-                        container.innerHTML = '';
-                        
-                        // 創建新的 div 用於 YouTube 播放器
-                        const playerDiv = document.createElement('div');
-                        playerDiv.id = 'youtube-player';
-                        container.appendChild(playerDiv);
-                        
-                        // 創建 YouTube 播放器
-                        youtubePlayer = new YT.Player('youtube-player', {
-                            height: '100%',
-                            width: '100%',
-                            videoId: videoId,
-                            playerVars: {
-                                'rel': 0,
-                                'controls': 1,
-                                'autoplay': 1  // 默認自動播放
-                            },
-                            events: {
-                                'onReady': onPlayerReady,
-                                'onStateChange': onPlayerStateChange
-                            }
-                        });
-                    }
-                    
-                    function onPlayerReady(event) {
-                        // 點擊後自動播放
-                        event.target.playVideo();
-                        videoPlaying = true;
-                    }
-                    
-                    function onPlayerStateChange(event) {
-                        // 更新影片狀態
-                        if (event.data == YT.PlayerState.PLAYING) {
-                            videoPlaying = true;
-                        } else if (event.data == YT.PlayerState.PAUSED || 
-                                  event.data == YT.PlayerState.ENDED || 
-                                  event.data == YT.PlayerState.BUFFERING) {
-                            videoPlaying = false;
+                // 直接載入 YouTube API
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                
+                // 定義全局回調函數
+                window.onYouTubeIframeAPIReady = function() {
+                    // 創建播放器
+                    const player = new YT.Player('youtube-player', {
+                        height: '100%',
+                        width: '100%',
+                        videoId: videoId,
+                        playerVars: {
+                            'rel': 0,
+                            'controls': 1,
+                            'autoplay': 1,
+                            'mute': 0,
+                            'playsinline': 1
+                        },
+                        events: {
+                            'onReady': onPlayerReady,
+                            'onStateChange': onPlayerStateChange
                         }
+                    });
+                    
+                    // 播放器準備就緒
+                    function onPlayerReady(event) {
+                        // 自動播放
+                        event.target.playVideo();
+                    }
+                    
+                    // 播放器狀態變化
+                    function onPlayerStateChange(event) {
+                        // 可以根據需要處理不同狀態
+                    }
+                };
+                
+                // 點擊縮略圖時創建播放器
+                container.addEventListener('click', function() {
+                    // 清空容器
+                    container.innerHTML = '';
+                    
+                    // 創建新的 div 用於 YouTube 播放器
+                    const playerDiv = document.createElement('div');
+                    playerDiv.id = 'youtube-player';
+                    container.appendChild(playerDiv);
+                    
+                    // 如果API已經載入，直接創建播放器
+                    if (window.YT) {
+                        window.onYouTubeIframeAPIReady();
                     }
                 });
             }

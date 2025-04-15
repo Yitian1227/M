@@ -23,17 +23,18 @@
         body {
             background-color: #141414;
             color: rgba(255, 255, 255, 0.8);
-            display: flex;
+            
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* 左側藍色線條 */
         body::before {
             content: '';
-            position: fixed;
+            position: relative;
             top: 0;
             left: 0;
             width: 20px;
@@ -265,6 +266,7 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            height: calc(100vh - 120px); /* 減去header的高度 */
         }
 
         .project-container {
@@ -289,6 +291,24 @@
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         .project-media {
@@ -312,6 +332,54 @@
             max-height: 80vh;
             object-fit: contain;
             display: block;
+        }
+
+        /* 添加左右分欄樣式 */
+        .media-row {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .media-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .media-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .media-text p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .media-image-left {
+            flex: 3;
+        }
+
+        .media-image-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .media-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .media-image-left,
+            .media-image-right {
+                flex: 1;
+            }
         }
 
         .youtube-container {
@@ -676,6 +744,38 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        body::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        body {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        body {
+            -ms-overflow-style: none;
+        }
+
+        /* 隱藏 content 區域的卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
@@ -714,18 +814,58 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Market Weathering</h2>
-                <p class="project-description">
-                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
-                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
-                </p>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div style="margin-top: 5rem;">
+                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div style="margin-top: 5rem;">
+                            Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="project-media">
-                
-                
-                <!-- 添加更多媒體項目 -->
+                <!-- 添加unity影片在最上方 -->
                 <div class="media-item">
-                    <img src="../path/to/your/image.jpg" alt="">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/vOxPTRxTUDs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <!-- 左右分欄：左側照片，右側影片 -->
+                <div class="media-row">
+                    <div class="media-image-left">
+                        <img src="天氣與股市 2025_1_9 下午 06_26_59.png" alt="天氣與股市" width="100%">
+                        <div class="image-caption" style="margin-top: 4rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                            天氣與股市的視覺化呈現 - 將複雜的金融數據轉化為直觀的視覺元素，幫助使用者理解市場趨勢與天氣變化的關聯性
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- 添加第二張照片 -->
+                <div class="media-item">
+                    <div style="display: flex; flex-direction: row; gap: 2rem;">
+                        <div style="flex: 3; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <div class="image-caption" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
+                                數據視覺化設計 - 將天氣數據與股市趨勢相結合，創造出直觀的視覺呈現，幫助投資者理解環境因素對市場的影響
+                            </div>
+                        </div>
+                        <div style="flex: 7;">
+                            <img src="天氣與股市 2025_1_9 下午 06_26_52.png" alt="天氣與股市" width="100%">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加新影片 -->
+                <div class="media-item">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/SuVblBms68Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
 
