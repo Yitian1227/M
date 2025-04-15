@@ -699,6 +699,22 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
