@@ -733,6 +733,22 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
@@ -788,10 +804,9 @@
             <div class="project-media">
                 <!-- 添加視頻 -->
                 <div class="media-item">
-                    <video width="100%" controls>
-                        <source src="手機.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/WfHGchaxA7Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
                 
                 <!-- 左右分欄：左側文字，右側圖片 -->
