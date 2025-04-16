@@ -208,6 +208,16 @@
             transform: none;
         }
 
+        .menu-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
         @keyframes rotate {
             from {
                 transform: rotate(0deg);
@@ -224,7 +234,7 @@
 
             .hamburger-menu {
                 font-size: 4rem;
-                left: 80px;
+                left: 90px;
                 top: 39px;
             }
 
@@ -248,6 +258,18 @@
             
             .project-title {
                 font-size: 7rem;
+            }
+            
+            .menu-circle {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .menu-circle {
+                width: 100px;
+                height: 100px;
             }
         }
 
@@ -277,17 +299,43 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.5rem;
+            font-size: 8rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 5rem 0;
         }
 
         .project-description {
             font-size: 1rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            position: relative;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        body.light-mode .project-description {
+            color: rgba(0, 0, 0, 0.7);
         }
 
         .project-media {
@@ -675,6 +723,97 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        .embedded-video {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        /* 左側視頻特別樣式 */
+        .project-description-left .embedded-video {
+            margin-top: 8rem;
+        }
+        
+        /* 左側描述文字樣式 */
+        .project-description-left-text {
+            margin-top: 8rem;
+            display: block;
+        }
+
+        /* 作品資訊樣式 */
+        .project-info-list {
+            margin-top: 3rem;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .project-info-list li {
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        body.light-mode .project-info-list li {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* 視頻說明文字樣式 */
+        .video-description {
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        body.light-mode .video-description {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* 嵌入左側照片 */
+        .embedded-image {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        /* 左側視頻特別樣式 */
+        .project-description-left .embedded-video {
+            margin-top: 2rem;
+        }
+        
+        /* 左側描述文字樣式 */
+        .project-description-left-text {
+            margin-top: 0rem;
+            display: block;
+        }
+
+        /* 嵌入右側照片 */
+        .right-embedded-image {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
@@ -684,7 +823,10 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
+        <div class="hamburger-menu">
+            <div class="menu-circle"></div>
+            ㋡
+        </div>
         <h1 class="page-title me-5">Yitiann Portfolio</h1>
     </div>
 
@@ -713,15 +855,56 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Calm the Code</h2>
-                <p class="project-description">
-                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
-                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
-                </p>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div class="project-description-left-text">
+                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        </div>
+                        
+                        <!-- 嵌入左側視頻 -->
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/KJjZKxrypKY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <!-- 嵌入左側照片 -->
+                        <div class="embedded-image">
+                            <img src="DSC09069.jpg" alt="展場照片" width="100%">
+                        </div>
+                        
+                        <!-- 作品資訊 -->
+                        <ul class="project-info-list">
+                            <li>-使用軟體 : touchdesigner</li>
+                            <li>-設計年分 : 2024 </li>
+                            <li>-製作團隊 : 施亦恬、陳柏安   </li>
+                            <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                            <li>-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</li>
+                            
+                        </ul>
+                    </div>
+                    <div class="project-description-right">
+                        Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        
+                        <!-- 嵌入視頻 -->
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/nNh6GiptSLs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <!-- 嵌入右側照片 -->
+                        <div class="right-embedded-image">
+                            <img src="DSC09330.jpg" alt="展場照片" width="100%">
+                        </div>
+                        
+                        <!-- 視頻說明文字 -->
+                        <div class="video-description">
+                            這個項目旨在探索數位媒體如何影響我們日常生活的感知體驗。透過結合視覺藝術和互動設計，我們創造了一個能夠引起觀眾情感共鳴的沉浸式環境。影片中展示的作品融合了傳統美學與現代技術，呈現出獨特的視覺語言。整個創作過程歷時六個月，期間團隊不斷調整和優化每個細節，確保最終呈現出的作品能夠準確傳達我們的理念。
+                            <br><br>
+                            在技術層面，我們使用了多種創新方法來實現預期效果。特別是在顏色處理和動態變化方面，我們嘗試了多種組合，最終選擇了最能表達情感張力的設計。這個項目不僅展示了技術可能性，更重要的是探討了藝術與科技融合所能創造的新型表達方式。我們希望觀眾能夠從中感受到數位媒體藝術的無限可能性。
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="project-media">
-                
-                
                 <!-- 添加更多媒體項目 -->
                 <div class="media-item">
                     <img src="../path/to/your/image.jpg" alt="">
