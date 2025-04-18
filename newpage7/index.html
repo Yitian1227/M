@@ -285,7 +285,7 @@
         }
 
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
         }
@@ -912,6 +912,22 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(13, 5, 242, 0.4);
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
@@ -953,10 +969,17 @@
                     <div class="project-header">
                         <h2 class="project-title">Contact</h2>
                         <p class="project-description">
+                            您可以在這裡找到我的 LINE 和 GMAIL，或者您甚至可以畫一幅畫！<br>
+                            只需使用右側的繪圖板即可開始！<br>
+                            歡迎任何跨領域聯繫！
+                        </p>
+                        <br>
+                        <p class="project-description">
                             You can find my LINE and GMAIL here, or you can even just draw me a picture!<br>
                             Just use the drawing board on the right and enjoy it!<br>
                             I will also reply to you with a picture. Any contact is very welcome!
                         </p>
+                        
                     </div>
                 </div>
 
