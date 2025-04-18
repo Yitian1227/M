@@ -698,19 +698,19 @@
 
         .post-date {
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
+            
             margin-bottom: 0.5rem;
         }
 
         .post-title {
             font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
+            
         }
 
         .post-excerpt {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            
             margin-bottom: 1rem;
         }
 
@@ -725,6 +725,22 @@
 
         .read-more:hover {
             color: white;
+        }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
         }
     </style>
 </head>
