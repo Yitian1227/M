@@ -88,9 +88,10 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
@@ -186,18 +187,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -218,37 +213,82 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
+        }
 
-            .page-title {
-                top: 65px;
-                right: 5px;
-                font-size: 1rem;
-                line-height: 40px;
-                z-index: 9999;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                margin: 0;
+        @media (min-width: 768px) {
+            .header {
+                padding: 3.5rem 2rem 2rem 3.5rem;
             }
-            
-            .project-title {
-                font-size: 8rem;
+
+            .hamburger-menu {
+                margin-left: 1rem;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
             }
         }
 
@@ -278,11 +318,17 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 5.5rem;
+            font-size: 3rem;  /* 手機版預設大小 */
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 85%;
             margin: 0 0 1.5rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;  /* 電腦版大小 */
+            }
         }
 
         .project-description {
@@ -758,12 +804,14 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
             <a href="../newpage1" class="project-item">Calm the Code</a>
@@ -789,14 +837,15 @@
                 <h2 class="project-title">Fly in Optical Road</h2>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 1rem; font-size: 0.9rem; line-height: 1.5;">
                             穿梭在台南的老街裡吧! <BR>
+                            <BR>
                             運用Touchdesigner搭配OSC 創造即時互動效果，點雲的空間裡一切都變得精緻。
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
-                            Let’s wander through the old streets of Tainan!<BR>
+                        <div style="margin-top: 1rem; font-size: 0.9rem; line-height: 1.5;">
+                            Let's wander through the old streets of Tainan!<BR>
                             Use Touchdesigner with OSC to create real-time interactive effects, and everything in the point cloud space becomes exquisite.
                         </div>
                     </div>
@@ -813,19 +862,21 @@
                 
                 <!-- 左右分欄：左側文字，右側圖片 -->
                 <div class="media-row">
-                    <div class="media-text">
-                        <h3>台南小巷探索</h3>
-                        <p style="font-size: 0.9rem; line-height: 1.6;">當手指拖曳畫面<BR>
+                    <div class="project-description-left">
+                        <div style="margin-top: 0rem; font-size: 0.9rem; line-height: 1.5;">
+                            台南小巷探索 <BR>
+                            <BR>
+                            當手指拖曳畫面<BR>
                             視角隨之轉動<BR>
                             及時互動影像<BR>
-                            後續在圓頂當中投放更有沉浸感。</p>
+                            後續在圓頂當中投放更有沉浸感。
+                        </div>
                     </div>
-                    <div class="media-text">
-                        <h3>Exploring Tainan Alleys</h3>
-                        <p style="font-size: 0.9rem; line-height: 1.6">When you drag your finger across the screen<BR>
-                            The angle of view rotates<BR>
-                            real-time interactive images<BR>
-                            The subsequent projection in the dome will be more immersive.</p>
+                    <div class="project-description-right">
+                        <div style="margin-top: 0rem; font-size: 0.9rem; line-height: 1.5;">
+                                Exploring Tainan Alleys<BR>
+                                Use Touchdesigner with OSC to create real-time interactive effects, and everything in the point cloud space becomes exquisite.
+                        </div>
                     </div>
                     <div class="media-image">
                         <img src="台南小巷.jpg" alt="台南小巷" width="100%">
@@ -923,9 +974,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
