@@ -16,8 +16,13 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
@@ -28,6 +33,12 @@
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         /* 左側藍色線條 */
@@ -88,9 +99,11 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
+            z-index: 5;
         }
 
         .back-button {
@@ -186,18 +199,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -218,20 +225,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -247,8 +274,14 @@
                 margin: 0;
             }
             
-            .project-title {
-                font-size: 7rem;
+            
+        }
+
+        @media (min-width: 768px) {
+            .hamburger-menu {
+                position: relative;
+                top: auto;
+                left: auto;
             }
         }
 
@@ -265,6 +298,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -278,7 +317,7 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.5rem;
+            font-size: 8rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
@@ -306,10 +345,15 @@
             gap: 1rem;
         }
 
+        /*手機板設定*/
         @media (max-width: 767px) {
             .project-description {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .project-title {
+                font-size: 5rem;
             }
         }
 
@@ -534,6 +578,37 @@
             z-index: 1000;
         }
 
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
+        }
+
         @media (min-width: 768px) {
             .menu-overlay {
                 width: 400px;
@@ -741,22 +816,6 @@
             overflow: hidden;
             width: 100%;
         }
-
-        /* 隱藏卷軸但保留滾動功能 */
-        .content::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
-        }
-        
-        /* 針對 Firefox */
-        .content {
-            scrollbar-width: none;
-        }
-        
-        /* 針對 IE 和 Edge */
-        .content {
-            -ms-overflow-style: none;
-        }
     </style>
 </head>
 <body>
@@ -766,12 +825,14 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
             <a href="../newpage1" class="project-item">Calm the Code</a>
@@ -825,27 +886,27 @@
                         
                         
                         <!-- 嵌入左側第二張照片 -->
-                        <div class="embedded-image" style="margin-top: 10rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
                             
                             </div>
                             <img src="DSC09099.jpg" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 嵌入左側第三張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
                                 作品空間細節 - 安排燈光進場。
                             </div>
                             <img src="展場照片5.jpg" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 嵌入左側第四張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
                                 <span style="color: #0713F2; font-size: 1.3rem; font-style: italic;">
                                     Γ你聽說嗎，不能用手去指月亮歐! 不然會被割耳朵的。」
                                 </span><br><br>
@@ -864,34 +925,34 @@
                         
                         
                         <!-- 嵌入左側第五張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
                                 觀眾參與互動 - 活動紀念海報。
                             </div>
                             <img src="DSC08997.jpg" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 嵌入左側第六張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
                                 互動投影細節 - 觀眾需要戴上耳機體驗指月亮後的聲道改變。
                             </div>
                             <img src="DSC09122.jpg" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 嵌入左側第七張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
                             
                             <img src="DSC08966.jpg" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 嵌入左側第八張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 3rem; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
                                 ✦中文名稱：謎信之間 <br>
                                 ✦英文名稱：The Room of myth<br>
                                 ✦展覽日期：2024/11/19（二）<br>
@@ -939,13 +1000,13 @@
                         <div class="right-embedded-image">
                             <img src="DSC08968.jpg" alt="展場照片" width="100%">
                         </div>
-                        <div class="embedded-image" style="margin-top: 15rem;">
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
                             <!-- Text above the photo -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
                                 <span style="color: #0713F2; font-size: 1.3rem; font-style: italic;">
                                     "Have you heard? You shouldn't point at the moon with your finger, or your ear will be cut off."
                                 </span><br><br>
-                                Upon entering, visitors first see the moon (projected from below onto the wall). A table nearby provides this area’s introduction, headphones, and a Leap Motion controller. When a visitor points at the moon, the audio shifts to only one channel in the headphones.<br><br><br>
+                                Upon entering, visitors first see the moon (projected from below onto the wall). A table nearby provides this area's introduction, headphones, and a Leap Motion controller. When a visitor points at the moon, the audio shifts to only one channel in the headphones.<br><br><br>
                         
                                 <span style="color: #0713F2; font-size: 1.3rem; font-style: italic;">
                                     "Have you heard? You shouldn't open an umbrella under the eaves — a ghost might sneak underneath it."
@@ -970,7 +1031,7 @@
                         <div class="right-embedded-image">
                             <img src="DSC09381.jpg" alt="展場照片" width="100%">
                         </div>
-                        <div class="image-caption" style="margin-top: 3rem; margin-bottom: 2rem;">
+                        <div class="image-caption" style="margin-top: 1rem; margin-bottom: 2rem;">
                             ✦Title (Chinese): 謎信之間<br>
                             ✦Title (English): The Room of Myth<br>
                             ✦Exhibition Date: 2024/11/19 (Tuesday)<br>
@@ -1075,9 +1136,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
