@@ -15,8 +15,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         body {
@@ -87,9 +86,11 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
+            z-index: 5;
         }
 
         .back-button {
@@ -185,18 +186,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,37 +212,78 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
+        }
 
-            .page-title {
-                top: 65px;
-                right: 5px;
-                font-size: 1rem;
-                line-height: 40px;
-                z-index: 9999;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                margin: 0;
+        @media (min-width: 768px) {
+            .header {
+                padding: 3.5rem 2rem 2rem 3.5rem;
             }
-            
-            .project-title {
-                font-size: 8rem;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
             }
         }
 
@@ -264,6 +300,7 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            position: relative;
         }
 
         .project-container {
@@ -277,11 +314,23 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.5rem;
+            font-size: 8rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
+        }
+
+        @media (max-width: 767px) {
+            .project-title {
+                font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;
+            }
         }
 
         .project-description {
@@ -718,12 +767,14 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
             <a href="../newpage1" class="project-item">Calm the Code</a>
@@ -749,8 +800,9 @@
                 <h2 class="project-title">Verbal Flow</h2>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 1rem;">
                             歡迎來到字海<BR>
+                             <BR>
                             某段時間著迷於文字，不論是字體、筆畫還是文字本身的意涵傳達都相當有趣，嘗試許多文字穿梭在空間的變化....後期加入大量圖騰，在字海的世界裡抽象的圖樣最終也變成文字，而文字本身也構成一幅精美的圖樣。<BR>
                             文字無所不在，構成歷史、撐起世界
                             
@@ -787,7 +839,7 @@
                         </div>
                         
                         <!-- 添加左側視頻說明文字 -->
-                        <div class="image-caption" style="margin-top: 2rem; margin-bottom: 1rem;">
+                        <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
                             在圓頂當中，觀眾可以自由穿梭在文字當中，感受文字的變化，甚至可以躺下來。
                         </div>
                         
@@ -797,7 +849,7 @@
                         </div>
                         
                         <!-- 添加左側第二張照片說明文字 -->
-                        <div class="image-caption" style="margin-top: 4rem; margin-bottom: 1rem;">
+                        <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
                             作品空間整體視圖 - 展場中的光影和投影共同構成完整的沉浸式體驗環境，需要四部投影機和充氣設備，以及大家的幫助才能完成。
                         </div>
                         
@@ -807,7 +859,7 @@
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 0rem;">
                             Welcome to the Sea of ​​Words
                             I was fascinated by words for a while. No matter the font, strokes or the meaning of the words themselves, they were all very interesting. I tried many changes of words traveling through space... Later, I added a lot of totems. In the world of words, the abstract patterns eventually became words, and the words themselves also formed a beautiful pattern.
                             Words are everywhere, forming history and supporting the worldyour content to ensure readers clearly understand the value of the project and your contribution.
@@ -815,18 +867,19 @@
                         <BR>
                         <!-- 嵌入右側視頻 -->
                         <div class="embedded-video">
-                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/JFOKR2KC2Zk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/gzloLKlyEiM?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         
                         <!-- 添加右側照片 -->
-                        <div class="embedded-image" style="margin-top: 2rem;">
-                            <img src="字海2.jpg" alt="字海2照片" width="100%">
+                        <div class="embedded-video" style="margin-top: 2rem;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/lN608GEeeKA?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         
                         <!-- 添加右側第二張照片 -->
-                        <div class="embedded-image" style="margin-top: 2rem;">
-                            <img src="字海5.jpg" alt="字海5照片" width="100%">
+                        <div class="embedded-video" style="margin-top: 2rem;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/q9Tb40_gHTw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -912,9 +965,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
