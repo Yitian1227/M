@@ -248,9 +248,7 @@
                 margin: 0;
             }
             
-            .project-title {
-                font-size: 8rem;
-            }
+            
         }
 
         .page-title {
@@ -280,11 +278,17 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7rem;
+            font-size: 5rem;  /* 手機版預設大小 */
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;  /* 電腦版大小 */
+            }
         }
 
         .project-description {
@@ -298,6 +302,17 @@
 
         .project-description-left {
             flex: 3;
+        }
+
+        .project-description-left div {
+            font-size: 0.8rem;  /* 手機版預設大小 */
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .project-description-left div {
+                font-size: 0.9rem;  /* 電腦版大小 */
+            }
         }
 
         .project-description-right {
@@ -786,7 +801,7 @@
             <span class="ripple-circle"></span>
         </button>
         <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        
     </div>
 
     <!-- 添加選單覆蓋層 -->
@@ -816,16 +831,17 @@
                 <h2 class="project-title">Market Weathering</h2>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
-                            你所認為的天氣或許不是客觀的
-但在暗潮洶湧的現今
-天氣何嘗不也是一種政治手段、多少利益糾葛
-這，是一場交易
-誰又會從中勝出呢。
+                        <div style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.5;">
+                            你所認為的天氣或許不是客觀的<BR>
+                            在暗潮洶湧的現今天氣何嘗不也淪為一種政治手段。<BR>
+                            <BR>
+                            這，是一場交易<BR>
+                            是老百姓和無形大手之間的拉鋸戰<BR>
+                            誰又會從中勝出呢。
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 1rem;">
 
                             What you think of as the weather may not be objective.
                             But in today's turbulent times
@@ -868,7 +884,7 @@
                                 若想讓波動產生變化，請以金錢來交換。 
                             </div>
                             
-                            <div class="image-caption" style="margin-top: 2rem; font-size: 0.9rem; line-height: 1.4;">
+                            <div class="image-caption" style="margin-top: 0rem; font-size: 0.9rem; line-height: 1.4;">
                                 ✦硬體技術：arduino感測器、投影機 <br>
                                 ✦使用軟體：Unity、Arduino IDE、Touchdesigner<br>
                                 ✦創作年份：2025/03<br>
