@@ -15,8 +15,8 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         body {
@@ -87,9 +87,10 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
@@ -185,18 +186,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,20 +212,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -247,7 +262,7 @@
             }
             
             .project-title {
-                font-size: 8rem;
+                font-size: 2rem;
             }
         }
 
@@ -264,6 +279,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -277,7 +298,7 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7rem;
+            font-size: 6rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
@@ -285,7 +306,7 @@
         }
 
         .project-description {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
             display: flex;
@@ -536,7 +557,72 @@
             height: 100vh;
             background-color: white;
             transition: right 0.3s ease-in-out;
-            z-index: 1000;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .menu-overlay.show {
+            right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 10000;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .menu-overlay {
+                width: 100%;
+                right: -100%;
+            }
+
+            .menu-overlay.show {
+                right: 0;
+            }
+
+            .close-button {
+                position: fixed;
+                top: 2.5rem;
+                right: 2rem;
+                z-index: 10000;
+            }
+
+            .hamburger-menu {
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
         }
 
         @media (min-width: 768px) {
@@ -548,10 +634,6 @@
             .menu-overlay.show {
                 right: 0;
             }
-        }
-
-        .menu-overlay.show {
-            right: 0;
         }
 
         .menu-items {
@@ -720,22 +802,6 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
-
-        /* 隱藏卷軸但保留滾動功能 */
-        .content::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
-        }
-        
-        /* 針對 Firefox */
-        .content {
-            scrollbar-width: none;
-        }
-        
-        /* 針對 IE 和 Edge */
-        .content {
-            -ms-overflow-style: none;
-        }
     </style>
 </head>
 <body>
@@ -745,12 +811,14 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
             <a href="../newpage1" class="project-item">Calm the Code</a>
@@ -776,13 +844,14 @@
                 <h2 class="project-title">Relational Shadows</h2>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 0rem;">
                             本次光雕投影計畫旨在結合藝術與科技，透過細緻的視覺設計，為即將到來的節日增添歡樂與溫馨氛圍。繽紛的燈光動畫、象徵祝福與團聚的圖像符號，以及與觀眾情感連結的故事畫面，搭配動態音效與場域氛圍，打造一場富有節慶感的沉浸式光雕體驗。<br>
+                            <br>
                             整體視覺效果設計靈感來自對「節日」的抽象想像——不再只是具象的節慶符號，而是聚焦於人們在節日中所感受到的情緒：期待、溫柔、喜悅與片刻的停留。我們將透過流動的光影、如煙花般綻放的粒子特效，以及如星雲般的色彩漸變，構築一段沉浸式的視覺旅程，彷彿走進一場在夜空下悄然展開的夢。
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
+                        <div style="margin-top: 0rem;">
                             This projection mapping project aims to combine art and technology to add joy and warmth to the upcoming festival through meticulous visual design. Colorful light animations, graphic symbols that symbolize blessing and reunion, and story scenes that connect with the audience's emotions, combined with dynamic sound effects and field atmosphere, create an immersive light sculpture experience with a festive feel.<br><br>
                             The overall visual design is inspired by the abstract imagination of "festival" - no longer just a concrete festival symbol, but focuses on the emotions people feel during the festival: anticipation, tenderness, joy and a moment of stay. We will construct an immersive visual journey through flowing light and shadow, particle effects that bloom like fireworks, and color gradients like nebulas, as if walking into a dream quietly unfolding under the night sky.
                         </div>
@@ -793,18 +862,18 @@
             <!-- 添加媒體內容，保持3:7分割 -->
             <div class="project-media">
                 <!-- 添加6.mp4在最上方，100%呈現 -->
-                <div class="media-item" style="margin-bottom: 4rem;">
+                <div class="media-item" style="margin-bottom: 0rem;">
                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/y-v4eIIgN8A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 
-                <div style="display: flex; flex-direction: row; gap: 3rem;">
+                <div style="display: flex; flex-direction: row; gap: 0rem;">
                     <!-- 左側影片 (30%) -->
                     <div style="flex: 3;">
                         <div class="media-item">
                             <iframe width="100%" height="400" src="https://www.youtube.com/embed/kochlNmcyV0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <!-- 添加說明文字 -->
-                        <div class="image-caption" style="margin-top: 1rem; font-size: 0.9rem; line-height: 1.4;">
+                        <div class="image-caption" style="margin-top: 0rem; font-size: 0.8rem; line-height: 1.4;">
                             <br>
                             光影互動設計 - 通過投影與實體物件的結合，創造出豐富的視覺層次與互動體驗。
                             <br>
@@ -837,7 +906,7 @@
                         </div>
                         
                         <!-- 添加底部說明文字 -->
-                        <div class="image-caption" style="margin-top: 1.5rem; font-size: 0.9rem; line-height: 1.4;">
+                        <div class="image-caption" style="margin-top: 1.5rem; font-size: 0.8rem; line-height: 1.4;">
                             空間互動設計 - 測試光影與實體物件的結合。
                         </div>
                     </div>
@@ -855,14 +924,14 @@
                     <!-- 左側空白 (30%) -->
                     <div style="flex: 3;">
                         <!-- 添加左下角說明文字 -->
-                        <div class="image-caption" style="margin-top: 2rem; font-size: 0.9rem; line-height: 1.4;">
+                        <div class="image-caption" style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.4;">
                             光影與空間的對話 - 通過投影技術與實體空間的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
                             創造出豐富的視覺層次與互動體驗，
                             讓觀眾能夠在空間中感受到人際關係的微妙變化
                         </div>
                         
                         <!-- 添加項目資訊 -->
-                        <div class="image-caption" style="margin-top: 2rem; font-size: 0.9rem; line-height: 1.6;">
+                        <div class="image-caption" style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.6;">
                             <br>
                             <br>
                             <br>
@@ -960,9 +1029,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
