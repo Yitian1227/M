@@ -10,13 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/theme-styles.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         body {
@@ -38,7 +40,7 @@
             width: 20px;
             height: 100%;
             background-color: #0D05F2;
-            z-index: -1;
+            z-index: 100;
         }
 
         @media (max-width: 767px) {
@@ -56,7 +58,7 @@
             width: 20px;
             height: 100%;
             background-color: #0D05F2;
-            z-index: -1;
+            z-index: 100;
         }
 
         /* 左上角藍色圓圈 */
@@ -87,9 +89,10 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
@@ -185,18 +188,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,20 +214,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -264,6 +281,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -277,7 +300,7 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.2rem;
+            font-size: 5rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
@@ -285,7 +308,7 @@
         }
 
         .project-description {
-            font-size: 1rem;
+            font-size: 0.8rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
         }
@@ -491,7 +514,9 @@
             height: 100vh;
             background-color: white;
             transition: right 0.3s ease-in-out;
-            z-index: 1000;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
         }
 
         @media (min-width: 768px) {
@@ -499,14 +524,47 @@
                 width: 400px;
                 right: -400px;
             }
-
-            .menu-overlay.show {
-                right: 0;
-            }
         }
 
         .menu-overlay.show {
             right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 10000;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
         }
 
         .menu-items {
@@ -698,19 +756,20 @@
 
         .post-date {
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
+            
             margin-bottom: 0.5rem;
         }
 
         .post-title {
-            font-size: 1.4rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
             margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
         }
 
         .post-excerpt {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            
             margin-bottom: 1rem;
         }
 
@@ -726,6 +785,146 @@
         .read-more:hover {
             color: white;
         }
+
+        /* 隱藏 Swiper 預設的 pagination bullet（如果有殘留） */
+        .swiper-pagination, .swiper-button-next, .swiper-button-prev {
+            display: none !important;
+        }
+
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .post-desc {
+            display: block;
+            color: #e0e6ff;
+            font-size: 0.8rem;
+            margin: 1.2rem 0 0.5rem 0;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 480px;
+        }
+        @media (max-width: 767px) {
+            .post-desc {
+                max-width: 220px;
+                font-size: 0.75rem;
+                line-height: 1.6;
+                margin: 1rem 0 0.5rem 0;
+            }
+            .post-desc.active {
+                max-width: 220px;
+            }
+            .glow-wrapper img {
+                height: 140px !important;
+                object-fit: cover;
+            }
+        }
+        .post-desc.active {
+            display: block;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        .swiper.myResearchSwiper {
+            width: 100vw !important;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            max-width: 100vw;
+        }
+        .swiper-wrapper {
+            width: 100vw !important;
+        }
+
+        .swiper-slide img {
+            height: 320px;
+            width: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+        .toggle-info-btn {
+            background: #0D05F2;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .toggle-info-btn:hover {
+            background: #2a1fff;
+        }
+        .toggle-info-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            z-index: 2;
+            background: #0D05F2;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 3.2rem;
+            height: 3.2rem;
+            font-size: 2.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(13,5,242,0.15);
+            transition: background 0.2s, transform 0.15s;
+        }
+        .toggle-info-btn:hover {
+            background: #2a1fff;
+            transform: scale(1.12);
+        }
+
+        @media (min-width: 768px) {
+            .swiper-wrapper {
+                gap: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .swiper-slide {
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+            .glow-wrapper {
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+            .glow-wrapper img {
+                height: 420px !important;
+                width: 100% !important;
+                min-width: 100% !important;
+                min-height: 420px !important;
+                object-fit: cover;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block;
+                border: none !important;
+                vertical-align: bottom !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -735,24 +934,27 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
+        
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -765,47 +967,78 @@
             <div class="project-header">
                 <h2 class="project-title">Recent Research</h2>
                 <p class="project-description">
-                    My ongoing research explores various aspects of digital media, interaction design, and the intersection of technology with human experiences. Below are some of my recent investigations and findings.
+                    我會在這裡 收藏先前的作品，還有一些近期的研究。<br>
+                    雖然過往的作品也可以直接刪除，但時間的積累下 這些替換下來的作品，成為我成長的一塊塊磚，所以仍想為它們保一席之地。<br>
+                    這裡的內容，會隨著時間的推移，不斷更新。
                 </p>
             </div>
 
-            <div class="research-posts">
-                <div class="research-post">
-                    <div class="post-date">June 15, 2024</div>
-                    <h3 class="post-title">Embodied Interactions in Virtual Spaces</h3>
-                    <p class="post-excerpt">
-                        Exploring how physicality translates into virtual environments, and how we can design more intuitive bodily interactions with digital systems that transcend traditional input methods.
-                    </p>
-                    <a href="#" class="read-more">Read more →</a>
+            <!--這裡是slider開始的地方 -->
+            <div class="swiper myResearchSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="glow-wrapper">
+                            <a href="detail1.html" target="_blank">
+                                <img src="../home png/page/1.png" alt="Embodied Interactions" style="width: 100%;">
+                            </a>
+                        </div>
+                        <div class="post-title">迷信之間 乖乖互動區</div>
+                        <div class="post-desc">
+                            迷信文化中的怪力亂神，我們透過科技藝術重新詮釋。<br>
+                            在這裡，乖乖靠近/遠離電腦桌，會觸發不同的聲音與視覺回饋<br>
+                            將"乖乖保佑"具象化。<br>
+                            
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="glow-wrapper">
+                            <a href="detail2.html" target="_blank">
+                                <img src="../home png/page/3.png" alt="Algorithmic Aesthetics" style="width: 100%;">
+                            </a>
+                        </div>
+                        <div class="post-title">圓頂之夢--字海</div>
+                        <div class="post-desc">文字無所不在、撐起歷史、構成世界<br>
+                            這次透過文字大集合，製作圓頂沉浸式投影
+                            一起來體驗被文字包圍的感覺吧!<br>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="glow-wrapper">
+                            <a href="detail3.html" target="_blank">
+                                <img src="../newpage2/DSC09059.jpg" alt="Cultural Context in Interface Design" style="width: 100%;">
+                            </a>
+                        </div>
+                        <div class="post-title">相信即成力量 科技與迷信展覽</div>
+                        <div class="post-desc">- 相信即成力量。
+                            那些口耳相傳的叮嚀、囑咐，彷彿是一條條隱形的魔力
+                            透過科技藝術 重現經典迷信場景
+                            讚嘆神奇之餘，也讓我們重新思考，台灣的迷信文化。
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="glow-wrapper">
+                            <a href="detail4.html" target="_blank">
+                                <img src="../newpage4/台南小巷.jpg" alt="Sonic Interfaces" style="width: 100%;">
+                            </a>
+                        </div>
+                        <div class="post-title">透過osc穿梭在台南小巷裡</div>
+                        <div class="post-desc">一起穿梭在台南的老街裡吧! <br>
+                            透過OSC與畫面即時互動，搭配點雲效果再現老街情懷。</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="glow-wrapper">
+                            <a href="detail5.html" target="_blank">
+                                <img src="../newpage6/7.jpg" alt="Sonic Interfaces" style="width: 100%;">
+                            </a>
+                        </div>
+                        <div class="post-title">光雕與家庭關係平面作品</div>
+                        <div class="post-desc">
+                            這個作品結合我大學時的平面設計背景，將光雕與家庭關係結合，透過光影的流動，凸顯平面設計中的張力。</div>
+                    </div>
                 </div>
-                
-                <div class="research-post">
-                    <div class="post-date">May 22, 2024</div>
-                    <h3 class="post-title">Algorithmic Aesthetics</h3>
-                    <p class="post-excerpt">
-                        Investigating the relationship between computational processes and aesthetic outputs, with a focus on generative systems that create emergent visual patterns and compositions.
-                    </p>
-                    <a href="#" class="read-more">Read more →</a>
-                </div>
-                
-                <div class="research-post">
-                    <div class="post-date">April 8, 2024</div>
-                    <h3 class="post-title">Cultural Context in Interface Design</h3>
-                    <p class="post-excerpt">
-                        Analyzing how cultural frameworks influence our perception and interaction with digital interfaces, and developing methods for creating more culturally inclusive design systems.
-                    </p>
-                    <a href="#" class="read-more">Read more →</a>
-                </div>
-                
-                <div class="research-post">
-                    <div class="post-date">March 17, 2024</div>
-                    <h3 class="post-title">Sonic Interfaces</h3>
-                    <p class="post-excerpt">
-                        Developing frameworks for audio-based interaction design that enhance accessibility and create richer multimodal experiences through spatial audio and rhythmic patterns.
-                    </p>
-                    <a href="#" class="read-more">Read more →</a>
-                </div>
+                <!-- 已移除箭頭與圓點 -->
             </div>
+            <!-- Swiper Slider End -->
         </div>
     </div>
 
@@ -885,9 +1118,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -933,9 +1171,55 @@
                 });
             }
         });
+
+        // 將 swiper 實例掛到 window 以便全域存取
+        window.addEventListener('DOMContentLoaded', function() {
+            window.swiper = new Swiper('.myResearchSwiper', {
+                slidesPerView: 3,
+                spaceBetween: 0,
+                loop: true,
+                speed: 5000, // 平滑滑動速度，數字越大越慢
+                autoplay: {
+                    delay: 0, // 無停頓
+                    disableOnInteraction: false,
+                },
+                breakpoints: {
+                    0: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1200: { slidesPerView: 3 }
+                }
+            });
+
+            // Accordion 展開/收合功能
+            function toggleDesc(btn, slide) {
+                const desc = slide.querySelector('.post-desc');
+                if (desc.classList.contains('active')) {
+                    desc.classList.remove('active');
+                    btn.textContent = '+';
+                    if (window.swiper && window.swiper.autoplay) window.swiper.autoplay.start();
+                } else {
+                    desc.classList.add('active');
+                    btn.textContent = '-';
+                    if (window.swiper && window.swiper.autoplay) window.swiper.autoplay.stop();
+                }
+            }
+            // 綁定圖片和+按鈕的點擊事件
+            document.querySelectorAll('.swiper-slide').forEach(function(slide) {
+                const btn = slide.querySelector('.toggle-info-btn');
+                const img = slide.querySelector('.glow-wrapper img');
+                function handleToggle(e) {
+                    toggleDesc(btn, slide);
+                    e && e.stopPropagation();
+                }
+                btn.addEventListener('click', handleToggle);
+                img.addEventListener('click', handleToggle);
+            });
+        });
     </script>
     
     <!-- 引入主題控制器 -->
     <script src="../js/theme-controller.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html> 

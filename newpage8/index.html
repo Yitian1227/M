@@ -15,8 +15,14 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
@@ -27,6 +33,12 @@
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         /* 左側藍色線條 */
@@ -87,9 +99,10 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
@@ -185,18 +198,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,20 +224,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -247,7 +274,7 @@
             }
             
             .project-title {
-                font-size: 8rem;
+                font-size: 4rem;
             }
         }
 
@@ -264,6 +291,22 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        /* 隱藏所有捲軸但保留滾動功能 */
+        * {
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -277,7 +320,7 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 8rem;
+            font-size: 4rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
@@ -285,7 +328,7 @@
         }
 
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
             display: flex;
@@ -404,7 +447,7 @@
         }
 
         .detail-content {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.6);
         }
@@ -515,7 +558,9 @@
             height: 100vh;
             background-color: white;
             transition: right 0.3s ease-in-out;
-            z-index: 1000;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
         }
 
         @media (min-width: 768px) {
@@ -523,14 +568,47 @@
                 width: 400px;
                 right: -400px;
             }
-
-            .menu-overlay.show {
-                right: 0;
-            }
         }
 
         .menu-overlay.show {
             right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 10000;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
         }
 
         .menu-items {
@@ -708,24 +786,27 @@
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
+        
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -740,32 +821,43 @@
                 <div class="project-description" style="margin-top: 3rem;">
                     <div class="project-description-left">
                         <p>
-                            I am Yitiann Shi, a designer and creative coder passionate about the intersection of art, technology, and human experience. My work explores visual narratives, interactive installations, and digital experiences that challenge perceptions and create meaningful connections.
+                            您好，我是一名科技藝術創作者，熱衷於創作，非常期待各種具有挑戰的事物和變化，
+                            喜歡嘗試各種不同的創作方式，也喜歡與不同領域的人交流，
+                            如果你剛好也有新奇的點子想和我分享，隨時歡迎，底下是關於我所具備的技能，或許我們有合作的可能! 請不用客氣!
                         </p>
-                        
+                        <br>
+                        <p>
+                            Hello, I am a technology artist. I am passionate about creation and look forward to all kinds of challenging things. I like to try different ways of creation and communicate with people from different fields.
+                            If you happen to have some new ideas you want to share with me, you are always welcome. Below is some information about my skills. Maybe we can work together! You are welcome!
+                        </p>
+                        <br>
                         <div class="bio-section">
                             <div class="detail-section">
-                                <h3 class="detail-title">Education</h3>
+                                <h3 class="detail-title">學歷 Education</h3>
                                 <p class="detail-content">
-                                    • Master of Design, Interaction Design, 2022-2024<br>
-                                    • Bachelor of Fine Arts, Digital Media, 2018-2022
+                                    • 國立臺灣藝術大學 多媒體動畫藝術學系 新媒體藝術碩士班 2024-至今<br>
+                                    • National Taiwan University of Arts, Department of Multimedia Animation Arts, Master of Arts in New Media Arts 2024-Present
                                 </p>
                             </div>
                             
                             <div class="detail-section">
-                                <h3 class="detail-title">Skills</h3>
+                                <h3 class="detail-title">技能 Skills</h3>
                                 <p class="detail-content">
+                                    互動設計、創意編碼、使用者體驗設計、視覺設計、
+                                    數位製造、3D建模、錄像製作、裝置藝術
+                                    <br>
                                     Interactive Design, Creative Coding, User Experience Design, Visual Design, 
                                     Digital Fabrication, 3D Modeling, Video Production, Installation Art
                                 </p>
                             </div>
                             
                             <div class="detail-section">
-                                <h3 class="detail-title">Experience</h3>
+                                <h3 class="detail-title">經歷 Experience</h3>
                                 <p class="detail-content">
-                                    • Digital Designer, StudioXYZ, 2021-Present<br>
-                                    • Exhibition Designer, Gallery Modern, 2020-2021<br>
-                                    • Design Intern, Creative Agency, 2019
+
+                                    
+                                    • 國立台中科學博物館 實習生 2023-2024<br>
+                                    • 國立台灣美術館 實習生 2022-2023 <br>
                                 </p>
                             </div>
                         </div>
@@ -779,9 +871,7 @@
                 </div>
             </div>
 
-            <div class="project-media">
-                <!-- 移除原有的圖片，因為已經移到右側了 -->
-            </div>
+        
         </div>
     </div>
 
@@ -861,9 +951,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單

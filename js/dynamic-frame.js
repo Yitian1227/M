@@ -2,11 +2,11 @@
 const GRID_SIZE = 12;
 const CELL_SIZE = 60; // pixels per grid cell
 
-// 初始化框架數據
+// 9部影片
 const initialFrames = [
   {
     id: 1,
-    video: "https://youtu.be/XHJUNYVGd84",
+    video: "https://youtu.be/NypGnVNjuCI",
     defaultPos: { x: 0, y: 0, w: 4, h: 4 },
     corner: "./images/1_corner.png",
     edgeHorizontal: "./images/1_edge_h.png",
@@ -20,7 +20,7 @@ const initialFrames = [
   },
   {
     id: 2,
-    video: "https://youtu.be/s0HbzURvl80",
+    video: "https://youtu.be/pfoBJNtUp8E",
     defaultPos: { x: 4, y: 0, w: 4, h: 4 },
     corner: "./images/2_corner.png",
     edgeHorizontal: "./images/2_edge_h.png",
@@ -33,7 +33,7 @@ const initialFrames = [
   },
   {
     id: 3,
-    video: "https://youtu.be/q9Tb40_gHTw",
+    video: "https://youtu.be/TT6ZaMAwwkw",
     defaultPos: { x: 8, y: 0, w: 4, h: 4 },
     corner: "./images/3_corner.png",
     edgeHorizontal: "./images/3_edge_h.png",
@@ -46,7 +46,7 @@ const initialFrames = [
   },
   {
     id: 4,
-    video: "https://youtu.be/WfHGchaxA7Q",
+    video: "https://youtu.be/ryCANZHtO4Y",
     defaultPos: { x: 0, y: 4, w: 4, h: 4 },
     corner: "./images/4_corner.png",
     edgeHorizontal: "./images/4_edge_h.png",
@@ -72,7 +72,7 @@ const initialFrames = [
   },
   {
     id: 6,
-    video: "https://youtu.be/F61hfOajAwI",
+    video: "https://youtu.be/yQSta563oZM",
     defaultPos: { x: 8, y: 4, w: 4, h: 4 },
     corner: "./images/6_corner.png",
     edgeHorizontal: "./images/6_edge_h.png",

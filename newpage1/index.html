@@ -15,18 +15,51 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
             background-color: #141414;
+            background-image: url('封面15.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
             color: rgba(255, 255, 255, 0.8);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        /* 背景效果 */
+        .background-overlay {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('封面15.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(0px) brightness(0.6);
+            z-index: -2;
         }
 
         /* 左側藍色線條 */
@@ -76,20 +109,31 @@
 
         @media (max-width: 767px) {
             .blue-circle {
-                width: 300px;
-                height: 300px;
-                top: 20px;
-                left: 20px;
+                width: 350px;
+                height: 350px;
+                top: -50px;
+                left: -50px;
                 filter: blur(40px);
+                background: radial-gradient(circle, 
+                    rgba(13, 5, 242, 0.9) 0%, 
+                    rgba(13, 5, 242, 0.7) 30%, 
+                    rgba(13, 5, 242, 0.4) 60%, 
+                    rgba(13, 5, 242, 0.2) 80%, 
+                    transparent 100%);
+                opacity: 0.8;
+                border: none;
             }
         }
+
+
 
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
@@ -106,7 +150,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             position: relative;
             z-index: 5;
         }
@@ -116,11 +160,11 @@
             color: black;
             border-color: white;
         }
-
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: black;
+            border-color: rgb(255, 255, 255);
         }
         
         .back-button:active,
@@ -185,18 +229,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -208,16 +246,6 @@
             transform: none;
         }
 
-        .menu-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 50%;
-            z-index: -1;
-        }
-
         @keyframes rotate {
             from {
                 transform: rotate(0deg);
@@ -227,20 +255,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 90px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -257,7 +305,11 @@
             }
             
             .project-title {
-                font-size: 7rem;
+                font-size: 6rem;
+            }
+
+            .project-subtitle {
+                margin: 0 0 3rem 0;
             }
             
             .menu-circle {
@@ -286,6 +338,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -299,17 +357,32 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 8rem;
+            font-size: 6rem;
             font-weight: 700;
             letter-spacing: -0.05em;
-            line-height: 75%;
-            margin: 0 0 5rem 0;
+            line-height: 80%;
+            margin: 0 0 1rem 0;
+        }
+
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .project-subtitle {
+                font-size: 5rem;
+            }
         }
 
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -325,6 +398,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            text-align: justify;
         }
 
         @media (max-width: 767px) {
@@ -334,8 +408,23 @@
             }
         }
 
-        body.light-mode .project-description {
-            color: rgba(0, 0, 0, 0.7);
+
+
+        .full-width-video {
+            width: 100%;
+            margin: 3rem 0;
+        }
+
+        .full-width-video iframe {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 767px) {
+            .full-width-video iframe {
+                height: 300px;
+            }
         }
 
         .project-media {
@@ -476,59 +565,7 @@
             margin-left: 45px; 
         }
         
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
 
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
-        .back-button:hover::before,
-        .back-button:hover::after,
-        .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
-        }
 
         /* 選單覆蓋層 */
         .menu-overlay {
@@ -540,6 +577,37 @@
             background-color: white;
             transition: right 0.3s ease-in-out;
             z-index: 1000;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
         }
 
         @media (min-width: 768px) {
@@ -740,6 +808,7 @@
         .project-description-left-text {
             margin-top: 8rem;
             display: block;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
 
         /* 作品資訊樣式 */
@@ -747,30 +816,28 @@
             margin-top: 3rem;
             list-style-type: none;
             padding: 0;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
         
         .project-info-list li {
             margin-bottom: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
             font-size: 0.9rem;
         }
         
-        body.light-mode .project-info-list li {
-            color: rgba(0, 0, 0, 0.7);
-        }
+
 
         /* 視頻說明文字樣式 */
         .video-description {
-            margin-top: 2rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
+            margin-top: 0.9rem;
+            color: rgba(255, 255, 255, 1);
+            font-size: 0.9rem;
             line-height: 1.8;
             text-align: justify;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
         
-        body.light-mode .video-description {
-            color: rgba(0, 0, 0, 0.7);
-        }
+
 
         /* 嵌入左側照片 */
         .embedded-image {
@@ -789,6 +856,7 @@
         .project-description-left-text {
             margin-top: 0rem;
             display: block;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
 
         /* 嵌入右側照片 */
@@ -799,24 +867,67 @@
             width: 100%;
         }
 
-        /* 隱藏卷軸但保留滾動功能 */
-        .content::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
+        /* 為文字行添加藍色背景 */
+        .project-description-left-text,
+        .project-description-right,
+        .project-info-list li,
+        .video-description {
+            /*background-color: #0D05F2;*/
+            line-height: 1.8;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
         }
-        
-        /* 針對 Firefox */
-        .content {
-            scrollbar-width: none;
+
+        /* 確保文字在藍色背景上清晰可見 */
+        .project-description-left-text,
+        .project-description-right,
+        .project-info-list li,
+        .video-description {
+            color: white !important;
         }
-        
-        /* 針對 IE 和 Edge */
-        .content {
-            -ms-overflow-style: none;
+
+
+
+        /* 為每行文字提供更好的間距 */
+        .project-description-left-text br,
+        .project-description-right br,
+        .video-description br {
+            display: block;
+            margin: 4px 0;
+            content: "";
+        }
+
+        /* 手機版移除色塊背景 */
+        @media (max-width: 767px) {
+            .project-description-left-text,
+            .project-description-right,
+            .project-info-list li,
+            .video-description {
+                background-color: transparent;
+                padding: 0;
+                margin-bottom: 0.8rem;
+                border-radius: 0;
+            }
+
+            /* 手機版文字顏色恢復原本設定 */
+            .project-description-left-text,
+            .project-description-right,
+            .project-info-list li,
+            .video-description {
+                color: rgba(255, 255, 255, 1) !important;
+            }
+
+
         }
     </style>
 </head>
 <body>
+    <!-- 背景覆蓋層 -->
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
@@ -824,26 +935,26 @@
             <span class="ripple-circle"></span>
         </button>
         <div class="hamburger-menu">
-            <div class="menu-circle"></div>
-            ㋡
+            <img src="../icon/face_icon.png" alt="face icon">
         </div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -854,52 +965,47 @@
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">Calm the Code</h2>
+                <h2 class="project-title">Interactive Table </h2>
+                <div class="project-subtitle">互動光桌</div>
+                
                 <div class="project-description">
                     <div class="project-description-left">
                         <div class="project-description-left-text">
-                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                            如果哀傷能化為美麗，那大概就是眼前這片溫柔飄落的花海吧。創作原型，是被油花污染的海綿寶寶天空。觀眾可以伸出手去阻擋"油花污染的掉落"，也可以放置"電風扇"模型，將油花吹散。但是當油花布滿整個畫面時，遊戲便結束。一起拯救海洋吧!
                         </div>
                         
-                        <!-- 嵌入左側視頻 -->
-                        <div class="embedded-video">
-                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/KJjZKxrypKY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                        
                         
                         <!-- 嵌入左側照片 -->
                         <div class="embedded-image">
-                            <img src="DSC09069.jpg" alt="展場照片" width="100%">
+                            <img src="圖.png" alt="展場照片" width="100%">
                         </div>
                         
                         <!-- 作品資訊 -->
                         <ul class="project-info-list">
-                            <li>-使用軟體 : touchdesigner</li>
-                            <li>-設計年分 : 2024 </li>
-                            <li>-製作團隊 : 施亦恬、陳柏安   </li>
+                            <li>-使用軟體 : unity open cv</li>
+                            <li>-設計年分 : 2025 </li>
+                            <li>-製作團隊 : 施亦恬 </li>
                             <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
-                            <li>-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</li>
-                            
+                            <li>-作品材質、設備 : 投影機、網路攝影機</li>  
                         </ul>
                     </div>
                     <div class="project-description-right">
-                        Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        If sadness can be transformed into beauty, it would probably be the gentle sea of ​​falling flowers in front of us. The original prototype is the sky of SpongeBob SquarePants polluted by oil. The audience can reach out to block the "falling of oil pollution" or place an "electric fan" model to blow away the oil. But when the oil fills the entire screen, the game is over. Let's save the ocean together!
                         
-                        <!-- 嵌入視頻 -->
+                        <!-- 嵌入影片 -->
                         <div class="embedded-video">
-                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/nNh6GiptSLs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/NypGnVNjuCI?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         
-                        <!-- 嵌入右側照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09330.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 視頻說明文字 -->
-                        <div class="video-description">
-                            這個項目旨在探索數位媒體如何影響我們日常生活的感知體驗。透過結合視覺藝術和互動設計，我們創造了一個能夠引起觀眾情感共鳴的沉浸式環境。影片中展示的作品融合了傳統美學與現代技術，呈現出獨特的視覺語言。整個創作過程歷時六個月，期間團隊不斷調整和優化每個細節，確保最終呈現出的作品能夠準確傳達我們的理念。
-                            <br><br>
-                            在技術層面，我們使用了多種創新方法來實現預期效果。特別是在顏色處理和動態變化方面，我們嘗試了多種組合，最終選擇了最能表達情感張力的設計。這個項目不僅展示了技術可能性，更重要的是探討了藝術與科技融合所能創造的新型表達方式。我們希望觀眾能夠從中感受到數位媒體藝術的無限可能性。
-                        </div>
+                        <!-- 作品資訊 -->
+                        <ul class="project-info-list">
+                            <li>-Software used: Unity Open CV</li>
+                            <li>-Design year: 2025 </li>
+                            <li>-Production team: Shi Yitian </li>
+                            <li>-Projects in charge: Programming, interactive design, visual design</li>
+                            <li>-Material and equipment used: Projector, webcam</li>  
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -991,9 +1097,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -1041,7 +1152,6 @@
         });
     </script>
     
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
+
 </body>
 </html> 

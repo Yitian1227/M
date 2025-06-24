@@ -34,6 +34,7 @@
   will-change: transform;
   transform: translateZ(0);
   transition: all 1.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+  background-color: #0D05F2; /* 影片背景色 */
 }
 
 .frame {

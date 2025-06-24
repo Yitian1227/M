@@ -75,6 +75,7 @@
                 border: none;
                 outline: none;
                 transform: none;
+                text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
             }
 
             /* 左側背景色塊 */
@@ -175,6 +176,7 @@
                 border: none;
                 outline: none;
                 transform: none;
+                text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
             }
         }
 
@@ -223,7 +225,7 @@
 
         .description {
             font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 1);
             max-width: 300px;
             font-family: "Kantumruy Pro", sans-serif;
             font-optical-sizing: auto;
@@ -307,6 +309,12 @@
                 border: none;
                 outline: none;
                 transform: none;
+                text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+                transition: opacity 0.3s ease;
+            }
+
+            .hamburger-menu.active {
+                opacity: 0;
             }
 
             /* 右側藍色條 */
@@ -377,13 +385,9 @@
                 border-color: #ffffff;
             }
             
-            .container.photo-section .divider {
-                background-color: rgba(255, 255, 255, 0.3);
-            }
+            
 
-            .container:not(.photo-section) .divider {
-                background-color: rgba(255, 255, 255, 0.3);
-            }
+            
             
             .container::before {
                 display: none;
@@ -505,6 +509,7 @@
                 font-size: 3.5rem;
                 margin: 0;
                 animation: rotate 15s linear infinite;
+                text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
             }
 
             @keyframes rotate {
@@ -582,6 +587,14 @@
                 -webkit-font-smoothing: antialiased;
                 font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
                 text-rendering: geometricPrecision;
+                background-color: #0D05F2;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
             }
 
             .photo-item .date-text .arrow {
@@ -591,7 +604,18 @@
             }
 
             .container.photo-section .photo-item .arrow {
-                color: #000000;
+                color: #ffffff;
+                background-color: #0D05F2;
+            }
+
+            .close-button {
+                top: 80px;
+                right: 30px;
+                font-size: 2.5rem;
+            }
+
+            .menu-overlay {
+                padding-top: 60px;
             }
         }
         
@@ -836,6 +860,14 @@
             font-weight: normal;
             transform: scaleX(0.7);
             display: inline-block;
+            background-color: #0D05F2;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
         }
 
         .photo-item .featured-text {
@@ -847,7 +879,7 @@
             letter-spacing: 0.05em;
             margin-bottom: 0.15rem;
             text-align: left;
-            padding-left: 0;
+            padding-top: 0.5rem;
             order: 1;
         }
 
@@ -891,9 +923,13 @@
             }
 
             .divider {
-                height: 2px;
+                height: 6px;
                 width: 100%;
                 margin: 1.5rem auto 0.5rem auto;
+                background-color: transparent;
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='6' viewBox='0 0 60 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 3 Q15 0 30 3 T60 3' stroke='%23ffffff' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+                background-repeat: repeat-x;
+                background-position: center;
             }
 
             .photo-item {
@@ -907,6 +943,11 @@
                 margin-top: 0;
             }
 
+            .photo-item a {
+                position: relative;
+                display: block;
+            }
+
             .photo-item img {
                 border-radius: 4px;
                 width: 100%;
@@ -917,6 +958,18 @@
                 line-height: 1.1;
                 letter-spacing: 0.02em;
                 padding-left: 0;
+            }
+
+            .photo-item .arrow {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                margin-left: 0;
+                z-index: 10;
+            }
+
+            .photo-item .featured-text {
+                color: #ffffff;
             }
         }
 
@@ -934,6 +987,71 @@
 
         .menu-overlay.show {
             right: 0;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 767px) {
+            .menu-overlay {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .menu-items {
+                padding: 120px 20px 40px;
+                min-height: 100%;
+                height: auto;
+                justify-content: flex-start;
+                position: relative;
+            }
+
+            .menu-items a {
+                margin: 8px 0;
+                padding: 8px 20px;
+            }
+
+            .menu-items .social-buttons {
+                margin-top: 30px;
+                padding-bottom: 30px;
+            }
+
+            .close-button {
+                position: absolute;
+                top: 120px;
+                right: 30px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .menu-overlay {
+                width: 400px;
+            }
         }
 
         .menu-items {
@@ -1154,7 +1272,7 @@
         .scrolling-text {
             font-family: "Kantumruy Pro", sans-serif;
             font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 1);
             text-align: left;
             margin: 1rem 0;
             line-height: 1.6;
@@ -1164,6 +1282,7 @@
             font-optical-sizing: auto;
             font-weight: 400;
             font-style: normal;
+            
         }
 
         /* 在亮色模式下的文字顏色 */
@@ -1191,7 +1310,8 @@
             body.light-mode .container .photo-item .date-text,
             body.light-mode .container .photo-item .featured-text,
             body.light-mode .container .photo-item .arrow {
-                color: #000000;
+                color: #ffffff;
+                background-color: #0D05F2;
             }
 
             body.light-mode .container .photo-item .date-text {
@@ -1199,11 +1319,12 @@
             }
 
             body.light-mode .container .photo-item .featured-text {
-                color: rgba(0, 0, 0, 0.7);
+                color: #ffffff;
             }
 
             body.light-mode .container .divider {
-                background-color: rgba(0, 0, 0, 0.3);
+                background-color: transparent;
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='6' viewBox='0 0 60 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 3 Q15 0 30 3 T60 3' stroke='%23000000' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             }
 
             body.light-mode .description p {
@@ -1214,15 +1335,79 @@
                 color: #000000;
             }
         }
+
+        /* 添加光暈動畫效果 */
+        .hamburger-menu::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #0D05F2, #45B7D1, #4ECDC4);
+            filter: blur(15px);
+            opacity: 0.8;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.95);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .menu-overlay {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .menu-items {
+                padding: 120px 20px 40px;
+                min-height: 100%;
+                height: auto;
+                justify-content: flex-start;
+            }
+
+            .menu-items a {
+                margin: 8px 0;
+                padding: 8px 20px;
+            }
+
+            .menu-items .social-buttons {
+                margin-top: 30px;
+                padding-bottom: 30px;
+            }
+
+            .close-button {
+                position: absolute;
+                top: 120px;
+                right: 30px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <div class="hamburger-menu" style="font-size: 4rem;">
-            :-) 
+        <div class="hamburger-menu" style="font-size: 4rem; position: relative;">
+            <div style="width: 60px; height: 60px; background-color: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;"></div>
+            <img src="icon/face_icon.png" alt="face icon" style="width: 60px; height: 60px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         </div>
     </div>
     <div class="menu-overlay">
+        <div class="close-button">×</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
             <a href="newpage1" class="project-item">Calm the Code</a>
@@ -1255,6 +1440,8 @@
                     <div>
                         <div class="divider"></div>
                         <p>
+                            歡迎來到我的作品集網站! 希望你享受每一個作品! 也請不用害羞地和我交流吧、或在contact區畫畫給我! <br>
+                            <br>
                             Welcome to yitiann's portfolio. I hope you have fun and enjoy it. Everyone can draw a picture for me in the contact me area.
                             <br>
                             
@@ -1275,71 +1462,76 @@
                             </div>
                         </div>
                         
-                        <div class="divider"></div>
+                        
                         
                         <div class="scrolling-text" id="scrolling-text">
-                            texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext
+                            試著把滑鼠懸停在影片上吧!
+                            <br>
+                            或是點選笑臉按鈕
+                            <br>
+                            ☆★ღ♡展開選單!㋡
+                            9張照片
                         </div>
 
-                        <!-- 照片展示區域 -->
+                        <!-- 9張照片 -->
                         <div class="photo-gallery">
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">OPEN CV 互動光桌</div>
                                 <a href="newpage1">
-                                    <img src="home png/page/1.png" alt="Page 1">
+                                    <img src="home png/page/封面15.jpg" alt="Page 1">
                                 </a>
-                                <div class="project-text">Calm the Code</div>
+                                <div class="project-text">Interactive Light Table</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">手部偵測 互動魔法書</div>
                                 <a href="newpage2">
-                                    <img src="home png/page/2.png" alt="Page 2">
+                                    <img src="home png/page/魔法書封面.jpg" alt="Page 2">
                                 </a>
-                                <div class="project-text">Superstitious Interspace</div>
+                                <div class="project-text">Magic Book</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">光達感應 互動牆</div>
                                 <a href="newpage3">
-                                    <img src="home png/page/3.png" alt="Page 3">
+                                    <img src="home png/page/光達 封面.png" alt="Page 3">
                                 </a>
-                                <div class="project-text">Verbal Flow</div>
+                                <div class="project-text">Quanda Wall</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">Touchdesigner 互動箱</div>
                                 <a href="newpage4">
                                     <img src="home png/page/4.png" alt="Page 4">
                                 </a>
-                                <div class="project-text">Fly in Optical Road</div>
+                                <div class="project-text">Interactive Box</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">unity+arduino 天氣股市</div>
                                 <a href="newpage5">
                                     <img src="home png/page/5.png" alt="Page 5">
                                 </a>
-                                <div class="project-text">Market Weathering</div>
+                                <div class="project-text">Market Weather</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">arduino 水相占卜</div>
                                 <a href="newpage6">
                                     <img src="home png/page/6.png" alt="Page 6">
                                 </a>
-                                <div class="project-text">Relational Shadows</div>
+                                <div class="project-text">ask water</div>
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">聯絡方式</div>
                                 <a href="newpage7">
                                     <img src="home png/page/7.png" alt="Page 7">
                                 </a>
@@ -1347,8 +1539,8 @@
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2025<div class="arrow">→</div></div>
+                                <div class="featured-text">關於我</div>
                                 <a href="newpage8">
                                     <img src="home png/page/8.png" alt="Page 8">
                                 </a>
@@ -1356,8 +1548,8 @@
                             </div>
                             <div class="divider" style="margin-top: 3.5rem;"></div>
                             <div class="photo-item">
-                                <div class="date-text">Until September 2025<div class="arrow">→</div></div>
-                                <div class="featured-text">Exhibition</div>
+                                <div class="date-text">2024-2025<div class="arrow">→</div></div>
+                                <div class="featured-text">過去的作品 和 近期研究</div>
                                 <a href="newpage9">
                                     <img src="home png/page/9.png" alt="Page 9">
                                 </a>
@@ -1444,15 +1636,15 @@
 
         // 設定懸停文字
         const hoverTexts = {
-            'newpage1': '111111111111111111111111111111111111111111111111111111111111111111111111111111111',
-            'newpage2': '222222222222222222222222222222222222222222222222222222222222222222222222222222222',
-            'newpage3': '333333333333333333333333333333333333333333333333333333333333333333333333333333333',
-            'newpage4': '444444444444444444444444444444444444444444444444444444444444444444444444444444444',
-            'newpage5': '555555555555555555555555555555555555555555555555555555555555555555555555555555555',
-            'newpage6': '666666666666666666666666666666666666666666666666666666666666666666666666666666666',
-            'newpage7': '777777777777777777777777777777777777777777777777777777777777777777777777777777777',
-            'newpage8': '888888888888888888888888888888888888888888888888888888888888888888888888888888888',
-            'newpage9': '999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+            'newpage1': '作品概念: 互動光桌。你聽說嗎 海綿寶寶裡的美麗花朵天空，其實是石油汙染，在這裡，這些漂亮的花朵會不斷掉落，觀眾需要拿起小模型去阻擋，或是用手撥走這些花來保護海洋，甚至也可以放入"電風扇"小模型，將石油花朵全部吹走，而當花朵布滿整個畫面時 遊戲便會結束。',
+            'newpage2': '作品概念: 小時候總相信自己擁有魔法，而咒語就藏在書頁的字裡行間。現在，觸碰書本就能夠喚醒那些沉睡的咒語! 只要觸碰特定文字，像是平安、一帆風順...這些文字就彷彿被召喚般、緩緩浮起，寫下最溫柔的祝福詩篇。',
+            'newpage3': '作品概念: 一起來看看吧! 結合光達感測與Unity技術，打造一座充滿驚喜的卡通電梯。觀眾可觸控按鈕啟動電梯，穿梭於不同樓層，每一層樓都結合卡通經典的登場方式或口頭禪來做互動',
+            'newpage4': '作品概念: 這是一個互動箱，四面有不同故事串成一句俚語，轉動箱子時故事才會繼續，當轉到原點時，故事又會重新開始，就像一個輪迴。一起來猜猜謎語吧',
+            'newpage5': '作品概念: 《或許 天氣有一天也不會是客觀的，在未來某一天淪為一種政治手段，也不無可能。這項作品是一場交易，是老百姓和無形大手之間的拉鋸戰， 使用者需要不斷投入硬幣來讓糟糕的天氣好轉，  投入越多現金，越能換來雨過天晴，但過不了多久又會烏雲漫天....天氣的波動如同股市，也是一種平民百姓與無形大手間的拉扯。 若想讓波動產生變化，請以金錢來交換。',
+            'newpage6': '作品概念: 《水相占卜》是一場超脫現實的預言之旅。觀者凝神向水面並誠心詢問心中的疑惑，再將指尖輕觸水面，剎那間，粼粼波光間即刻浮現「YES」或「NO」的答案。命運的箴言便隨波影顯現。',
+            'newpage7': '這裡有聯繫方式。不論有任何想法都和我連絡吧，透過LINE或是信箱、甚至你可以藉由裡頭的繪圖板畫圖給我，也非常歡迎跨領域合作邀約，即使不一定幫上忙，但在這裡是個可以聊聊的地方。',
+            'newpage8': '關於我。關於我的資訊可以在這裡找到，我在哪裡畢業、擅長領域等。',
+            'newpage9': '近期研究。這裡放了我過去的作品，或是正在嘗試的小創作、感興趣的領域研究等，不一定完美，我想留有餘地給不完美，但或許足夠好玩。'
         };
         
         // 原始文字
@@ -1711,6 +1903,13 @@
                     hamburgerMenu.classList.remove('active');
                     menuOverlay.classList.remove('show');
                 }
+            });
+
+            // 添加關閉按鈕功能
+            const closeButton = document.querySelector('.close-button');
+            closeButton.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('active');
+                menuOverlay.classList.remove('show');
             });
         });
     </script>

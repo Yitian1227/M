@@ -15,18 +15,46 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
             background-color: #141414;
-            color: rgba(255, 255, 255, 0.8);
+            background-image: url('水.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* 背景效果 */
+        .background-overlay {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('水.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(3px) brightness(0.9);
+            z-index: -2;
         }
 
         /* 左側藍色線條 */
@@ -87,14 +115,15 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
             background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 1);
             color: white;
             padding: 0;
             width: 80px;
@@ -143,7 +172,7 @@
             border-radius: 50%;
             transform: translate(-50%, -50%) scale(0);
             background-color: transparent;
-            border: 2px solid rgb(0, 0, 0); /* Night模式下為白色 */
+            border: 2px solid rgb(255, 255, 255);
             opacity: 0;
             pointer-events: none;
             z-index: 2;
@@ -185,18 +214,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,20 +240,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -247,7 +290,7 @@
             }
             
             .project-title {
-                font-size: 8rem;
+                font-size: 2rem;
             }
         }
 
@@ -264,6 +307,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -277,17 +326,32 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7rem;
+            font-size: 6rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
         }
 
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .project-subtitle {
+                font-size: 5rem;
+            }
+        }
+
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -295,6 +359,7 @@
 
         .project-description-left {
             flex: 3;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
 
         .project-description-right {
@@ -305,6 +370,10 @@
             .project-description {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .project-subtitle {
+                margin: 0 0 3rem 0;
             }
             
             /* 手機版時，所有媒體元素都是100%寬度 */
@@ -421,13 +490,13 @@
         .detail-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .detail-content {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
         }
 
         /* 影片控制開關樣式 */
@@ -440,7 +509,7 @@
         .control-label {
             margin-right: 10px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
         
         .toggle { 
@@ -473,58 +542,13 @@
             margin-left: 45px; 
         }
         
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
 
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
+
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            border-color: rgb(255, 255, 255);
         }
 
         /* 選單覆蓋層 */
@@ -536,7 +560,72 @@
             height: 100vh;
             background-color: white;
             transition: right 0.3s ease-in-out;
-            z-index: 1000;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .menu-overlay.show {
+            right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 10000;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .menu-overlay {
+                width: 100%;
+                right: -100%;
+            }
+
+            .menu-overlay.show {
+                right: 0;
+            }
+
+            .close-button {
+                position: fixed;
+                top: 2.5rem;
+                right: 2rem;
+                z-index: 10000;
+            }
+
+            .hamburger-menu {
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
         }
 
         @media (min-width: 768px) {
@@ -548,10 +637,6 @@
             .menu-overlay.show {
                 right: 0;
             }
-        }
-
-        .menu-overlay.show {
-            right: 0;
         }
 
         .menu-items {
@@ -717,36 +802,39 @@
         .menu-divider {
             width: 100%;
             height: 2px;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 1);
             margin: 0.5rem 0;
         }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -758,119 +846,51 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Relational Shadows</h2>
+                <div class="project-subtitle">水相占卜</div>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
-                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        <div style="margin-top: 1rem;">
+                            《水相占卜》是一場超脫現實的預言之旅。觀者凝神向水面並誠心詢問心中的疑惑，再將指尖輕觸水面，剎那間，粼粼波光間即刻浮現「YES」或「NO」的答案。命運的箴言便隨波影顯現。
                         </div>
+                        
+                        <!-- 添加左側照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="水.png" alt="Relational Shadows" width="100%">
+                        </div>
+                        
+                        <!-- 添加作品信息 -->
+                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
+                            <ul class="project-info-list">
+                                <li>-使用軟體 : TouchDesigner</li>
+                                <li>-設計年分 : 2025 </li>
+                                <li>-製作團隊 : 施亦恬 </li>
+                                <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                                <li>-作品材質、設備 : 投影機、網路攝影機</li>  
+                            </ul>
+                        </div>
+                        
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
-                            Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        <div style="margin-top: 1rem;">
+                            "Ask water" is a prophetic journey beyond reality. The viewer focuses on the water and sincerely asks the doubts in his heart, then touches the water surface with his fingertips. In an instant, the answer "YES" or "NO" will appear in the shimmering waves. The motto of fate will appear with the waves.
                         </div>
-                    </div>
-                </div>
-            </div>
+                        
+                        <!-- 嵌入右側視頻 -->
+                        <div class="embedded-video" style="margin-top: 2rem;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/yQSta563oZM?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            當手指靠近時，粒子會聚集環繞，觸摸後則即時投影占卜結果，實現宛如魔法般的水面預言。
+                            <br>
+                            <ul class="project-info-list">
+                                <li>-Software used: TouchDesigner</li>
+                                <li>-Design year: 2025 </li>
+                                <li>-Production team: Shi Yitian </li>
+                                <li>-Projects in charge: Programming, interactive design, visual design</li>
+                                <li>-Material and equipment used: Projector, webcam</li>  
+                            </ul>
+                        </div>
 
-            <!-- 添加媒體內容，保持3:7分割 -->
-            <div class="project-media">
-                <!-- 添加6.mp4在最上方，100%呈現 -->
-                <div class="media-item" style="margin-bottom: 4rem;">
-                    <video width="100%" controls>
-                        <source src="6.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                
-                <div style="display: flex; flex-direction: row; gap: 3rem;">
-                    <!-- 左側影片 (30%) -->
-                    <div style="flex: 3;">
-                        <div class="media-item">
-                            <video width="100%" controls>
-                                <source src="2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <!-- 添加說明文字 -->
-                        <div class="image-caption" style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                            光影互動設計 - 通過投影與實體物件的結合，創造出豐富的視覺層次與互動體驗
-                        </div>
-                    </div>
-                    
-                    <!-- 右側照片 (70%) -->
-                    <div style="flex: 7;">
-                        <div class="media-item">
-                            <img src="7.jpg" alt="Relational Shadows" width="100%">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 添加第二組媒體內容，保持3:7分割 -->
-                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
-                    <!-- 左側說明文字和照片 (30%) -->
-                    <div style="flex: 3;">
-                        <div class="image-caption" style="margin-top: -10rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                            關係陰影的視覺呈現 - 通過光影變化展現人際關係中的微妙互動與情感流動，探索空間中的無形連結
-                        </div>
-                        
-                        <!-- 添加兩張照片 -->
-                        <div class="media-item" style="margin-top: 1rem;">
-                            <img src="9.jpg" alt="Relational Shadows" width="100%">
-                        </div>
-                        
-                        <div class="media-item" style="margin-top: 0.5rem;">
-                            <img src="11.jpg" alt="Relational Shadows" width="100%">
-                        </div>
-                        
-                        <!-- 添加底部說明文字 -->
-                        <div class="image-caption" style="margin-top: 1.5rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                            空間互動設計 - 通過光影與實體物件的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
-                        </div>
-                    </div>
-                    
-                    <!-- 右側影片 (70%) -->
-                    <div style="flex: 7;">
-                        <div class="media-item">
-                            <video width="100%" controls>
-                                <source src="6.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 添加第三組媒體內容，保持3:7分割 -->
-                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
-                    <!-- 左側空白 (30%) -->
-                    <div style="flex: 3;">
-                        <!-- 添加左下角說明文字 -->
-                        <div class="image-caption" style="margin-top: 2rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                            光影與空間的對話 - 通過投影技術與實體空間的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
-                            創造出豐富的視覺層次與互動體驗，
-                            讓觀眾能夠在空間中感受到人際關係的微妙變化
-                        </div>
-                        
-                        <!-- 添加項目資訊 -->
-                        <div class="image-caption" style="margin-top: 2rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6;">
-                            <br>
-                            <br>
-                            <br>
-                            <div style="margin-bottom: 0.5rem;">-使用軟體 : touchdesigner</div>
-                            <div style="margin-bottom: 0.5rem;">-設計年分 : 2024</div>
-                            <div style="margin-bottom: 0.5rem;">-製作團隊 : 施亦恬、陳柏安</div>
-                            <div style="margin-bottom: 0.5rem;">-負責項目 : 程式設計、互動設計、視覺設計</div>
-                            <div style="margin-bottom: 0.5rem;">-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</div>
-                        </div>
-                    </div>
-                    
-                    <!-- 右側影片 (70%) -->
-                    <div style="flex: 7;">
-                        <div class="media-item">
-                            <video width="100%" controls>
-                                <source src="1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -953,9 +973,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -1002,8 +1027,5 @@
             }
         });
     </script>
-    
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
 </body>
 </html> 

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio - Project 6 Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/theme-styles.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 左側藍色線條 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        @media (max-width: 767px) {
+            body::before {
+                display: none;
+            }
+        }
+
+        /* 右側藍色線條 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+
+        /* 左上角藍色圓圈 */
+        .blue-circle {
+            content: '';
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 400px;
+            height: 400px;
+            background-color: #0D05F2;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 767px) {
+            .blue-circle {
+                width: 300px;
+                height: 300px;
+                top: 20px;
+                left: 20px;
+                filter: blur(40px);
+            }
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 767px) {
+            .close-btn {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            margin-top: 6rem;
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        .project-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .project-header {
+            margin-bottom: 2rem;
+        }
+
+        .project-title {
+            font-family: "Tangerine", cursive;
+            font-size: 6rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 75%;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .project-description {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        .project-description-left {
+            flex: 3;
+        }
+
+        .project-description-right {
+            flex: 7;
+        }
+
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            /* 手機版時，所有媒體元素都是100%寬度 */
+            .project-media > div {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+            }
+            
+            .project-media > div > div {
+                flex: 1 !important;
+                width: 100% !important;
+            }
+            
+            .media-item {
+                width: 100% !important;
+            }
+            
+            .media-item img,
+            .media-item video,
+            .media-item iframe {
+                width: 100% !important;
+                max-height: none !important;
+            }
+            
+            /* 手機版時，調整光影與空間的對話文字的margin-top */
+            .project-media > div:nth-child(3) > div:first-child > div:first-child {
+                margin-top: 2rem !important;
+            }
+        }
+
+        .project-media {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+        }
+
+        .media-item {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .media-item img,
+        .media-item video,
+        .media-item iframe {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            cursor: pointer;
+        }
+
+        .youtube-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background-color: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .play-button:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .youtube-container:hover .play-button {
+            background-color: red;
+        }
+
+        .project-details {
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 影片控制開關樣式 */
+        .video-control {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        
+        .control-label {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .toggle { 
+            width: 80px; 
+            height: 40px; 
+            border-radius: 20px; 
+            background: #333; 
+            box-shadow: inset 2px 2px 5px #222, inset -2px -2px 5px #444; 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        
+        .circle { 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            background: white; 
+            box-shadow: 2px 2px 5px #222, -2px -2px 5px #444; 
+            margin-left: 5px; 
+            transition: 0.3s; 
+        }
+        
+        .toggle.active { 
+            background: #666; 
+        }
+        
+        .toggle.active .circle { 
+            margin-left: 45px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-circle"></div>
+    
+    <!-- Close button -->
+    <button class="close-btn" onclick="window.location.href='index.html'" title="關閉">&times;</button>
+
+    <div class="content">
+        <div class="project-container">
+            <div class="project-header">
+                <h2 class="project-title">Relational Shadows</h2>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div style="margin-top: 0rem;">
+                            本次光雕投影計畫旨在結合藝術與科技，透過細緻的視覺設計，為即將到來的節日增添歡樂與溫馨氛圍。繽紛的燈光動畫、象徵祝福與團聚的圖像符號，以及與觀眾情感連結的故事畫面，搭配動態音效與場域氛圍，打造一場富有節慶感的沉浸式光雕體驗。<br>
+                            <br>
+                            整體視覺效果設計靈感來自對「節日」的抽象想像——不再只是具象的節慶符號，而是聚焦於人們在節日中所感受到的情緒：期待、溫柔、喜悅與片刻的停留。我們將透過流動的光影、如煙花般綻放的粒子特效，以及如星雲般的色彩漸變，構築一段沉浸式的視覺旅程，彷彿走進一場在夜空下悄然展開的夢。
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div style="margin-top: 0rem;">
+                            This projection mapping project aims to combine art and technology to add joy and warmth to the upcoming festival through meticulous visual design. Colorful light animations, graphic symbols that symbolize blessing and reunion, and story scenes that connect with the audience's emotions, combined with dynamic sound effects and field atmosphere, create an immersive light sculpture experience with a festive feel.<br><br>
+                            The overall visual design is inspired by the abstract imagination of "festival" - no longer just a concrete festival symbol, but focuses on the emotions people feel during the festival: anticipation, tenderness, joy and a moment of stay. We will construct an immersive visual journey through flowing light and shadow, particle effects that bloom like fireworks, and color gradients like nebulas, as if walking into a dream quietly unfolding under the night sky.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 添加媒體內容，保持3:7分割 -->
+            <div class="project-media">
+                <!-- 添加6.mp4在最上方，100%呈現 -->
+                <div class="media-item" style="margin-bottom: 0rem;">
+                    <iframe width="100%" height="600" src="https://www.youtube.com/embed/y-v4eIIgN8A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+                <div style="display: flex; flex-direction: row; gap: 0rem;">
+                    <!-- 左側影片 (30%) -->
+                    <div style="flex: 3;">
+                        <div class="media-item">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/kochlNmcyV0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <!-- 添加說明文字 -->
+                        <div class="image-caption" style="margin-top: 0rem; font-size: 0.8rem; line-height: 1.4;">
+                            <br>
+                            光影互動設計 - 通過投影與實體物件的結合，創造出豐富的視覺層次與互動體驗。
+                            <br>
+                            <br>
+                            Light and shadow interactive design - through the combination of projection and physical objects, create rich visual levels and interactive experience
+                        </div>
+                    </div>
+                    
+                    <!-- 右側照片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <img src="../newpage6/7.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加第二組媒體內容，保持3:7分割 -->
+                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
+                    <!-- 左側說明文字和照片 (30%) -->
+                    <div style="flex: 3;">
+                        
+                        
+                        <!-- 添加兩張照片 -->
+                        <div class="media-item" style="margin-top: 1rem;">
+                            <img src="../newpage6/9.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                        
+                        <div class="media-item" style="margin-top: 0.5rem;">
+                            <img src="../newpage6/11.jpg" alt="Relational Shadows" width="100%">
+                        </div>
+                        
+                        <!-- 添加底部說明文字 -->
+                        <div class="image-caption" style="margin-top: 1.5rem; font-size: 0.8rem; line-height: 1.4;">
+                            空間互動設計 - 測試光影與實體物件的結合。
+                        </div>
+                    </div>
+                    
+                    <!-- 右側影片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/wIrVB_aNM_Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加第三組媒體內容，保持3:7分割 -->
+                <div style="display: flex; flex-direction: row; gap: 3rem; margin-top: 1rem;">
+                    <!-- 左側空白 (30%) -->
+                    <div style="flex: 3;">
+                        <!-- 添加左下角說明文字 -->
+                        <div class="image-caption" style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.4;">
+                            光影與空間的對話 - 通過投影技術與實體空間的結合，創造出豐富的視覺層次與互動體驗，讓觀眾能夠在空間中感受到人際關係的微妙變化
+                            創造出豐富的視覺層次與互動體驗，
+                            讓觀眾能夠在空間中感受到人際關係的微妙變化
+                        </div>
+                        
+                        <!-- 添加項目資訊 -->
+                        <div class="image-caption" style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.6;">
+                            <br>
+                            <br>
+                            <br>
+                            <div style="margin-bottom: 0.5rem;">-使用軟體 : touchdesigner</div>
+                            <div style="margin-bottom: 0.5rem;">-創作年分 : 2024</div>
+                            <div style="margin-bottom: 0.5rem;">-使用技術 : 程式設計、互動設計、視覺設計</div>
+                            <div style="margin-bottom: 0.5rem;">-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右側影片 (70%) -->
+                    <div style="flex: 7;">
+                        <div class="media-item">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/vDduZRUrxtY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // YouTube 延遲載入
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('youtube-player-container');
+            let youtubePlayer = null;
+            let videoPlaying = false;
+            
+            if (container) {
+                const videoId = container.getAttribute('data-video-id');
+                
+                container.addEventListener('click', function() {
+                    // 載入 YouTube API
+                    if (!window.YT) {
+                        // 載入 YouTube API
+                        const tag = document.createElement('script');
+                        tag.src = "https://www.youtube.com/iframe_api";
+                        const firstScriptTag = document.getElementsByTagName('script')[0];
+                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                        
+                        window.onYouTubeIframeAPIReady = function() {
+                            createYouTubePlayer();
+                        };
+                    } else {
+                        createYouTubePlayer();
+                    }
+                    
+                    function createYouTubePlayer() {
+                        // 清空容器
+                        container.innerHTML = '';
+                        
+                        // 創建新的 div 用於 YouTube 播放器
+                        const playerDiv = document.createElement('div');
+                        playerDiv.id = 'youtube-player';
+                        container.appendChild(playerDiv);
+                        
+                        // 創建 YouTube 播放器
+                        youtubePlayer = new YT.Player('youtube-player', {
+                            height: '100%',
+                            width: '100%',
+                            videoId: videoId,
+                            playerVars: {
+                                'rel': 0,
+                                'controls': 1,
+                                'autoplay': 1  // 默認自動播放
+                            },
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
+                    
+                    function onPlayerReady(event) {
+                        // 點擊後自動播放
+                        event.target.playVideo();
+                        videoPlaying = true;
+                    }
+                    
+                    function onPlayerStateChange(event) {
+                        // 更新影片狀態
+                        if (event.data == YT.PlayerState.PLAYING) {
+                            videoPlaying = true;
+                        } else if (event.data == YT.PlayerState.PAUSED || 
+                                  event.data == YT.PlayerState.ENDED || 
+                                  event.data == YT.PlayerState.BUFFERING) {
+                            videoPlaying = false;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <!-- 引入主題控制器 -->
+    <script src="../js/theme-controller.js"></script>
+</body>
+</html> 

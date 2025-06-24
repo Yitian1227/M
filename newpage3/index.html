@@ -15,18 +15,51 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
             background-color: #141414;
-            color: rgba(255, 255, 255, 0.8);
+            background-image: url('光達 封面.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        /* 背景效果 */
+        .background-overlay {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('光達 封面.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(3px) brightness(1);
+            z-index: -2;
         }
 
         /* 左側藍色線條 */
@@ -87,14 +120,16 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
+            z-index: 5;
         }
 
         .back-button {
             background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 1);
             color: white;
             padding: 0;
             width: 80px;
@@ -185,18 +220,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -217,37 +246,78 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
+        }
 
-            .page-title {
-                top: 65px;
-                right: 5px;
-                font-size: 1rem;
-                line-height: 40px;
-                z-index: 9999;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                margin: 0;
+        @media (min-width: 768px) {
+            .header {
+                padding: 3.5rem 2rem 2rem 3.5rem;
             }
-            
-            .project-title {
-                font-size: 8rem;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
             }
         }
 
@@ -264,6 +334,7 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            position: relative;
         }
 
         .project-container {
@@ -277,17 +348,48 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.5rem;
+            font-size: 8rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
         }
 
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .project-subtitle {
+                font-size: 5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .project-title {
+                font-size: 4rem;
+            }
+
+            .project-subtitle {
+                margin: 0 0 3rem 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;
+            }
+        }
+
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -295,10 +397,15 @@
 
         .project-description-left {
             flex: 3;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
 
         .project-description-right {
             flex: 7;
+        }
+
+        .project-info {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
 
         @media (max-width: 767px) {
@@ -394,13 +501,13 @@
         .detail-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .detail-content {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
         }
 
         /* 影片控制開關樣式 */
@@ -413,7 +520,7 @@
         .control-label {
             margin-right: 10px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
         
         .toggle { 
@@ -446,58 +553,13 @@
             margin-left: 45px; 
         }
 
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
 
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
+
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            border-color: rgb(255, 255, 255);
         }
 
         /* 選單覆蓋層 */
@@ -690,36 +752,64 @@
         .menu-divider {
             width: 100%;
             height: 2px;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 1);
             margin: 0.5rem 0;
+        }
+
+        /* 隱藏所有捲軸但保留滾動功能 */
+        * {
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
         }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -730,103 +820,52 @@
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">Verbal Flow</h2>
+                <h2 class="project-title">Quanda Wall</h2>
+                <div class="project-subtitle">光達 互動牆</div>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
-                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
-                        </div>
-                        
-                        <!-- 添加作品信息 -->
-                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">使用軟體:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">Processing, Arduino IDE</span>
-                            </div>
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">藝術團隊:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">Yitiann Shi</span>
-                            </div>
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">負責項目:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">概念發想、程式設計、硬體整合</span>
-                            </div>
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">設備器材:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">投影機、感應器、Arduino</span>
-                            </div>
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">作品媒材:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">互動投影、程式設計</span>
-                            </div>
-                            <div class="info-item" style="margin-bottom: 0.5rem;">
-                                <span style="font-weight: bold; color: rgba(255, 255, 255, 0.9);">作品年分:</span>
-                                <span style="color: rgba(255, 255, 255, 0.6);">2023</span>
-                            </div>
+                        <div style="margin-top: 1rem;">
+                            運用光達感測與Unity，打造一座通往童年回憶的互動電梯。觀眾可觸控按鈕，穿梭各個樓層。每層都有獨特互動，如幫派大星的搖搖馬投幣，或為辛普森家庭轉台。甚至還有搭電梯時的等待時光及配樂。
                         </div>
                         
                         <!-- 添加左側照片 -->
                         <div class="embedded-image" style="margin-top: 2rem;">
-                            <img src="字海.jpg" alt="字海照片" width="100%">
+                            <img src="光達 封面.png" alt="字海照片" width="100%">
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <!-- 作品資訊 -->
+                            <ul class="project-info-list">
+                                <li>-使用軟體 : touchdesigner</li>
+                                <li>-設計年分 : 2025 </li>
+                                <li>-製作團隊 : 施亦恬 </li>
+                                <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                                <li>-作品材質、設備 : 投影機、網路攝影機</li>  
+                            </ul>
                         </div>
                         
-                        <!-- 添加左側視頻說明文字 -->
-                        <div class="image-caption" style="margin-top: 2rem; margin-bottom: 1rem;">
-                            互動投影細節 - 作品利用精準的動態投影技術，創造出隨觀眾行為變化的視覺效果
-                        </div>
-                        
-                        <!-- 添加左側視頻 -->
-                        <div class="embedded-video" style="margin-top: 0;">
-                            <video controls autoplay muted loop width="100%">
-                                <source src="字海4.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        
-                        <!-- 添加左側第二張照片說明文字 -->
-                        <div class="image-caption" style="margin-top: 4rem; margin-bottom: 1rem;">
-                            作品空間整體視圖 - 展場中的光影和投影共同構成完整的沉浸式體驗環境
-                        </div>
-                        
-                        <!-- 添加左側第二張照片 -->
-                        <div class="embedded-image" style="margin-top: 0;">
-                            <img src="字海3.jpg" alt="字海3照片" width="100%">
-                        </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
-                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        <div style="margin-bottom: 2rem;">
+                            Using LiDAR sensing and Unity, we created an interactive elevator that takes you back to childhood memories. Visitors can touch buttons to travel through the floors. Each floor has unique interactions, such as coin-operated rocking horses for Peppa Pig or rotating channels for The Simpsons.
                         </div>
                         
-                        <!-- 添加本地視頻 -->
-                        <div class="embedded-video" style="margin-top: 2rem;">
-                            <video controls autoplay muted loop width="100%">
-                                <source src="剪輯版.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                        <!-- 嵌入右側視頻 -->
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/TT6ZaMAwwkw?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        
-                        <!-- 添加右側照片 -->
-                        <div class="embedded-image" style="margin-top: 2rem;">
-                            <img src="字海2.jpg" alt="字海2照片" width="100%">
-                        </div>
-                        
-                        <!-- 添加右側第二張照片 -->
-                        <div class="embedded-image" style="margin-top: 2rem;">
-                            <img src="字海5.jpg" alt="字海5照片" width="100%">
-                        </div>
+                            <!-- 作品資訊 -->
+                            <ul class="project-info-list">
+                                <li>-Software used: touchdesigner</li>
+                                <li>-Design year: 2025 </li>
+                                <li>-Production team: Shi Yitian </li>
+                                <li>-Projects in charge: Programming, interactive design, visual design</li>
+                                <li>-Material and equipment used: Projector, webcam</li>  
+                            </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="project-media">
-                
-                
-                <!-- 添加更多媒體項目 -->
-                <div class="media-item">
-                    <img src="../path/to/your/image.jpg" alt="">
-                </div>
-            </div>
+            
 
             <!-- 可以添加更多內容區塊 -->
         </div>
@@ -900,9 +939,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -950,7 +994,6 @@
         });
     </script>
     
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
+
 </body>
 </html> 

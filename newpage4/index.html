@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/theme-styles.css">
-    <script src="../js/theme-controller.js"></script>
     <style>
         html, body {
             margin: 0;
@@ -22,12 +21,34 @@
 
         body {
             background-color: #141414;
-            color: rgba(255, 255, 255, 0.8);
+            background-image: url('第一幕.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* 背景效果 */
+        .background-overlay {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('第一幕.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(0px) brightness(1);
+            z-index: -2;
         }
 
         /* 左側藍色線條 */
@@ -88,14 +109,15 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
             background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 1);
             color: white;
             padding: 0;
             width: 80px;
@@ -186,18 +208,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -218,37 +234,82 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
+        }
 
-            .page-title {
-                top: 65px;
-                right: 5px;
-                font-size: 1rem;
-                line-height: 40px;
-                z-index: 9999;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                margin: 0;
+        @media (min-width: 768px) {
+            .header {
+                padding: 3.5rem 2rem 2rem 3.5rem;
             }
-            
-            .project-title {
-                font-size: 8rem;
+
+            .hamburger-menu {
+                margin-left: 1rem;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
             }
         }
 
@@ -278,17 +339,42 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 5.5rem;
+            font-size: 3rem;  /* 手機版預設大小 */
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 85%;
             margin: 0 0 1.5rem 0;
         }
 
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;  /* 電腦版大小 */
+            }
+
+            .project-subtitle {
+                font-size: 5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .project-subtitle {
+                margin: 0 0 3rem 0;
+            }
+        }
+
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -351,13 +437,13 @@
         .media-text h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
+           
         }
 
         .media-text p {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.7);
+            
         }
 
         .media-image {
@@ -434,13 +520,13 @@
         .detail-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .detail-content {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
         }
 
         /* 影片控制開關樣式 */
@@ -453,7 +539,7 @@
         .control-label {
             margin-right: 10px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
         
         .toggle { 
@@ -486,58 +572,13 @@
             margin-left: 45px; 
         }
 
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
 
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
+
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            border-color: rgb(255, 255, 255);
         }
 
         /* 選單覆蓋層 */
@@ -733,33 +774,52 @@
             background-color: rgba(0, 0, 0, 0.3);
             margin: 0.5rem 0;
         }
+
+        /* 隱藏卷軸但保留滾動功能 */
+        .content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        /* 針對 Firefox */
+        .content {
+            scrollbar-width: none;
+        }
+        
+        /* 針對 IE 和 Edge */
+        .content {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -770,49 +830,49 @@
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">Fly in Optical Road</h2>
+                <h2 class="project-title">Story Box</h2>
+                <div class="project-subtitle">故事盒</div>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
-                    Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        <div style="margin-top: 1rem;">
+                            《故事盒》是一個故事翻轉箱。觀眾可自由翻轉箱子的四個面，每一面都會播放不同的動畫，並配有一句俚語解釋。四個面組合起來，便能完整呈現一個俚語故事。透過TouchDesigner偵測陀螺儀方向，加上OSC遠端控制動畫播放，動畫則以Blender建模呈現。
+                        </div>
+                        
+                        <!-- 添加左側照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="第一幕.jpg" alt="台南小巷" width="100%">
+                        </div>
+                        
+                        <!-- 添加作品信息 -->
+                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
+                            <ul class="project-info-list">
+                                <li>-使用軟體 : touchdesigner+blender</li>
+                                <li>-設計年分 : 2025 </li>
+                                <li>-製作團隊 : 施亦恬 </li>
+                                <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                                <li>-作品材質、設備 : 投影機</li>  
+                            </ul>
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
-                    Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        <div style="margin-top: 1rem;">
+                            Story Box is a story flip box. The audience can freely flip the four sides of the box, and each side will play a different animation with a slang explanation. The four sides are combined to present a complete slang story. The gyroscope direction is detected by TouchDesigner, and the animation playback is remotely controlled by OSC. The animation is modeled and presented in Blender.
+                        </div>
+                        
+                        <!-- 嵌入右側視頻 -->
+                        <div class="embedded-video" style="margin-top: 2rem;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/ryCANZHtO4Y?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
+                            <ul class="project-info-list">
+                                <li>-Software used: touchdesigner+blender</li>
+                                <li>-Design year: 2025 </li>
+                                <li>-Production team: Shi Yitian </li>
+                                <li>-Projects in charge: Programming, interactive design, visual design</li>
+                                <li>-Material and equipment used: Projector</li>  
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="project-media">
-                <!-- 添加視頻 -->
-                <div class="media-item">
-                    <video width="100%" controls>
-                        <source src="手機.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                
-                <!-- 左右分欄：左側文字，右側圖片 -->
-                <div class="media-row">
-                    <div class="media-text">
-                        <h3>台南小巷探索</h3>
-                        <p style="font-size: 1rem; line-height: 1.6; color: rgba(255, 255, 255, 0.6);">這張照片捕捉了台南傳統小巷的獨特氛圍，展現了台灣歷史文化的精髓。狹窄的巷道、斑駁的牆壁和傳統建築元素共同構成了一幅充滿故事感的畫面，讓人感受到時光流逝中的寧靜與美好。</p>
-                    </div>
-                    <div class="media-image">
-                        <img src="台南小巷.jpg" alt="台南小巷" width="100%">
-                    </div>
-                </div>
-                
-                <!-- 添加螢幕擷取畫面 -->
-                <div class="media-item">
-                    <img src="螢幕擷取畫面 (1).png" alt="螢幕擷取畫面" width="100%">
-                </div>
-                
-                <!-- 添加更多媒體項目 -->
-                <div class="media-item">
-                    <img src="../path/to/your/image.jpg" alt="">
                 </div>
             </div>
 
@@ -896,9 +956,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -946,7 +1011,6 @@
         });
     </script>
     
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
+
 </body>
 </html> 

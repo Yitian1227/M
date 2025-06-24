@@ -10,30 +10,60 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/theme-styles.css">
-    <script src="../js/theme-controller.js"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
+            background-image: url('天氣.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             background-color: #141414;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        /* 背景疊加層 */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('天氣.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(5px) brightness(0.8);
+            z-index: -10;
         }
 
         /* 左側藍色線條 */
         body::before {
             content: '';
-            position: fixed;
+            position: relative;
             top: 0;
             left: 0;
             width: 20px;
@@ -88,14 +118,15 @@
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
         }
 
         .back-button {
             background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 1);
             color: white;
             padding: 0;
             width: 80px;
@@ -144,7 +175,7 @@
             border-radius: 50%;
             transform: translate(-50%, -50%) scale(0);
             background-color: transparent;
-            border: 2px solid rgb(0, 0, 0); /* Night模式下為白色 */
+            border: 2px solid rgb(255, 255, 255);
             opacity: 0;
             pointer-events: none;
             z-index: 2;
@@ -186,18 +217,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -218,15 +243,35 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: relative;
+                top: auto;
+                left: auto;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
@@ -247,9 +292,7 @@
                 margin: 0;
             }
             
-            .project-title {
-                font-size: 8rem;
-            }
+            
         }
 
         .page-title {
@@ -265,6 +308,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -278,17 +327,42 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7rem;
+            font-size: 5rem;  /* 手機版預設大小 */
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
         }
 
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 8rem;  /* 電腦版大小 */
+            }
+
+            .project-subtitle {
+                font-size: 5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .project-subtitle {
+                margin: 0 0 3rem 0;
+            }
+        }
+
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -296,6 +370,18 @@
 
         .project-description-left {
             flex: 3;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+        }
+
+        .project-description-left div {
+            font-size: 0.8rem;  /* 手機版預設大小 */
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .project-description-left div {
+                font-size: 0.9rem;  /* 電腦版大小 */
+            }
         }
 
         .project-description-right {
@@ -351,13 +437,13 @@
         .media-text h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .media-text p {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
 
         .media-image-left {
@@ -407,7 +493,7 @@
             transform: translate(-50%, -50%);
             width: 68px;
             height: 48px;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,1);
             border-radius: 10px;
             cursor: pointer;
             display: flex;
@@ -443,13 +529,13 @@
         .detail-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .detail-content {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
         }
 
         /* 影片控制開關樣式 */
@@ -462,7 +548,7 @@
         .control-label {
             margin-right: 10px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
         
         .toggle { 
@@ -495,58 +581,13 @@
             margin-left: 45px; 
         }
         
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
 
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
+
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            border-color: rgb(255, 255, 255);
         }
 
         /* 選單覆蓋層 */
@@ -559,6 +600,37 @@
             background-color: white;
             transition: right 0.3s ease-in-out;
             z-index: 1000;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
         }
 
         @media (min-width: 768px) {
@@ -739,36 +811,40 @@
         .menu-divider {
             width: 100%;
             height: 2px;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 1);
             margin: 0.5rem 0;
         }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
+        
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -780,65 +856,62 @@
         <div class="project-container">
             <div class="project-header">
                 <h2 class="project-title">Market Weathering</h2>
+                <div class="project-subtitle">股市天氣</div>
                 <div class="project-description">
                     <div class="project-description-left">
-                        <div style="margin-top: 5rem;">
-                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                        <div style="margin-top: 1rem;">
+                            或許 天氣有一天也不會是客觀的<BR>
+                            在未來某一天淪為一種政治手段，也不無可能。<BR>
+                            <BR>
+                            這項作品是一場交易<BR>
+                            是老百姓和無形大手之間的拉鋸戰<BR>
+                            <BR>
+                            使用者需要不斷投入硬幣來讓糟糕的天氣好轉<BR>
+                            投入越多現金，越能換來雨過天晴<BR>
+                            但過不了多久又會烏雲漫天....<BR>
+                            天氣的波動如同股市<BR>
+                            也是一種平民百姓與無形大手間的拉扯<BR>
+                            若想讓波動產生變化，請以金錢來交換。
+                        </div>
+                        
+                        <!-- 添加左側照片 -->
+                        <div class="embedded-image" style="margin-top: 2rem;">
+                            <img src="天氣與股市 2025_1_9 下午 06_26_59.png" alt="天氣與股市" width="100%">
+                        </div>
+                        
+                        <!-- 添加作品信息 -->
+                        <div class="project-info" style="margin-top: 2rem; margin-bottom: 2rem;">
+                         <!-- 作品資訊 -->
+                        <ul class="project-info-list">
+                            <li>-使用軟體 : unity+arduino</li>
+                            <li>-設計年分 : 2025 </li>
+                            <li>-製作團隊 : 施亦恬 </li>
+                            <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                            <li>-作品材質、設備 : 投影機、網路攝影機</li>  
+                        </ul>
                         </div>
                     </div>
                     <div class="project-description-right">
-                        <div style="margin-top: 5rem;">
-                            Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                        <div style="margin-top: 1rem;">
+                            Perhaps the weather will not be objective one day. It is possible that it will become a political means one day in the future. This work is a transaction. It is a tug-of-war between ordinary people and invisible big hands. Users need to keep putting coins in to make the bad weather better. The more cash you put in, the more likely it is to be sunny. But it won’t be long before the sky is full of dark clouds again. The fluctuation of weather is like the stock market. It is also a tug-of-war between ordinary people and invisible big hands. If you want to change the fluctuation, please exchange it with money.
+                            <br>
+                            
+                        </div>
+                        
+                        <!-- 嵌入右側視頻 -->
+                        <div class="embedded-video" style="margin-top: 2rem;">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/vOxPTRxTUDs?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div style="margin-top: 2rem;"></div>
+                        <ul class="project-info-list">
+                            <li>-Software used: unity+arduino</li>
+                            <li>-Design year: 2025 </li>
+                            <li>-Production team: Shi Yitian </li>
+                            <li>-Projects in charge: Programming, interactive design, visual design</li>
+                            <li>-Material and equipment used: Projector, webcam</li>  
+                        </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="project-media">
-                <!-- 添加unity影片在最上方 -->
-                <div class="media-item">
-                    <video width="100%" controls>
-                        <source src="unity影片.mp4#t=5" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                
-                <!-- 左右分欄：左側照片，右側影片 -->
-                <div class="media-row">
-                    <div class="media-image-left">
-                        <img src="天氣與股市 2025_1_9 下午 06_26_59.png" alt="天氣與股市" width="100%">
-                        <div class="image-caption" style="margin-top: 4rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                            天氣與股市的視覺化呈現 - 將複雜的金融數據轉化為直觀的視覺元素，幫助使用者理解市場趨勢與天氣變化的關聯性
-                        </div>
-                    </div>
-                    <div class="media-image-right">
-                        <video width="100%" controls>
-                            <source src="天氣與股市2 2025-01-10 13-28-38.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
-                
-                <!-- 添加第二張照片 -->
-                <div class="media-item">
-                    <div style="display: flex; flex-direction: row; gap: 2rem;">
-                        <div style="flex: 3; display: flex; flex-direction: column; justify-content: flex-end;">
-                            <div class="image-caption" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.4;">
-                                數據視覺化設計 - 將天氣數據與股市趨勢相結合，創造出直觀的視覺呈現，幫助投資者理解環境因素對市場的影響
-                            </div>
-                        </div>
-                        <div style="flex: 7;">
-                            <img src="天氣與股市 2025_1_9 下午 06_26_52.png" alt="天氣與股市" width="100%">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 添加新影片 -->
-                <div class="media-item">
-                    <video width="100%" controls>
-                        <source src="758182910.354401.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
                 </div>
             </div>
 
@@ -922,9 +995,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -971,8 +1049,5 @@
             }
         });
     </script>
-    
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
 </body>
 </html> 

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio - Project 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/theme-styles.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar { display: none; }
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+        @media (max-width: 767px) {
+            body::before { display: none; }
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+        .blue-circle {
+            content: '';
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 400px;
+            height: 400px;
+            background-color: #0D05F2;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+        @media (max-width: 767px) {
+            .blue-circle {
+                width: 300px;
+                height: 300px;
+                top: 20px;
+                left: 20px;
+                filter: blur(40px);
+            }
+        }
+        .close-btn {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        @media (max-width: 767px) {
+            .close-btn {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            position: relative;
+            margin-top: 5rem;
+        }
+        .project-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .project-header {
+            margin-bottom: 2rem;
+        }
+        .project-title {
+            font-family: "Tangerine", cursive;
+            font-size: 6rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 80%;
+            margin: 0 0 0rem 0;
+        }
+        .project-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            position: relative;
+        }
+        .project-description-left {
+            flex: 3;
+        }
+        .project-description-right {
+            flex: 7;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        .project-description-left-text {
+            margin-top: 8rem;
+            display: block;
+        }
+        .embedded-video {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .embedded-image {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .project-info-list {
+            margin-top: 3rem;
+            list-style-type: none;
+            padding: 0;
+        }
+        .project-info-list li {
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        .right-embedded-image {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .video-description {
+            margin-top: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-circle"></div>
+    <button class="close-btn" onclick="window.location.href='../newpage9/'" title="關閉">&times;</button>
+    <div class="content">
+        <div class="project-container">
+            <div class="project-header">
+                <h2 class="project-title">Calm the Code</h2>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div class="project-description-left-text">
+                            迷信之間<br>
+                            - 相信即成力量。<br>
+                            那些口耳相傳的叮嚀、囑咐，彷彿形成一種守則，我們在驚嘆之餘也半信半疑地相信了。<br>
+                            你曾聽說過嗎？不能用手去指月亮歐! 不然會被割耳朵的。」<br>
+                            有人解讀為怪力亂神，也有人不信邪的挑戰，但我們更願意相信這是一種文化的集體意識，屬於生活在這片土地的大家，能擁有如此高度統一的默契是相當珍貴的一種財產，記憶間的共鳴帶來熟悉的歸屬感——<br>
+                            是的，我來自台灣，這是我們土地上發生的事。<br>
+                            讓我們重新體驗口耳相傳間那些，引以為傲的守則吧!
+                        </div>
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/LsJSWCMjYvY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="embedded-image">
+                            <img src="../newpage1/DSC09069.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <ul class="project-info-list">
+                            <li>-使用軟體 : Touchdesigner</li>
+                            <li>-設計年分 : 2024 </li>
+                            <li>-製作團隊 : 施亦恬、陳柏安   </li>
+                            <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                            <li>-作品材質、設備 : 投影機、投影幕、電腦、麥克風、喇叭、網路攝影機</li>
+                        </ul>
+                    </div>
+                    <div class="project-description-right">
+                        between superstitions<br>
+Belief is power.<br>
+Those instructions and advice passed down orally seemed to form a kind of rule, and we believed them half-heartedly while being amazed.<br>
+Have you ever heard of it? Don't point at the moon! Otherwise, your ears will be cut off. "<br>
+ Some people interpret it as supernatural power, while others challenge it without believing in evil. However, we prefer to believe that this is a kind of collective consciousness of culture, belonging to everyone living on this land. It is a very precious asset to have such a highly unified tacit understanding. The resonance between memories brings a familiar sense of belonging.<br>
+Yes, I am from Taiwan, this is what happened on our land"<br>
+Let us re-experience those proud rules that have been passed down by word of mouth!
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/nNh6GiptSLs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage1/DSC09330.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="video-description">
+                           你聽說嗎，放一包乖乖在電腦旁邊就可以祈求演出順利、展覽順利、電腦運作正常。<br>
+                           在現場，我們布置宛如魔力加持的神祕場景，在乖乖餅乾靠近電腦時，撥放童年乖乖歌；若遠離電腦你會發現一切都變得混亂、失去秩序。<br>
+                           看似缺乏邏輯，卻是我們寧可信其有、不可信其無的切身經歷。<br>
+                            <br><br>
+                            Have you heard that if you place a pack of sweets next to your computer, you can pray for a smooth performance, a successful exhibition, and the computer to function properly?<br>
+                            On site, we set up a mysterious scene that seemed to be blessed by magic. When the obedient cookies were close to the computer, we played the childhood obedient songs; if they were away from the computer, you would find that everything became chaotic and out of order.<br>
+It seems to lack logic, but it is our personal experience that we would rather believe it than not believe it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-media">
+                <!-- 移除不存在的圖片 -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/theme-controller.js"></script>
+</body>
+</html> 

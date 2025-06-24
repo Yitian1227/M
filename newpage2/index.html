@@ -10,24 +10,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/theme-styles.css">
-    <script src="../js/theme-controller.js"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         body {
             background-color: #141414;
-            color: rgba(255, 255, 255, 0.8);
+            background-image: url('神秘音樂20.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             font-family: 'Kantumruy Pro', sans-serif;
             position: relative;
             overflow-x: hidden;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+
+        /* 背景效果 */
+        .background-overlay {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('神秘音樂20.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(5px) brightness(1);
+            z-index: -2;
         }
 
         /* 左側藍色線條 */
@@ -77,25 +109,29 @@
 
         @media (max-width: 767px) {
             .blue-circle {
-                width: 300px;
-                height: 300px;
-                top: 20px;
-                left: 20px;
-                filter: blur(40px);
+                width: 500px;
+                height: 500px;
+                top: 10px;
+                left: 10px;
+                filter: blur(80px);
+                background: radial-gradient(circle, #0D05F2 0%, #0D05F2 40%, rgba(13, 5, 242, 0.5) 70%, transparent 100%);
+                border: 50px solid rgb(89, 0, 116);
             }
         }
 
         .header {
             padding: 3.5rem 2rem 2rem 3.5rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
+            gap: 1rem;
+            z-index: 5;
         }
 
         .back-button {
             background: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 1);
             color: white;
             padding: 0;
             width: 80px;
@@ -186,18 +222,12 @@
         }
 
         .hamburger-menu {
-            position: fixed;
-            top: 40px;
-            left: 150px;
             display: flex;
-            width: auto;
-            height: auto;
             cursor: pointer;
             align-items: center;
             justify-content: center;
             z-index: 100000;
             color: #0D05F2;
-            font-size: 7rem;
             margin: 0;
             animation: rotate 15s linear infinite;
             pointer-events: auto;
@@ -218,20 +248,40 @@
             }
         }
 
+        .hamburger-menu img {
+            width: 80px;
+            height: 80px;
+        }
+
         @media (max-width: 767px) {
             .header {
                 padding: 2.5rem 1rem 1rem 1rem;
+                gap: 1rem;
             }
 
             .hamburger-menu {
-                font-size: 4rem;
-                left: 80px;
-                top: 39px;
+                position: fixed;
+                top: 2.5rem;
+                left: 5rem;
+                z-index: 100000;
+                transition: all 0.3s ease;
+            }
+
+            /* 當選單展開時隱藏 hamburger-menu */
+            body:has(.menu-overlay.show) .hamburger-menu {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .hamburger-menu img {
+                width: 60px;
+                height: 60px;
             }
 
             .back-button {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
                 font-size: 0.8rem;
             }
 
@@ -247,8 +297,14 @@
                 margin: 0;
             }
             
-            .project-title {
-                font-size: 7rem;
+            
+        }
+
+        @media (min-width: 768px) {
+            .hamburger-menu {
+                position: relative;
+                top: auto;
+                left: auto;
             }
         }
 
@@ -265,6 +321,12 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .project-container {
@@ -278,17 +340,26 @@
 
         .project-title {
             font-family: "Tangerine", cursive;
-            font-size: 7.5rem;
+            font-size: 8rem;
             font-weight: 700;
             letter-spacing: -0.05em;
             line-height: 75%;
             margin: 0 0 1.5rem 0;
         }
 
+        .project-subtitle {
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            margin: 0 0 4rem 0;
+            letter-spacing: 0.05em;
+        }
+
         .project-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: row;
             gap: 3rem;
@@ -306,21 +377,35 @@
             gap: 1rem;
         }
 
+        @media (min-width: 768px) {
+            .project-subtitle {
+                font-size: 5rem;
+            }
+        }
+
+        /*手機板設定*/
         @media (max-width: 767px) {
             .project-description {
                 flex-direction: column;
                 gap: 1rem;
             }
+
+            .project-title {
+                font-size: 5rem;
+            }
+
+            .project-subtitle {
+                margin: 0 0 3rem 0;
+            }
         }
 
-        body.light-mode .project-description {
-            color: rgba(0, 0, 0, 0.7);
-        }
+
         
         /* 左側描述文字樣式 */
         .project-description-left-text {
             margin-top: 4rem;
             display: block;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
         
         /* 右側描述文字樣式 */
@@ -328,6 +413,59 @@
             margin-top: 4rem;
             margin-bottom: 4rem;
             display: block;
+        }
+
+        /* 為文字行添加藍色背景 */
+        .project-description-left-text,
+        .project-description-right,
+        .image-caption {
+            /*background-color: #0D05F2;*/
+            line-height: 1.8;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 確保文字在藍色背景上清晰可見 */
+        .project-description-left-text,
+        .project-description-right,
+        .image-caption {
+            color: white !important;
+        }
+
+
+
+        /* 為每行文字提供更好的間距 */
+        .project-description-left-text br,
+        .project-description-right br,
+        .image-caption br {
+            display: block;
+            margin: 4px 0;
+            content: "";
+        }
+
+        /* 手機版移除色塊背景 */
+        @media (max-width: 767px) {
+            .project-description-left-text,
+            .project-description-right,
+            .image-caption {
+                background-color: transparent;
+                padding: 0;
+                margin-bottom: 0.8rem;
+                border-radius: 0;
+            }
+
+            /* 手機版文字顏色恢復原本設定 */
+            .project-description-left-text,
+            .project-description-right,
+            .image-caption {
+                color: rgba(255, 255, 255, 1) !important;
+            }
+
+
         }
 
         .project-media {
@@ -416,13 +554,13 @@
         .detail-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 1);
         }
 
         .detail-content {
             font-size: 1rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
         }
 
         /* 影片控制開關樣式 */
@@ -435,7 +573,7 @@
         .control-label {
             margin-right: 10px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
         }
         
         .toggle { 
@@ -468,58 +606,11 @@
             margin-left: 45px; 
         }
         
-        /* 亮色模式下的按鈕樣式 */
-        body.light-mode .back-button {
-            border-color: rgba(0, 0, 0, 0.3);
-            color: rgba(0, 0, 0, 0.8);
-            background: none;
-        }
-        
-        body.light-mode .back-button:hover {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: white;
-        }
-        
-        body.light-mode .back-button:active,
-        body.light-mode .back-button.active {
-            background-color: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        /* 亮色模式下的漣漪樣式 */
-        body.light-mode .back-button::before,
-        body.light-mode .back-button::after,
-        body.light-mode .back-button .ripple-circle {
-            border-color: rgba(0, 0, 0, 0.8); /* Day模式下為黑色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button:hover::before,
-        body.light-mode .back-button:hover::after,
-        body.light-mode .back-button:hover .ripple-circle {
-            border-color: rgb(0, 0, 0); /* Day模式下懸停時為白色 */
-        }
-        
-        /* 懸停時的漣漪顏色 - Night模式 */
+        /* home button 水波 */
         .back-button:hover::before,
         .back-button:hover::after,
         .back-button:hover .ripple-circle {
-            border-color: rgb(255, 255, 255); /* Night模式下懸停時為黑色 */
-        }
-        
-        /* 激活時的漣漪顏色 - Day模式 */
-        body.light-mode .back-button.active::before,
-        body.light-mode .back-button.active::after,
-        body.light-mode .back-button.active .ripple-circle {
-            border-color: #333;
+            border-color: rgb(255, 255, 255);
         }
 
         /* 選單覆蓋層 */
@@ -532,6 +623,37 @@
             background-color: white;
             transition: right 0.3s ease-in-out;
             z-index: 1000;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 120px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1001;
+        }
+
+        .menu-overlay.show .close-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 767px) {
+            .close-button {
+                top: 2.5rem;
+                right: 2rem;
+            }
         }
 
         @media (min-width: 768px) {
@@ -712,7 +834,7 @@
         .menu-divider {
             width: 100%;
             height: 2px;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 1);
             margin: 0.5rem 0;
         }
 
@@ -725,15 +847,13 @@
         
         /* 照片說明文字樣式 */
         .image-caption {
-            margin-top: 4rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            font-family: "ChironSungHK", "Kantumruy Pro", sans-serif;
         }
         
-        body.light-mode .image-caption {
-            color: rgba(0, 0, 0, 0.6);
-        }
+
 
         /* 右側照片樣式 */
         .right-embedded-image {
@@ -742,48 +862,64 @@
             width: 100%;
         }
 
-        /* 隱藏卷軸但保留滾動功能 */
-        .content::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
+        /* Neon Effect Styles */
+        .neon-box-blue {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1.5px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 3px #fff, 
+                        inset 0 0 3px #fff, 
+                        0 0 10px #0D05F2, 
+                        inset 0 0 10px #0D05F2, 
+                        0 0 20px #0D05F2, 
+                        inset 0 0 20px #0D05F2;
+            animation: flicker-effect 0.5s infinite alternate;
         }
-        
-        /* 針對 Firefox */
-        .content {
-            scrollbar-width: none;
+
+        .neon-text-blue {
+            color: #fff;
+            font-size: 1.3rem; 
+            font-style: italic;
+            text-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 12px #0D05F2, 0 0 15px #0D05F2, 0 0 20px #0D05F2, 0 0 25px #0D05F2;
         }
-        
-        /* 針對 IE 和 Edge */
-        .content {
-            -ms-overflow-style: none;
+
+        @keyframes flicker-effect {
+            to {
+                opacity: 0.2;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景覆蓋層 -->
+    <div class="background-overlay"></div>
     <div class="blue-circle"></div>
     <div class="header">
         <button class="back-button" onclick="window.location.href='../'">
             HOME
             <span class="ripple-circle"></span>
         </button>
-        <div class="hamburger-menu">✻</div>
-        <h1 class="page-title me-5">Yitiann Portfolio</h1>
+        <div class="hamburger-menu">
+            <img src="../icon/face_icon.png" alt="face icon">
+        </div>
     </div>
 
     <!-- 添加選單覆蓋層 -->
     <div class="menu-overlay">
+        <div class="close-button">&times;</div>
         <div class="menu-items">
             <span class="menu-category">PROJECT</span>
-            <a href="../newpage1" class="project-item">Calm the Code</a>
-            <a href="../newpage2" class="project-item">Superstitious Interspace</a>
-            <a href="../newpage3" class="project-item">Verbal Flow</a>
-            <a href="../newpage4" class="project-item">Fly in Optical Road</a>
-            <a href="../newpage5" class="project-item">Market Weathering</a>
-            <a href="../newpage6" class="project-item">Relational Shadows</a>
+            <a href="../newpage1" class="project-item">互動光桌 Interactive Table</a>
+            <a href="../newpage2" class="project-item">魔法書 Magic Book</a>
+            <a href="../newpage3" class="project-item">光達 互動牆 Quanda Wall</a>
+            <a href="../newpage4" class="project-item">故事盒 Story Box</a>
+            <a href="../newpage5" class="project-item">股市天氣 Market Weathering</a>
+            <a href="../newpage6" class="project-item">水相占卜 Ask water</a>
             <div class="menu-divider"></div>
-            <a href="../newpage7">contact</a>
-            <a href="../newpage8">about me</a>
-            <a href="../newpage9">recent research</a>
+            <a href="../newpage7">聯絡 contact</a>
+            <a href="../newpage8">關於我 about me</a>
+            <a href="../newpage9">過往作品 recent research</a>
             <div class="social-buttons">
                 <a href="#" class="social-button" id="lineButton">Line</a>
                 <a href="#" class="social-button" id="gmailButton">Gmail</a>
@@ -794,142 +930,56 @@
     <div class="content">
         <div class="project-container">
             <div class="project-header">
-                <h2 class="project-title">Superstitious Interspace</h2>
+                <h2 class="project-title">Magic book</h2>
+                <div class="project-subtitle">魔法書</div>
                 <div class="project-description">
                     <div class="project-description-left">
                         <div class="project-description-left-text">
-                            Add a detailed description of your project here. This is a sample text that you can replace with real content based on your actual project.
+                            小時候總相信自己擁有魔法，而咒語就藏在書頁的字裡行間。現在，觸碰書本就能夠喚醒那些沉睡的咒語! 只要觸碰特定文字，像是平安、一帆風順...這些文字就彷彿被召喚般、緩緩浮起，寫下最溫柔的祝福詩篇。
                         </div>
                         
                         <!-- 嵌入左側照片 -->
                         <div class="embedded-image">
-                            <img src="DSC09317.jpg" alt="展場照片" width="100%">
+                            <img src="477522_0.jpg" alt="展場照片" width="100%">
                         </div>
-                        
-                        <!-- 照片說明文字 -->
-                        <div class="image-caption">
-                            本作品在2023年台北國際藝術節展出，透過沉浸式的互動環境，探討數位時代的信仰轉變。作品結合傳統意象與現代科技，創造出一個介於實體與虛擬之間的超自然空間。觀眾可以透過互動裝置體驗不同層次的感官刺激，並反思科技與信仰的關係。
-                        </div>
-                        
-                        <!-- 嵌入左側第二張照片 -->
-                        <div class="embedded-image" style="margin-top: 10rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                觀眾互動體驗展示 - 作品透過感應器追蹤觀眾動作，即時反饋於投影效果中
-                            </div>
-                            <img src="DSC09099.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第三張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                作品空間細節 - 視覺和聲音元素融合創造出超越物理限制的感知體驗
-                            </div>
-                            <img src="展場照片5.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第四張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                多重投影層次 - 作品通過多重投影層次創造深度空間感，強化虛實交錯的體驗
-                            </div>
-                            <img src="展場照片6.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第五張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                觀眾參與互動 - 作品邀請觀眾成為藝術體驗的一部分，透過身體參與完成作品
-                            </div>
-                            <img src="DSC08997.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第六張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                互動投影細節 - 作品利用精準的動態投影技術，創造出隨觀眾行為變化的視覺效果
-                            </div>
-                            <img src="DSC09122.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第七張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 0; margin-bottom: 2rem;">
-                                作品細節特寫 - 投影與實體空間的交疊創造出獨特的視覺張力
-                            </div>
-                            <img src="DSC08966.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入左側第八張照片 -->
-                        <div class="embedded-image" style="margin-top: 15rem;">
-                            <!-- 照片上方的說明文字 -->
-                            <div class="image-caption" style="margin-top: 3rem; margin-bottom: 2rem;">
-                                作品空間整體視圖 - 展場中的光影和投影共同構成完整的沉浸式體驗環境
-                            </div>
-                            <img src="DSC09371.jpg" alt="展場照片" width="100%">
+
+
+                        <div class="embedded-image" style="margin-top: 2rem;">
+
+                            <!-- 作品資訊 -->
+                        <ul class="project-info-list">
+                            <li>-使用軟體 : touchdesigner</li>
+                            <li>-設計年分 : 2025 </li>
+                            <li>-製作團隊 : 施亦恬 </li>
+                            <li>-負責項目 : 程式設計、互動設計、視覺設計</li>
+                            <li>-作品材質、設備 : 投影機、網路攝影機</li>  
+                        </ul>
                         </div>
                     </div>
                     <div class="project-description-right">
                         <div class="project-description-right-text">
-                            Detail the background, goals, challenges, and solutions of the project. Use multiple paragraphs to organize your content to ensure readers clearly understand the value of the project and your contribution.
+                            When I was a kid, I always believed that I had magic, and the spells were hidden between the lines of the pages of books. Now, touching the book can awaken those dormant spells! Just touch certain words, such as peace, smooth sailing...these words will slowly float up as if summoned, writing the most gentle blessing poem.
                         </div>
                         
                         <!-- 嵌入視頻 -->
                         <div class="embedded-video">
-                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/poAMqFGE6vE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/pfoBJNtUp8E?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         
-                        <!-- 嵌入右側照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09059.jpg" alt="展場照片" width="100%">
-                        </div>
                         
-                        <!-- 嵌入右側第二張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09105.JPG" alt="展場照片" width="100%">
-                        </div>
+                        <ul class="project-info-list">
+                            <li>-Software used: touchdesigner</li>
+                            <li>-Design year: 2025 </li>
+                            <li>-Production team: Shi Yitian </li>
+                            <li>-Projects in charge: Programming, interactive design, visual design</li>
+                            <li>-Material and equipment used: Projector, webcam</li>  
+                        </ul>
                         
-                        <!-- 嵌入右側第三張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09171.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入右側第四張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC08968.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入右側第五張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09046.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入右側第六張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09316.jpg" alt="展場照片" width="100%">
-                        </div>
-                        
-                        <!-- 嵌入右側第七張照片 -->
-                        <div class="right-embedded-image">
-                            <img src="DSC09381.jpg" alt="展場照片" width="100%">
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="project-media">
-                
-                
-                <!-- 添加更多媒體項目 -->
-                <div class="media-item">
-                    <img src="../path/to/your/image.jpg" alt="">
-                </div>
-            </div>
+            
 
             <!-- 可以添加更多內容區塊 -->
         </div>
@@ -1011,9 +1061,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const menuOverlay = document.querySelector('.menu-overlay');
+            const closeButton = document.querySelector('.close-button');
             
             hamburgerMenu.addEventListener('click', () => {
                 menuOverlay.classList.toggle('show');
+            });
+
+            closeButton.addEventListener('click', () => {
+                menuOverlay.classList.remove('show');
             });
 
             // 點擊選單項目時關閉選單
@@ -1061,7 +1116,6 @@
         });
     </script>
     
-    <!-- 引入主題控制器 -->
-    <script src="../js/theme-controller.js"></script>
+
 </body>
 </html> 

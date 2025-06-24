@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitiann Portfolio - Project 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Niconne&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Splash&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/theme-styles.css">
+    <script src="../js/theme-controller.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            background-color: #141414;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Kantumruy Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+        @media (max-width: 767px) {
+            body::before { display: none; }
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #0D05F2;
+            z-index: -1;
+        }
+        .blue-circle {
+            content: '';
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            width: 400px;
+            height: 400px;
+            background-color: #0D05F2;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+        @media (max-width: 767px) {
+            .blue-circle {
+                width: 300px;
+                height: 300px;
+                top: 20px;
+                left: 20px;
+                filter: blur(40px);
+            }
+        }
+        .close-btn {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        @media (max-width: 767px) {
+            .close-btn {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+            margin-top: 5rem;
+        }
+        .content::-webkit-scrollbar {
+            display: none;
+        }
+        .project-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        .project-header {
+            margin-bottom: 2rem;
+        }
+        .project-title {
+            font-family: "Tangerine", cursive;
+            font-size: 8rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 75%;
+            margin: 0 0 1.5rem 0;
+        }
+        .project-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            position: relative;
+        }
+        .project-description-left {
+            flex: 3;
+        }
+        .project-description-right {
+            flex: 7;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        @media (max-width: 767px) {
+            .project-description {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .project-title {
+                font-size: 5rem;
+            }
+        }
+        body.light-mode .project-description {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        .project-description-left-text {
+            margin-top: 4rem;
+            display: block;
+        }
+        .project-description-right-text {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+            display: block;
+        }
+        .project-media {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .media-item {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        .media-item img,
+        .media-item video,
+        .media-item iframe {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            cursor: pointer;
+        }
+        .youtube-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background-color: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .play-button:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent #fff;
+        }
+        .youtube-container:hover .play-button {
+            background-color: red;
+        }
+        .project-details {
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+        .detail-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .detail-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .embedded-image {
+            margin-top: 5rem;
+            overflow: hidden;
+            width: 100%;
+        }
+        .image-caption {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        body.light-mode .image-caption {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        .right-embedded-image {
+            margin-top: 3rem;
+            overflow: hidden;
+            width: 100%;
+        }
+        .neon-box-blue {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1.5px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 3px #fff, 
+                        inset 0 0 3px #fff, 
+                        0 0 10px #0D05F2, 
+                        inset 0 0 10px #0D05F2, 
+                        0 0 20px #0D05F2, 
+                        inset 0 0 20px #0D05F2;
+            animation: flicker-effect 0.5s infinite alternate;
+        }
+        .neon-text-blue {
+            color: #fff;
+            font-size: 1.3rem; 
+            font-style: italic;
+            text-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 12px #0D05F2, 0 0 15px #0D05F2, 0 0 20px #0D05F2, 0 0 25px #0D05F2;
+        }
+        @keyframes flicker-effect {
+            to {
+                opacity: 0.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-circle"></div>
+    <button class="close-btn" onclick="window.location.href='../newpage9/'" title="關閉">&times;</button>
+    <div class="content">
+        <div class="project-container">
+            <div class="project-header">
+                <h2 class="project-title">Superstitious Interspace</h2>
+                <div class="project-description">
+                    <div class="project-description-left">
+                        <div class="project-description-left-text">
+                            迷信之間<br>
+                            - 相信即成力量。<br>
+                            那些口耳相傳的叮嚀、囑咐，彷彿形成一種守則，我們在驚嘆之餘也半信半疑地相信了。<br>
+                            你曾聽說過嗎？不能用手去指月亮歐! 不然會被割耳朵的。」<br>
+                            有人解讀為怪力亂神，也有人不信邪的挑戰，但我們更願意相信這是一種文化的集體意識，屬於生活在這片土地的大家，能擁有如此高度統一的默契是相當珍貴的一種財產，記憶間的共鳴帶來熟悉的歸屬感——<br>
+                            是的，我來自台灣，這是我們土地上發生的事。<br>
+                            讓我們重新體驗口耳相傳間那些，引以為傲的守則吧!
+                        </div>
+                        <div class="embedded-image">
+                            <img src="../newpage2/DSC09317.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="image-caption">
+                            本作品在2024年臺藝大展出，透過沉浸式的互動環境，探討數位時代的信仰轉變/或不變。作品結合傳統意象與現代科技，創造出一個介於實體與虛擬之間的超自然空間。<br>
+                            <br>
+                            <div class="neon-box-blue">
+                                <span class="neon-text-blue">Γ你聽說碟仙嗎」</span>
+                            </div><br><br>
+                            觀眾看到有一個圓形桌面(我們的碟仙區) 可以用手 按住桌上的小碟子，這時碟子底下出現影子 並開始移動 觀眾可以跟隨影子移動(用手指)。影子帶領觀眾閱讀出現的文字，手指滑過時 文字才出現。
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;"></div>
+                            <img src="../newpage2/DSC09099.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
+                                作品空間細節 - 安排燈光進場。
+                            </div>
+                            <img src="../newpage2/展場照片5.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
+                                <div style="margin-bottom: 2rem;">
+                                    <div class="neon-box-blue" style="margin-bottom: 1rem;">
+                                        <span class="neon-text-blue">Γ你聽說嗎，不能用手去指月亮歐! 不然會被割耳朵的。」</span>
+                                    </div>
+                                    一進門便先到看到月亮，(用投影機由下往上投影在牆面的月亮) 有桌子上 放置此區說明、耳機、lead motion。當觀眾用手指月亮時耳機聲道剩單邊。
+                                    <br>
+                                    <div class="neon-box-blue">
+                                        <span class="neon-text-blue">Γ你聽說嗎，不能在屋簷下撐傘歐! 鬼會鑽到你的雨傘底下的」</span>
+                                    </div>
+                                    <br>
+                                    懸掛5-6隻雨傘，地面放置投影機由下往上打、打在雨傘內部，Kinect偵測觀眾走入傘下時 便讓鬼的投影也出現在傘中。
+                                        觀眾可以撐著雨傘走進走外，鬼的投影也會跟著觀眾走。
+                                </div>
+                            </div>
+                            <img src="../newpage2/展場照片6.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
+                                觀眾參與互動 - 活動紀念海報。
+                            </div>
+                            <img src="../newpage2/DSC08997.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 1rem;">
+                                互動投影細節 - 觀眾需要戴上耳機體驗指月亮後的聲道改變。
+                            </div>
+                            <img src="../newpage2/DSC09122.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <img src="../newpage2/DSC08966.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;">
+                                ✦中文名稱：謎信之間 <br>
+                                ✦英文名稱：The Room of myth<br>
+                                ✦展覽日期：2024/11/19（二）<br>
+                                ✦展覽時間：16:00～20:00（16:00開放入場）<br>
+                                ✦展覽地點：九單藝術實踐空間 B展間<br>
+                                （台藝大北側停車場旁，圖文系館對面）<br>
+                                ✦開課老師：藍羚涵<br>
+                                ✦指導老師：高榮陽<br>
+                                ✦策展人：蔡金珊、馮倬蓓、陳柏安、黃昱婷、陳郁娸、高至宣、吳宛軒、施亦恬、張妙瑄<br>
+                            </div>
+                            <img src="../newpage2/DSC09371.jpg" alt="展場照片" width="100%">
+                        </div>
+                    </div>
+                    <div class="project-description-right">
+                        <div class="project-description-right-text">
+                            Belief is power.<br>
+                        Those instructions and advice passed down orally seemed to form a kind of rule, and we believed them half-heartedly while being amazed.<br>
+                        Have you ever heard of it? Don't point at the moon! Otherwise, your ears will be cut off. "
+                        Some people interpret it as supernatural power, while others challenge it without believing in evil. However, we prefer to believe that this is a kind of collective consciousness of culture, belonging to everyone living on this land. It is a very precious asset to have such a highly unified tacit understanding. The resonance between memories brings a familiar sense of belonging.
+                        Yes, I am from Taiwan, this is what happened on our land"<br>
+                        Let us re-experience those proud rules that have been passed down by word of mouth!
+                        </div>
+                        <div class="embedded-video">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/poAMqFGE6vE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09059.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09105.JPG" alt="展場照片" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09171.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC08968.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="embedded-image" style="margin-top: 0.3rem;">
+                            <div class="image-caption" style="margin-top: 0.3rem; margin-bottom: 2rem;"></div>
+                            <img src="../newpage2/展場照片6.jpg" alt="Exhibition photo" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09046.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09316.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="right-embedded-image">
+                            <img src="../newpage2/DSC09381.jpg" alt="展場照片" width="100%">
+                        </div>
+                        <div class="image-caption" style="margin-top: 1rem; margin-bottom: 2rem;">
+                            ✦Title (Chinese): 謎信之間<br>
+                            ✦Title (English): The Room of Myth<br>
+                            ✦Exhibition Date: 2024/11/19 (Tuesday)<br>
+                            ✦Exhibition Time: 16:00–20:00 (Entry starts at 16:00)<br>
+                            ✦Venue: Jiudan Art Practice Space – Exhibition Room B<br>
+                            (Beside the north-side parking lot of NTUA, across from the Department of Graphic Communication building)<br>
+                            ✦Course Instructor: Lan Ling-Han<br>
+                            ✦Advising Professor: Kao Jung-Yang<br>
+                            ✦Curators: Tsai Chin-Shan, Feng Chuo-Pei, Chen Po-An, Huang Yu-Ting, Chen Yu-Chi, Kao Chih-Hsuan, Wu Wan-Hsuan, Shih Yi-Tien, Chang Miao-Hsuan<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-media">
+                <div class="media-item">
+                    <img src="../path/to/your/image.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/theme-controller.js"></script>
+</body>
+</html> 
